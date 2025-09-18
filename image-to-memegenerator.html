@@ -3,58 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Meme Generator — Tools Jet</title>
+  <title>Funny Meme Generator — Tools Jet</title>
   <style>
     :root{
       --blue:#00aaff;
       --yellow:#ffde59;
       --pink:#ff69b4;
       --bg:#ffffff;
+      --meme-font: "Impact", "Arial Black", sans-serif;
     }
     *{box-sizing:border-box}
-    body{font-family:'Comic Sans MS',cursive,Arial,sans-serif;margin:0;background:linear-gradient(135deg,var(--blue),var(--pink));color:#222}
+    body{font-family:'Comic Sans MS',cursive,Arial,sans-serif;margin:0;background:linear-gradient(135deg,var(--blue),var(--pink));color:#222;min-height:100vh}
     .app{max-width:1100px;margin:28px auto;padding:20px}
-    .card{background:var(--bg);border-radius:20px;box-shadow:0 6px 30px rgba(0,0,0,0.15);padding:20px;transform:rotate(-0.5deg)}
+    .card{background:var(--bg);border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.15);padding:20px;transform:rotate(-0.8deg)}
     header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-    .logo .dot{width:40px;height:40px;border-radius:50%;background:var(--yellow);border:3px dashed var(--pink)}
-    h1{font-size:22px;margin:0;color:var(--blue);text-shadow:2px 2px var(--yellow)}
+    .logo .dot{width:44px;height:44px;border-radius:50%;background:var(--yellow);border:4px dashed var(--pink);display:inline-block}
+    h1{font-size:22px;margin:0;color:var(--blue);text-shadow:3px 3px var(--yellow)}
     p.lead{margin:6px 0 0;color:var(--pink);font-weight:bold}
 
     .controls{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .btn{background:var(--pink);color:#fff;padding:10px 16px;border-radius:12px;border:3px solid var(--yellow);cursor:pointer;font-weight:700;box-shadow:2px 3px var(--blue);transition:transform .2s}
-    .btn:hover{transform:scale(1.05) rotate(-2deg)}
+    .btn{background:var(--pink);color:#fff;padding:10px 16px;border-radius:12px;border:3px solid var(--yellow);cursor:pointer;font-weight:700;box-shadow:2px 3px var(--blue);transition:transform .16s}
+    .btn:hover{transform:scale(1.04) rotate(-2deg)}
     .btn.ghost{background:var(--yellow);color:#222;border:3px solid var(--pink)}
 
     label.file-label{background:var(--blue);color:#fff;padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:700;border:3px dotted var(--yellow)}
     input[type=file]{display:none}
 
     .workspace{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-top:18px}
+
     .canvas-wrap{background:#fafafa;border-radius:15px;padding:12px;display:flex;align-items:center;justify-content:center;min-height:320px;position:relative;border:4px dashed var(--pink)}
-    canvas#imageCanvas{max-width:100%;height:auto;border-radius:10px;display:block}
+    .canvas-area{position:relative;display:inline-block}
+    canvas{display:block;max-width:100%;height:auto;border-radius:10px}
 
-    .overlay{position:absolute;left:12px;top:12px;right:12px;bottom:12px;border-radius:10px;pointer-events:none}
-
+    /* overlay (handles + overlay-canvas) */
+    .overlay-canvas{position:absolute;left:0;top:0;z-index:2}
+    .handles{position:absolute;left:0;top:0;z-index:3;pointer-events:none}
     .handle{position:absolute;width:20px;height:20px;background:var(--yellow);border:3px solid var(--blue);border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.2);pointer-events:auto}
-    .handle.tl{cursor:nwse-resize}
-    .handle.tr{cursor:nesw-resize}
-    .handle.bl{cursor:nesw-resize}
-    .handle.br{cursor:nwse-resize}
 
-    .sidebar{padding:12px;background:#fff;border:3px dashed var(--blue);border-radius:15px;}
-    .preview{background:#fffbf0;border-radius:15px;padding:10px;border:2px dashed var(--pink);display:flex;align-items:center;justify-content:center}
+    .sidebar{padding:12px;background:#fff;border:3px dashed var(--blue);border-radius:15px}
+    .preview{background:#fffbf0;border-radius:12px;padding:10px;border:2px dashed var(--pink);display:flex;align-items:center;justify-content:center}
     .meta{font-size:14px;color:var(--blue);margin-top:8px;font-weight:bold}
 
     .caption{width:100%;padding:10px;border-radius:12px;border:2px dashed var(--pink);margin-top:10px;font-family:'Comic Sans MS',cursive}
+    .caption-style{display:flex;gap:8px;margin-top:8px;align-items:center}
+    select,input[type=range]{padding:6px;border-radius:8px;border:1px solid #eee}
 
-    .hint{font-size:13px;color:var(--yellow);font-weight:bold;margin-top:10px}
+    .hint{font-size:13px;color:var(--blue);font-weight:bold;margin-top:10px}
 
     @media (max-width:880px){
       .workspace{grid-template-columns:1fr}
       .sidebar{order:2}
       .canvas-wrap{min-height:240px}
+      .card{transform:none}
     }
 
-    footer{margin-top:14px;color:#fff;font-size:14px;text-align:center;font-weight:bold;text-shadow:1px 1px #000}
+    footer{margin-top:14px;color:#333;font-size:14px;text-align:center;font-weight:bold}
   </style>
 </head>
 <body>
@@ -62,10 +65,10 @@
     <div class="card">
       <header>
         <div class="logo">
-          <span class="dot"></span>
+          <span class="dot" aria-hidden></span>
           <div>
             <h1>😂 Tools Jet — Meme Generator 😂</h1>
-            <p class="lead">Upload • Crop • LOL • Download</p>
+            <p class="lead">Upload • Crop • Caption • Download</p>
           </div>
         </div>
       </header>
@@ -86,10 +89,13 @@
       <div class="workspace">
         <div>
           <div class="canvas-wrap" id="canvasWrap">
-            <canvas id="imageCanvas"></canvas>
-            <div class="overlay" id="overlay"></div>
+            <div class="canvas-area" id="canvasArea">
+              <canvas id="imageCanvas"></canvas>
+              <canvas id="overlayCanvas" class="overlay-canvas"></canvas>
+              <div id="handles" class="handles" aria-hidden></div>
+            </div>
           </div>
-          <p class="hint">👉 Drag corners to crop — make your meme magic! ✨</p>
+          <p class="hint">👉 Drag corners to crop — drag inside to move. Works with touch & mouse.</p>
         </div>
 
         <aside class="sidebar">
@@ -101,7 +107,11 @@
             Original: <span id="origSize">—</span>
           </div>
 
-          <input id="caption" class="caption" placeholder="✍️ Add your funny caption here" />
+          <input id="caption" class="caption" placeholder="✍️ Add your funny caption (optional)" />
+          <div class="caption-style">
+            <label class="small">Font size</label>
+            <input id="fontSize" type="range" min="12" max="120" value="36">
+          </div>
         </aside>
       </div>
 
@@ -110,8 +120,347 @@
   </div>
 
   <script>
-    // Keep same JS logic as before (cropping, preview, download)
-    // (Code unchanged from earlier version for functionality)
+    // DOM
+    const fileInput = document.getElementById('fileInput');
+    const imageCanvas = document.getElementById('imageCanvas');
+    const overlayCanvas = document.getElementById('overlayCanvas');
+    const handlesWrap = document.getElementById('handles');
+    const previewCanvas = document.getElementById('previewCanvas');
+    const previewBtn = document.getElementById('previewBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const cropSizeEl = document.getElementById('cropSize');
+    const origSizeEl = document.getElementById('origSize');
+    const captionInput = document.getElementById('caption');
+    const fontSizeInput = document.getElementById('fontSize');
+    const canvasWrap = document.getElementById('canvasWrap');
+    const canvasArea = document.getElementById('canvasArea');
+
+    // contexts
+    const baseCtx = imageCanvas.getContext('2d');
+    const overCtx = overlayCanvas.getContext('2d');
+    const pctx = previewCanvas.getContext('2d');
+
+    // image state
+    let img = new Image();
+    let imgLoaded = false;
+    let scale = 1; // display scale (canvas px = img px * scale)
+
+    // selection in canvas pixels (scaled)
+    const sel = { x: 40, y: 40, w: 160, h: 120 };
+
+    // interaction
+    let interaction = { dragging: false, mode: null, handle: null, startX:0, startY:0, startSel:{} };
+
+    // helper: set both canvases size to same display size (in CSS/display px and backing canvas px)
+    function setCanvasDisplaySize(displayW, displayH){
+      // set canvas element logical sizes (backing pixels)
+      imageCanvas.width = Math.round(displayW);
+      imageCanvas.height = Math.round(displayH);
+      overlayCanvas.width = Math.round(displayW);
+      overlayCanvas.height = Math.round(displayH);
+      // ensure CSS width matches (use px values)
+      imageCanvas.style.width = displayW + 'px';
+      imageCanvas.style.height = displayH + 'px';
+      overlayCanvas.style.width = displayW + 'px';
+      overlayCanvas.style.height = displayH + 'px';
+      // adjust handles container size
+      handlesWrap.style.width = displayW + 'px';
+      handlesWrap.style.height = displayH + 'px';
+    }
+
+    function resetState(){
+      imgLoaded = false;
+      baseCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
+      overCtx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+      handlesWrap.innerHTML = '';
+      previewCanvas.width = 300; previewCanvas.height = 180;
+      cropSizeEl.textContent = '—';
+      origSizeEl.textContent = '—';
+      downloadBtn.disabled = true;
+    }
+
+    clearBtn.addEventListener('click', ()=>{ fileInput.value = ''; resetState(); });
+
+    fileInput.addEventListener('change', (e)=>{
+      const f = e.target.files && e.target.files[0];
+      if(!f) return;
+      const url = URL.createObjectURL(f);
+      img = new Image();
+      img.onload = () => {
+        imgLoaded = true;
+        origSizeEl.textContent = img.width + '×' + img.height;
+        // compute display width to fit container
+        const maxDisplay = Math.min(900, canvasWrap.clientWidth - 20);
+        scale = Math.min(1, maxDisplay / img.width) || (maxDisplay / img.width);
+        const displayW = Math.round(img.width * scale);
+        const displayH = Math.round(img.height * scale);
+        setCanvasDisplaySize(displayW, displayH);
+        // draw base image scaled
+        baseCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
+        baseCtx.drawImage(img, 0, 0, imageCanvas.width, imageCanvas.height);
+
+        // init selection centered
+        sel.w = Math.max(80, Math.round(displayW * 0.6));
+        sel.h = Math.max(60, Math.round(displayH * 0.5));
+        sel.x = Math.round((displayW - sel.w)/2);
+        sel.y = Math.round((displayH - sel.h)/2);
+
+        renderOverlay();
+        downloadBtn.disabled = false;
+      };
+      img.src = url;
+    });
+
+    // draw overlay mask, border, and refresh handles
+    function renderOverlay(){
+      if(!imgLoaded) return;
+      // clear overlay
+      overCtx.clearRect(0,0,overlayCanvas.width,overlayCanvas.height);
+
+      // dim entire area
+      overCtx.fillStyle = 'rgba(0,0,0,0.45)';
+      overCtx.fillRect(0,0,overlayCanvas.width,overlayCanvas.height);
+
+      // cut out selection using composite
+      overCtx.save();
+      overCtx.globalCompositeOperation = 'destination-out';
+      overCtx.fillStyle = 'rgba(0,0,0,1)';
+      overCtx.fillRect(sel.x, sel.y, sel.w, sel.h);
+      overCtx.restore();
+
+      // draw white border around selection
+      overCtx.strokeStyle = '#ffffff';
+      overCtx.lineWidth = Math.max(2, Math.round(overlayCanvas.width/300));
+      overCtx.strokeRect(sel.x + 0.5, sel.y + 0.5, sel.w - 1, sel.h - 1);
+
+      // draw corner handles as DOM elements for easier hit-testing
+      renderHandles();
+
+      // update crop size text (in original image pixels)
+      const origW = Math.round(sel.w / scale);
+      const origH = Math.round(sel.h / scale);
+      cropSizeEl.textContent = origW + '×' + origH;
+    }
+
+    function renderHandles(){
+      handlesWrap.innerHTML = '';
+      const hs = ['tl','tr','bl','br'];
+      const size = 20;
+      const positions = {
+        tl: [sel.x - size/2, sel.y - size/2],
+        tr: [sel.x + sel.w - size/2, sel.y - size/2],
+        bl: [sel.x - size/2, sel.y + sel.h - size/2],
+        br: [sel.x + sel.w - size/2, sel.y + sel.h - size/2]
+      };
+      hs.forEach(h=>{
+        const d = document.createElement('div');
+        d.className = 'handle ' + h;
+        d.style.left = positions[h][0] + 'px';
+        d.style.top = positions[h][1] + 'px';
+        d.dataset.handle = h;
+        d.style.pointerEvents = 'auto';
+        handlesWrap.appendChild(d);
+      });
+    }
+
+    // pointer helpers
+    function getLocalPos(e){
+      const rect = overlayCanvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: Math.round(clientX - rect.left), y: Math.round(clientY - rect.top) };
+    }
+
+    // attach pointer events to handlesWrap for both handles and dragging inside selection
+    handlesWrap.addEventListener('pointerdown', (ev)=>{
+      if(!imgLoaded) return;
+      ev.preventDefault();
+      const target = ev.target;
+      const pos = getLocalPos(ev);
+      interaction.startX = pos.x; interaction.startY = pos.y; interaction.startSel = {...sel};
+
+      if(target.classList.contains('handle')){
+        interaction.mode = 'resize';
+        interaction.handle = target.dataset.handle;
+      } else {
+        // clicked inside overlay? check if inside selection
+        if(pos.x >= sel.x && pos.x <= sel.x + sel.w && pos.y >= sel.y && pos.y <= sel.y + sel.h){
+          interaction.mode = 'move';
+        } else {
+          // clicked outside — center selection at click
+          sel.x = Math.max(0, Math.min(imageCanvas.width - sel.w, pos.x - sel.w/2));
+          sel.y = Math.max(0, Math.min(imageCanvas.height - sel.h, pos.y - sel.h/2));
+          renderOverlay();
+          return;
+        }
+      }
+      interaction.dragging = true;
+      (ev.target).setPointerCapture && (ev.target).setPointerCapture(ev.pointerId);
+    });
+
+    handlesWrap.addEventListener('pointermove', (ev)=>{
+      if(!interaction.dragging || !imgLoaded) return;
+      const pos = getLocalPos(ev);
+      const dx = pos.x - interaction.startX;
+      const dy = pos.y - interaction.startY;
+
+      if(interaction.mode === 'move'){
+        sel.x = Math.max(0, Math.min(imageCanvas.width - sel.w, interaction.startSel.x + dx));
+        sel.y = Math.max(0, Math.min(imageCanvas.height - sel.h, interaction.startSel.y + dy));
+      } else if(interaction.mode === 'resize'){
+        const minSize = 30;
+        const h = interaction.handle;
+        if(h === 'tl'){
+          const nx = Math.min(interaction.startSel.x + interaction.startSel.w - minSize, interaction.startSel.x + dx);
+          const ny = Math.min(interaction.startSel.y + interaction.startSel.h - minSize, interaction.startSel.y + dy);
+          sel.w = interaction.startSel.w + (interaction.startSel.x - nx);
+          sel.h = interaction.startSel.h + (interaction.startSel.y - ny);
+          sel.x = nx; sel.y = ny;
+        }
+        if(h === 'tr'){
+          sel.w = Math.max(minSize, interaction.startSel.w + dx);
+          const ny = Math.min(interaction.startSel.y + interaction.startSel.h - minSize, interaction.startSel.y + dy);
+          sel.h = interaction.startSel.h + (interaction.startSel.y - ny);
+          sel.y = ny;
+        }
+        if(h === 'bl'){
+          const nx = Math.min(interaction.startSel.x + interaction.startSel.w - minSize, interaction.startSel.x + dx);
+          sel.w = interaction.startSel.w + (interaction.startSel.x - nx);
+          sel.x = nx;
+          sel.h = Math.max(minSize, interaction.startSel.h + dy);
+        }
+        if(h === 'br'){
+          sel.w = Math.max(minSize, interaction.startSel.w + dx);
+          sel.h = Math.max(minSize, interaction.startSel.h + dy);
+        }
+        // clamp
+        sel.w = Math.min(sel.w, imageCanvas.width - sel.x);
+        sel.h = Math.min(sel.h, imageCanvas.height - sel.y);
+        sel.x = Math.max(0, sel.x);
+        sel.y = Math.max(0, sel.y);
+      }
+      renderOverlay();
+    });
+
+    handlesWrap.addEventListener('pointerup', (ev)=>{ interaction.dragging = false; interaction.mode = null; interaction.handle = null; try{ev.target.releasePointerCapture && ev.target.releasePointerCapture(ev.pointerId);}catch(e){} });
+    handlesWrap.addEventListener('pointercancel', ()=>{ interaction.dragging = false; interaction.mode = null; interaction.handle = null });
+
+    // Preview draws cropped region from original image into previewCanvas
+    function previewCrop(){
+      if(!imgLoaded) return alert('Upload an image first');
+      const sx = Math.round(sel.x / scale);
+      const sy = Math.round(sel.y / scale);
+      const sw = Math.round(sel.w / scale);
+      const sh = Math.round(sel.h / scale);
+
+      // fit preview area
+      const maxW = 320, maxH = 220;
+      let pw = sw, ph = sh;
+      const r = Math.min(maxW / pw, maxH / ph, 1);
+      pw = Math.max(1, Math.round(pw * r)); ph = Math.max(1, Math.round(ph * r));
+      previewCanvas.width = pw; previewCanvas.height = ph;
+      pctx.clearRect(0,0,pw,ph);
+      pctx.drawImage(img, sx, sy, sw, sh, 0, 0, pw, ph);
+    }
+
+    previewBtn.addEventListener('click', previewCrop);
+
+    // Download: create offscreen canvas at original crop size and optionally burn caption
+    downloadBtn.addEventListener('click', ()=>{
+      if(!imgLoaded) return;
+      const sx = Math.round(sel.x / scale);
+      const sy = Math.round(sel.y / scale);
+      const sw = Math.max(1, Math.round(sel.w / scale));
+      const sh = Math.max(1, Math.round(sel.h / scale));
+
+      const out = document.createElement('canvas');
+      out.width = sw; out.height = sh;
+      const ctx = out.getContext('2d');
+      // draw cropped image from original
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
+
+      // caption burn-in
+      const caption = captionInput.value.trim();
+      if(caption){
+        const fontSize = Math.max(12, Math.round(parseInt(fontSizeInput.value) * (sw/400)));
+        ctx.font = `bold ${fontSize}px ${'Impact, Arial Black, sans-serif'}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        // stroke then fill for classic meme look
+        ctx.lineWidth = Math.max(3, Math.round(sw / 200));
+        ctx.strokeStyle = 'black';
+        ctx.fillStyle = 'white';
+        const x = out.width / 2;
+        const y = out.height - Math.round(out.height * 0.04);
+        // allow multiline if needed
+        const lines = wrapText(ctx, caption, Math.floor(sw * 0.92));
+        const lineHeight = fontSize * 1.08;
+        // draw lines from bottom upward
+        for(let i = 0; i < lines.length; i++){
+          const line = lines[lines.length - 1 - i];
+          const ly = y - (i * lineHeight);
+          ctx.strokeText(line, x, ly);
+          ctx.fillText(line, x, ly);
+        }
+      }
+
+      out.toBlob((blob)=>{
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'meme.png';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }, 'image/png');
+    });
+
+    // utility: wrap text to canvas width
+    function wrapText(ctx, text, maxWidth){
+      const words = text.split(' ');
+      const lines = [];
+      let current = words[0] || '';
+      for(let i = 1; i < words.length; i++){
+        const word = words[i];
+        const width = ctx.measureText(current + ' ' + word).width;
+        if(width < maxWidth) current += ' ' + word;
+        else { lines.push(current); current = word; }
+      }
+      lines.push(current);
+      return lines;
+    }
+
+    // redraw base image when window resizes to keep selection proportion
+    window.addEventListener('resize', ()=>{
+      if(!imgLoaded) return;
+      // compute new scale
+      const maxDisplay = Math.min(900, canvasWrap.clientWidth - 20);
+      const oldScale = scale;
+      scale = Math.min(1, maxDisplay / img.width) || (maxDisplay / img.width);
+      const displayW = Math.round(img.width * scale);
+      const displayH = Math.round(img.height * scale);
+
+      // convert selection back to original pixels, then reapply
+      const origSel = {
+        x: Math.round(sel.x / oldScale),
+        y: Math.round(sel.y / oldScale),
+        w: Math.round(sel.w / oldScale),
+        h: Math.round(sel.h / oldScale)
+      };
+
+      setCanvasDisplaySize(displayW, displayH);
+      baseCtx.clearRect(0,0,imageCanvas.width,imageCanvas.height);
+      baseCtx.drawImage(img, 0, 0, imageCanvas.width, imageCanvas.height);
+
+      sel.x = Math.round(origSel.x * scale);
+      sel.y = Math.round(origSel.y * scale);
+      sel.w = Math.round(origSel.w * scale);
+      sel.h = Math.round(origSel.h * scale);
+      renderOverlay();
+    });
+
+    // initial clear
+    resetState();
   </script>
 </body>
 </html>
