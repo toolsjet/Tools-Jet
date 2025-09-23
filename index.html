@@ -61,6 +61,13 @@
             font-weight: 700;
             color: var(--primary-red);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
         }
 
         .logo span {
@@ -81,6 +88,12 @@
             color: var(--dark-gray);
             font-weight: 500;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a i {
+            margin-right: 5px;
         }
 
         nav ul li a:hover {
@@ -257,6 +270,12 @@
             font-size: 24px;
             color: var(--primary-red);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-icon-small i {
+            margin-right: 10px;
         }
 
         .tool-name {
@@ -330,6 +349,12 @@
             font-size: 24px;
             color: var(--primary-red);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-title i {
+            margin-right: 10px;
         }
 
         .tool-interface {
@@ -421,6 +446,12 @@
             font-weight: 700;
             color: var(--white);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
         }
 
         .footer-tagline {
@@ -458,6 +489,13 @@
             text-decoration: none;
             opacity: 0.8;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-links ul li a i {
+            margin-right: 8px;
+            width: 16px;
         }
 
         .footer-links ul li a:hover {
@@ -577,7 +615,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">Tools<span>Jet</span></a>
+                <a href="#" class="logo"><i class="fas fa-rocket"></i>Tools<span>Jet</span></a>
                 
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -585,9 +623,9 @@
                 
                 <nav id="main-nav">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#tools">Tools</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="#tools"><i class="fas fa-tools"></i>Tools</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i>Contact</a></li>
                     </ul>
                 </nav>
                 
@@ -790,7 +828,7 @@
     <div class="modal" id="tool-modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2 class="modal-title" id="modal-tool-name">Tool Name</h2>
+            <h2 class="modal-title" id="modal-tool-name"><i class="fas fa-tools"></i>Tool Name</h2>
             <p id="modal-tool-description">Tool description will appear here.</p>
             
             <div class="tool-interface" id="tool-interface">
@@ -804,7 +842,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <div class="footer-logo">ToolsJet</div>
+                    <div class="footer-logo"><i class="fas fa-rocket"></i>ToolsJet</div>
                     <p class="footer-tagline">Simplifying your digital life.</p>
                     <div class="footer-contact">
                         <i class="fas fa-envelope"></i>
@@ -815,20 +853,20 @@
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Use</a></li>
-                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i>About Us</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i>Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i>Terms of Use</a></li>
+                        <li><a href="#"><i class="fas fa-exclamation-triangle"></i>Disclaimer</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h3>Popular Tools</h3>
                     <ul>
-                        <li><a href="#" data-tool="image-converter">Image Converter</a></li>
-                        <li><a href="#" data-tool="pdf-to-word">PDF to Word</a></li>
-                        <li><a href="#" data-tool="text-case-converter">Text Case Converter</a></li>
-                        <li><a href="#" data-tool="qr-code-generator">QR Code Generator</a></li>
+                        <li><a href="#" data-tool="image-converter"><i class="fas fa-exchange-alt"></i>Image Converter</a></li>
+                        <li><a href="#" data-tool="pdf-to-word"><i class="fas fa-file-pdf"></i>PDF to Word</a></li>
+                        <li><a href="#" data-tool="text-case-converter"><i class="fas fa-font"></i>Text Case Converter</a></li>
+                        <li><a href="#" data-tool="qr-code-generator"><i class="fas fa-qrcode"></i>QR Code Generator</a></li>
                     </ul>
                 </div>
             </div>
@@ -845,249 +883,249 @@
             document.getElementById('main-nav').classList.toggle('active');
         });
 
-        // Tool data - containing all tools from the prompt
+        // Tool data - containing all tools from the prompt with proper icons
         const toolsData = {
             "image": [
-                { name: "Image Converter", description: "Convert images between different formats", type: "converter", inputs: ["file"] },
-                { name: "Image Compressor", description: "Reduce image file size without losing quality", type: "compressor", inputs: ["file", "quality"] },
-                { name: "Image Resizer", description: "Change image dimensions to fit your needs", type: "resizer", inputs: ["file", "width", "height"] },
-                { name: "Image Enlarger", description: "Increase image size while maintaining quality", type: "enlarger", inputs: ["file", "scale"] },
-                { name: "JPG to PNG Converter", description: "Convert JPG images to PNG format", type: "converter", inputs: ["file"] },
-                { name: "PNG to JPG Converter", description: "Convert PNG images to JPG format", type: "converter", inputs: ["file"] },
-                { name: "PNG to GIF Converter", description: "Convert PNG images to GIF format", type: "converter", inputs: ["file"] },
-                { name: "PNG to WebP Converter", description: "Convert PNG images to WebP format", type: "converter", inputs: ["file"] },
-                { name: "Image to Base64 Converter", description: "Convert images to Base64 encoding", type: "converter", inputs: ["file"] },
-                { name: "JPG Converter", description: "Convert JPG images to various formats", type: "converter", inputs: ["file", "format"] },
-                { name: "JPG to WebP Converter", description: "Convert JPG images to WebP format", type: "converter", inputs: ["file"] },
-                { name: "ASCII Art Generator", description: "Convert images to ASCII art", type: "generator", inputs: ["file", "width"] },
-                { name: "Favicon Generator", description: "Create favicons from images", type: "generator", inputs: ["file"] },
-                { name: "Image Cropper", description: "Crop images to specific dimensions", type: "editor", inputs: ["file", "x", "y", "width", "height"] },
-                { name: "Image to Text (OCR)", description: "Extract text from images using OCR", type: "extractor", inputs: ["file"] },
-                { name: "Image Rotator/Flipper", description: "Rotate and flip images", type: "editor", inputs: ["file", "angle", "flip"] },
-                { name: "JPG to GIF Converter", description: "Convert JPG images to GIF format", type: "converter", inputs: ["file"] },
-                { name: "WebP to PNG Converter", description: "Convert WebP images to PNG format", type: "converter", inputs: ["file"] },
-                { name: "PNG to BMP Converter", description: "Convert PNG images to BMP format", type: "converter", inputs: ["file"] },
-                { name: "JPG to ICO Converter", description: "Convert JPG images to ICO format", type: "converter", inputs: ["file"] },
-                { name: "Base64 to Image Converter", description: "Convert Base64 strings to images", type: "converter", inputs: ["text"] },
-                { name: "Rotate Image", description: "Rotate images by specified degrees", type: "editor", inputs: ["file", "angle"] },
-                { name: "ICO to PNG Converter", description: "Convert ICO images to PNG format", type: "converter", inputs: ["file"] },
-                { name: "WebP to JPG Converter", description: "Convert WebP images to JPG format", type: "converter", inputs: ["file"] }
+                { name: "Image Converter", description: "Convert images between different formats", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Image Compressor", description: "Reduce image file size without losing quality", type: "compressor", icon: "fas fa-compress-alt" },
+                { name: "Image Resizer", description: "Change image dimensions to fit your needs", type: "resizer", icon: "fas fa-expand-alt" },
+                { name: "Image Enlarger", description: "Increase image size while maintaining quality", type: "enlarger", icon: "fas fa-search-plus" },
+                { name: "JPG to PNG Converter", description: "Convert JPG images to PNG format", type: "converter", icon: "fas fa-file-image" },
+                { name: "PNG to JPG Converter", description: "Convert PNG images to JPG format", type: "converter", icon: "fas fa-file-image" },
+                { name: "PNG to GIF Converter", description: "Convert PNG images to GIF format", type: "converter", icon: "fas fa-file-image" },
+                { name: "PNG to WebP Converter", description: "Convert PNG images to WebP format", type: "converter", icon: "fas fa-file-image" },
+                { name: "Image to Base64 Converter", description: "Convert images to Base64 encoding", type: "converter", icon: "fas fa-code" },
+                { name: "JPG Converter", description: "Convert JPG images to various formats", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "JPG to WebP Converter", description: "Convert JPG images to WebP format", type: "converter", icon: "fas fa-file-image" },
+                { name: "ASCII Art Generator", description: "Convert images to ASCII art", type: "generator", icon: "fas fa-font" },
+                { name: "Favicon Generator", description: "Create favicons from images", type: "generator", icon: "fas fa-flag" },
+                { name: "Image Cropper", description: "Crop images to specific dimensions", type: "editor", icon: "fas fa-crop-alt" },
+                { name: "Image to Text (OCR)", description: "Extract text from images using OCR", type: "extractor", icon: "fas fa-text-height" },
+                { name: "Image Rotator/Flipper", description: "Rotate and flip images", type: "editor", icon: "fas fa-sync-alt" },
+                { name: "JPG to GIF Converter", description: "Convert JPG images to GIF format", type: "converter", icon: "fas fa-file-image" },
+                { name: "WebP to PNG Converter", description: "Convert WebP images to PNG format", type: "converter", icon: "fas fa-file-image" },
+                { name: "PNG to BMP Converter", description: "Convert PNG images to BMP format", type: "converter", icon: "fas fa-file-image" },
+                { name: "JPG to ICO Converter", description: "Convert JPG images to ICO format", type: "converter", icon: "fas fa-file-image" },
+                { name: "Base64 to Image Converter", description: "Convert Base64 strings to images", type: "converter", icon: "fas fa-image" },
+                { name: "Rotate Image", description: "Rotate images by specified degrees", type: "editor", icon: "fas fa-redo-alt" },
+                { name: "ICO to PNG Converter", description: "Convert ICO images to PNG format", type: "converter", icon: "fas fa-file-image" },
+                { name: "WebP to JPG Converter", description: "Convert WebP images to JPG format", type: "converter", icon: "fas fa-file-image" }
             ],
             "document": [
-                { name: "PDF to Word", description: "Convert PDF documents to editable Word format", type: "converter", inputs: ["file"] },
-                { name: "Word to PDF", description: "Convert Word documents to PDF format", type: "converter", inputs: ["file"] },
-                { name: "PDF Compressor", description: "Reduce PDF file size for easier sharing", type: "compressor", inputs: ["file", "quality"] },
-                { name: "PDF Merger & Splitter", description: "Combine or separate PDF pages", type: "editor", inputs: ["files", "pages"] },
-                { name: "Document Converter", description: "Convert between various document formats", type: "converter", inputs: ["file", "format"] },
-                { name: "PDF Lock/Unlock", description: "Add or remove password protection from PDFs", type: "security", inputs: ["file", "password"] },
-                { name: "eSign PDF", description: "Add electronic signatures to PDF documents", type: "editor", inputs: ["file", "signature"] },
-                { name: "Excel to PDF", description: "Convert Excel spreadsheets to PDF format", type: "converter", inputs: ["file"] },
-                { name: "PDF to Excel", description: "Convert PDF tables to Excel format", type: "converter", inputs: ["file"] },
-                { name: "PowerPoint to PDF", description: "Convert PowerPoint presentations to PDF", type: "converter", inputs: ["file"] },
-                { name: "PDF to PowerPoint", description: "Convert PDF to editable PowerPoint", type: "converter", inputs: ["file"] },
-                { name: "HTML to PDF", description: "Convert HTML pages to PDF documents", type: "converter", inputs: ["url", "html"] },
-                { name: "Edit PDF", description: "Edit text and images in PDF documents", type: "editor", inputs: ["file"] },
-                { name: "Scan to PDF", description: "Convert scanned documents to PDF", type: "converter", inputs: ["file"] },
-                { name: "Crop PDF", description: "Crop PDF pages to remove margins", type: "editor", inputs: ["file", "margins"] },
-                { name: "JPG to PDF", description: "Convert JPG images to PDF documents", type: "converter", inputs: ["files"] }
+                { name: "PDF to Word", description: "Convert PDF documents to editable Word format", type: "converter", icon: "fas fa-file-pdf" },
+                { name: "Word to PDF", description: "Convert Word documents to PDF format", type: "converter", icon: "fas fa-file-word" },
+                { name: "PDF Compressor", description: "Reduce PDF file size for easier sharing", type: "compressor", icon: "fas fa-compress-alt" },
+                { name: "PDF Merger & Splitter", description: "Combine or separate PDF pages", type: "editor", icon: "fas fa-object-group" },
+                { name: "Document Converter", description: "Convert between various document formats", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "PDF Lock/Unlock", description: "Add or remove password protection from PDFs", type: "security", icon: "fas fa-lock" },
+                { name: "eSign PDF", description: "Add electronic signatures to PDF documents", type: "editor", icon: "fas fa-signature" },
+                { name: "Excel to PDF", description: "Convert Excel spreadsheets to PDF format", type: "converter", icon: "fas fa-file-excel" },
+                { name: "PDF to Excel", description: "Convert PDF tables to Excel format", type: "converter", icon: "fas fa-file-pdf" },
+                { name: "PowerPoint to PDF", description: "Convert PowerPoint presentations to PDF", type: "converter", icon: "fas fa-file-powerpoint" },
+                { name: "PDF to PowerPoint", description: "Convert PDF to editable PowerPoint", type: "converter", icon: "fas fa-file-pdf" },
+                { name: "HTML to PDF", description: "Convert HTML pages to PDF documents", type: "converter", icon: "fas fa-code" },
+                { name: "Edit PDF", description: "Edit text and images in PDF documents", type: "editor", icon: "fas fa-edit" },
+                { name: "Scan to PDF", description: "Convert scanned documents to PDF", type: "converter", icon: "fas fa-scanner" },
+                { name: "Crop PDF", description: "Crop PDF pages to remove margins", type: "editor", icon: "fas fa-crop-alt" },
+                { name: "JPG to PDF", description: "Convert JPG images to PDF documents", type: "converter", icon: "fas fa-file-image" }
             ],
             "calculator": [
-                { name: "Scientific Calculator", description: "Advanced calculator for complex calculations", type: "calculator", inputs: ["expression"] },
-                { name: "Age Calculator", description: "Calculate age based on birth date", type: "calculator", inputs: ["birthdate"] },
-                { name: "Percentage Calculator", description: "Calculate percentages easily", type: "calculator", inputs: ["value", "percentage"] },
-                { name: "Confidence Interval Calculator", description: "Calculate statistical confidence intervals", type: "calculator", inputs: ["data", "confidence"] },
-                { name: "Margin Calculator", description: "Calculate profit margins", type: "calculator", inputs: ["cost", "price"] },
-                { name: "PayPal Fee Calculator", description: "Calculate PayPal transaction fees", type: "calculator", inputs: ["amount"] },
-                { name: "CPM Calculator", description: "Calculate cost per thousand impressions", type: "calculator", inputs: ["cost", "impressions"] },
-                { name: "Average Calculator", description: "Calculate averages from a set of numbers", type: "calculator", inputs: ["numbers"] },
-                { name: "Sales Tax Calculator", description: "Calculate sales tax amounts", type: "calculator", inputs: ["amount", "taxRate"] },
-                { name: "Probability Calculator", description: "Calculate probabilities of events", type: "calculator", inputs: ["events", "outcomes"] },
-                { name: "Discount Calculator", description: "Calculate discounts and final prices", type: "calculator", inputs: ["price", "discount"] },
-                { name: "BMI Calculator", description: "Calculate Body Mass Index", type: "calculator", inputs: ["weight", "height"] },
-                { name: "Loan EMI Calculator", description: "Calculate Equated Monthly Installments", type: "calculator", inputs: ["principal", "rate", "term"] },
-                { name: "GST Calculator", description: "Calculate Goods and Services Tax", type: "calculator", inputs: ["amount", "gstRate"] },
-                { name: "Currency Converter", description: "Convert between world currencies", type: "converter", inputs: ["amount", "from", "to"] }
+                { name: "Scientific Calculator", description: "Advanced calculator for complex calculations", type: "calculator", icon: "fas fa-calculator" },
+                { name: "Age Calculator", description: "Calculate age based on birth date", type: "calculator", icon: "fas fa-birthday-cake" },
+                { name: "Percentage Calculator", description: "Calculate percentages easily", type: "calculator", icon: "fas fa-percentage" },
+                { name: "Confidence Interval Calculator", description: "Calculate statistical confidence intervals", type: "calculator", icon: "fas fa-chart-bar" },
+                { name: "Margin Calculator", description: "Calculate profit margins", type: "calculator", icon: "fas fa-dollar-sign" },
+                { name: "PayPal Fee Calculator", description: "Calculate PayPal transaction fees", type: "calculator", icon: "fab fa-paypal" },
+                { name: "CPM Calculator", description: "Calculate cost per thousand impressions", type: "calculator", icon: "fas fa-ad" },
+                { name: "Average Calculator", description: "Calculate averages from a set of numbers", type: "calculator", icon: "fas fa-chart-line" },
+                { name: "Sales Tax Calculator", description: "Calculate sales tax amounts", type: "calculator", icon: "fas fa-receipt" },
+                { name: "Probability Calculator", description: "Calculate probabilities of events", type: "calculator", icon: "fas fa-dice" },
+                { name: "Discount Calculator", description: "Calculate discounts and final prices", type: "calculator", icon: "fas fa-tag" },
+                { name: "BMI Calculator", description: "Calculate Body Mass Index", type: "calculator", icon: "fas fa-weight" },
+                { name: "Loan EMI Calculator", description: "Calculate Equated Monthly Installments", type: "calculator", icon: "fas fa-hand-holding-usd" },
+                { name: "GST Calculator", description: "Calculate Goods and Services Tax", type: "calculator", icon: "fas fa-receipt" },
+                { name: "Currency Converter", description: "Convert between world currencies", type: "converter", icon: "fas fa-money-bill-wave" }
             ],
             "text": [
-                { name: "Text Case Converter", description: "Change text between uppercase, lowercase and more", type: "converter", inputs: ["text", "caseType"] },
-                { name: "Word & Character Counter", description: "Count words and characters in your text", type: "counter", inputs: ["text"] },
-                { name: "Text Sorter", description: "Alphabetically sort lines of text", type: "sorter", inputs: ["text", "order"] },
-                { name: "Text Reverser", description: "Reverse the order of text characters", type: "converter", inputs: ["text"] },
-                { name: "Article Rewriter", description: "Rephrase text while keeping the meaning", type: "rewriter", inputs: ["text"] },
-                { name: "Backwards Text Generator", description: "Generate text that reads backwards", type: "generator", inputs: ["text"] },
-                { name: "Text Compare", description: "Compare two texts for differences", type: "comparator", inputs: ["text1", "text2"] },
-                { name: "Lorem Ipsum Generator", description: "Generate placeholder text for designs", type: "generator", inputs: ["paragraphs", "words"] },
-                { name: "Remove Line Breaks", description: "Remove line breaks from text", type: "cleaner", inputs: ["text"] },
-                { name: "Text Repeater", description: "Repeat text multiple times", type: "generator", inputs: ["text", "times"] },
-                { name: "Comma Separator", description: "Add or remove commas from text", type: "editor", inputs: ["text", "action"] },
-                { name: "Word to Number Converter", description: "Convert written numbers to digits", type: "converter", inputs: ["text"] },
-                { name: "Text to Hashtags Converter", description: "Convert text to social media hashtags", type: "converter", inputs: ["text"] },
-                { name: "Text to Slug Converter", description: "Convert text to URL-friendly slugs", type: "converter", inputs: ["text"] },
-                { name: "Case Converter", description: "Convert text between different case styles", type: "converter", inputs: ["text", "caseStyle"] },
-                { name: "Random Word Generator", description: "Generate random words", type: "generator", inputs: ["count", "length"] },
-                { name: "Number to Word Converter", description: "Convert numbers to written words", type: "converter", inputs: ["number"] },
-                { name: "Text to Tags Converter", description: "Convert text to HTML tags", type: "converter", inputs: ["text", "tag"] },
-                { name: "Text Encryptor/Decryptor", description: "Encrypt and decrypt text securely", type: "security", inputs: ["text", "key", "action"] }
+                { name: "Text Case Converter", description: "Change text between uppercase, lowercase and more", type: "converter", icon: "fas fa-font" },
+                { name: "Word & Character Counter", description: "Count words and characters in your text", type: "counter", icon: "fas fa-text-height" },
+                { name: "Text Sorter", description: "Alphabetically sort lines of text", type: "sorter", icon: "fas fa-sort-alpha-down" },
+                { name: "Text Reverser", description: "Reverse the order of text characters", type: "converter", icon: "fas fa-retweet" },
+                { name: "Article Rewriter", description: "Rephrase text while keeping the meaning", type: "rewriter", icon: "fas fa-pen-alt" },
+                { name: "Backwards Text Generator", description: "Generate text that reads backwards", type: "generator", icon: "fas fa-backward" },
+                { name: "Text Compare", description: "Compare two texts for differences", type: "comparator", icon: "fas fa-code-compare" },
+                { name: "Lorem Ipsum Generator", description: "Generate placeholder text for designs", type: "generator", icon: "fas fa-paragraph" },
+                { name: "Remove Line Breaks", description: "Remove line breaks from text", type: "cleaner", icon: "fas fa-remove-format" },
+                { name: "Text Repeater", description: "Repeat text multiple times", type: "generator", icon: "fas fa-redo" },
+                { name: "Comma Separator", description: "Add or remove commas from text", type: "editor", icon: "fas fa-comma" },
+                { name: "Word to Number Converter", description: "Convert written numbers to digits", type: "converter", icon: "fas fa-hashtag" },
+                { name: "Text to Hashtags Converter", description: "Convert text to social media hashtags", type: "converter", icon: "fas fa-hashtag" },
+                { name: "Text to Slug Converter", description: "Convert text to URL-friendly slugs", type: "converter", icon: "fas fa-link" },
+                { name: "Case Converter", description: "Convert text between different case styles", type: "converter", icon: "fas fa-text-height" },
+                { name: "Random Word Generator", description: "Generate random words", type: "generator", icon: "fas fa-random" },
+                { name: "Number to Word Converter", description: "Convert numbers to written words", type: "converter", icon: "fas fa-spell-check" },
+                { name: "Text to Tags Converter", description: "Convert text to HTML tags", type: "converter", icon: "fas fa-code" },
+                { name: "Text Encryptor/Decryptor", description: "Encrypt and decrypt text securely", type: "security", icon: "fas fa-lock" }
             ],
             "web": [
-                { name: "HTML Minifier", description: "Minify HTML code to reduce file size", type: "minifier", inputs: ["html"] },
-                { name: "CSS Minifier", description: "Minify CSS code to reduce file size", type: "minifier", inputs: ["css"] },
-                { name: "HTML Beautifier", description: "Format and beautify HTML code", type: "formatter", inputs: ["html"] },
-                { name: "JavaScript DeObfuscator", description: "Deobfuscate JavaScript code", type: "deobfuscator", inputs: ["javascript"] },
-                { name: "JSON to JSON Schema", description: "Convert JSON to JSON Schema", type: "converter", inputs: ["json"] },
-                { name: "JSON Editor", description: "Edit and validate JSON data", type: "editor", inputs: ["json"] },
-                { name: "XML to JSON Converter", description: "Convert XML to JSON format", type: "converter", inputs: ["xml"] },
-                { name: "TSV to JSON Converter", description: "Convert TSV to JSON format", type: "converter", inputs: ["tsv"] },
-                { name: "JSON to CSV Converter", description: "Convert JSON to CSV format", type: "converter", inputs: ["json"] },
-                { name: "JSON to TSV Converter", description: "Convert JSON to TSV format", type: "converter", inputs: ["json"] },
-                { name: "HTML Encoder", description: "Encode HTML entities", type: "encoder", inputs: ["html"] },
-                { name: "JavaScript Minifier", description: "Minify JavaScript code", type: "minifier", inputs: ["javascript"] },
-                { name: "JavaScript Viewer", description: "View and analyze JavaScript code", type: "viewer", inputs: ["javascript"] },
-                { name: "JSON Validator", description: "Validate JSON syntax", type: "validator", inputs: ["json"] },
-                { name: "JSON Minify", description: "Minify JSON by removing whitespace", type: "minifier", inputs: ["json"] },
-                { name: "CSV to JSON Converter", description: "Convert CSV to JSON format", type: "converter", inputs: ["csv"] },
-                { name: "JSON to XML Converter", description: "Convert JSON to XML format", type: "converter", inputs: ["json"] },
-                { name: "JSON to Text Converter", description: "Convert JSON to plain text", type: "converter", inputs: ["json"] },
-                { name: "JSON Formatter & Validator", description: "Format and validate JSON data", type: "formatter", inputs: ["json"] },
-                { name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", type: "converter", inputs: ["text", "action"] },
-                { name: "URL Encoder/Decoder", description: "Encode and decode URL strings", type: "converter", inputs: ["text", "action"] },
-                { name: "Color Picker & Converter", description: "Pick colors and convert between formats", type: "converter", inputs: ["color", "format"] },
-                { name: "Regex Tester", description: "Test regular expressions", type: "tester", inputs: ["regex", "text"] }
+                { name: "HTML Minifier", description: "Minify HTML code to reduce file size", type: "minifier", icon: "fas fa-code" },
+                { name: "CSS Minifier", description: "Minify CSS code to reduce file size", type: "minifier", icon: "fab fa-css3-alt" },
+                { name: "HTML Beautifier", description: "Format and beautify HTML code", type: "formatter", icon: "fas fa-code" },
+                { name: "JavaScript DeObfuscator", description: "Deobfuscate JavaScript code", type: "deobfuscator", icon: "fab fa-js-square" },
+                { name: "JSON to JSON Schema", description: "Convert JSON to JSON Schema", type: "converter", icon: "fas fa-database" },
+                { name: "JSON Editor", description: "Edit and validate JSON data", type: "editor", icon: "fas fa-edit" },
+                { name: "XML to JSON Converter", description: "Convert XML to JSON format", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "TSV to JSON Converter", description: "Convert TSV to JSON format", type: "converter", icon: "fas fa-table" },
+                { name: "JSON to CSV Converter", description: "Convert JSON to CSV format", type: "converter", icon: "fas fa-file-csv" },
+                { name: "JSON to TSV Converter", description: "Convert JSON to TSV format", type: "converter", icon: "fas fa-table" },
+                { name: "HTML Encoder", description: "Encode HTML entities", type: "encoder", icon: "fas fa-code" },
+                { name: "JavaScript Minifier", description: "Minify JavaScript code", type: "minifier", icon: "fab fa-js-square" },
+                { name: "JavaScript Viewer", description: "View and analyze JavaScript code", type: "viewer", icon: "fab fa-js-square" },
+                { name: "JSON Validator", description: "Validate JSON syntax", type: "validator", icon: "fas fa-check-circle" },
+                { name: "JSON Minify", description: "Minify JSON by removing whitespace", type: "minifier", icon: "fas fa-database" },
+                { name: "CSV to JSON Converter", description: "Convert CSV to JSON format", type: "converter", icon: "fas fa-file-csv" },
+                { name: "JSON to XML Converter", description: "Convert JSON to XML format", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "JSON to Text Converter", description: "Convert JSON to plain text", type: "converter", icon: "fas fa-file-alt" },
+                { name: "JSON Formatter & Validator", description: "Format and validate JSON data", type: "formatter", icon: "fas fa-database" },
+                { name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", type: "converter", icon: "fas fa-code" },
+                { name: "URL Encoder/Decoder", description: "Encode and decode URL strings", type: "converter", icon: "fas fa-link" },
+                { name: "Color Picker & Converter", description: "Pick colors and convert between formats", type: "converter", icon: "fas fa-eye-dropper" },
+                { name: "Regex Tester", description: "Test regular expressions", type: "tester", icon: "fas fa-terminal" }
             ],
             "color": [
-                { name: "Color Picker from Image", description: "Extract colors from images", type: "picker", inputs: ["file"] },
-                { name: "Gradient Generator", description: "Create beautiful color gradients", type: "generator", inputs: ["colors", "direction"] },
-                { name: "Contrast Checker", description: "Check color contrast for accessibility", type: "checker", inputs: ["color1", "color2"] },
-                { name: "Palette Generator", description: "Generate color palettes from base colors", type: "generator", inputs: ["color", "scheme"] },
-                { name: "Color Blindness Simulator", description: "Simulate how colors appear to colorblind users", type: "simulator", inputs: ["color", "type"] }
+                { name: "Color Picker from Image", description: "Extract colors from images", type: "picker", icon: "fas fa-eye-dropper" },
+                { name: "Gradient Generator", description: "Create beautiful color gradients", type: "generator", icon: "fas fa-palette" },
+                { name: "Contrast Checker", description: "Check color contrast for accessibility", type: "checker", icon: "fas fa-adjust" },
+                { name: "Palette Generator", description: "Generate color palettes from base colors", type: "generator", icon: "fas fa-paint-brush" },
+                { name: "Color Blindness Simulator", description: "Simulate how colors appear to colorblind users", type: "simulator", icon: "fas fa-eye" }
             ],
             "seo": [
-                { name: "Keyword Density Checker", description: "Analyze keyword density in text", type: "analyzer", inputs: ["text", "keywords"] },
-                { name: "Meta Tag Generator", description: "Generate meta tags for SEO", type: "generator", inputs: ["title", "description", "keywords"] },
-                { name: "Hashtag Generator", description: "Generate relevant hashtags for social media", type: "generator", inputs: ["text"] },
-                { name: "Meta Tag Analyzer", description: "Analyze meta tags of a webpage", type: "analyzer", inputs: ["url"] },
-                { name: "Word Counter/Character Counter", description: "Count words and characters in text", type: "counter", inputs: ["text"] },
-                { name: "Website Ranking Checker", description: "Check website ranking for keywords", type: "checker", inputs: ["url", "keywords"] },
-                { name: "Google Index Checker", description: "Check if pages are indexed by Google", type: "checker", inputs: ["url"] },
-                { name: "UTM Builder", description: "Build UTM parameters for tracking", type: "builder", inputs: ["url", "source", "medium", "campaign"] },
-                { name: "Open Graph Generator", description: "Generate Open Graph meta tags", type: "generator", inputs: ["title", "description", "image"] },
-                { name: "Keywords Suggestion", description: "Get keyword suggestions for content", type: "suggester", inputs: ["topic"] },
-                { name: "Open Graph Checker", description: "Check Open Graph tags of a webpage", type: "checker", inputs: ["url"] },
-                { name: "Google Cache Checker", description: "Check Google's cached version of a page", type: "checker", inputs: ["url"] },
-                { name: "Twitter Card Generator", description: "Generate Twitter Card meta tags", type: "generator", inputs: ["title", "description", "image"] }
+                { name: "Keyword Density Checker", description: "Analyze keyword density in text", type: "analyzer", icon: "fas fa-search" },
+                { name: "Meta Tag Generator", description: "Generate meta tags for SEO", type: "generator", icon: "fas fa-tags" },
+                { name: "Hashtag Generator", description: "Generate relevant hashtags for social media", type: "generator", icon: "fas fa-hashtag" },
+                { name: "Meta Tag Analyzer", description: "Analyze meta tags of a webpage", type: "analyzer", icon: "fas fa-chart-bar" },
+                { name: "Word Counter/Character Counter", description: "Count words and characters in text", type: "counter", icon: "fas fa-text-height" },
+                { name: "Website Ranking Checker", description: "Check website ranking for keywords", type: "checker", icon: "fas fa-trophy" },
+                { name: "Google Index Checker", description: "Check if pages are indexed by Google", type: "checker", icon: "fab fa-google" },
+                { name: "UTM Builder", description: "Build UTM parameters for tracking", type: "builder", icon: "fas fa-link" },
+                { name: "Open Graph Generator", description: "Generate Open Graph meta tags", type: "generator", icon: "fab fa-facebook" },
+                { name: "Keywords Suggestion", description: "Get keyword suggestions for content", type: "suggester", icon: "fas fa-lightbulb" },
+                { name: "Open Graph Checker", description: "Check Open Graph tags of a webpage", type: "checker", icon: "fab fa-facebook" },
+                { name: "Google Cache Checker", description: "Check Google's cached version of a page", type: "checker", icon: "fab fa-google" },
+                { name: "Twitter Card Generator", description: "Generate Twitter Card meta tags", type: "generator", icon: "fab fa-twitter" }
             ],
             "utility": [
-                { name: "QR Code Generator & Scanner", description: "Generate and scan QR codes", type: "generator", inputs: ["text", "size"] },
-                { name: "Barcode Generator", description: "Generate barcodes from text", type: "generator", inputs: ["text", "type"] },
-                { name: "UUID Generator", description: "Generate unique identifiers", type: "generator", inputs: ["version", "count"] },
-                { name: "MD5 Generator", description: "Generate MD5 hashes from text", type: "generator", inputs: ["text"] },
-                { name: "Base64 Encode", description: "Encode text to Base64", type: "encoder", inputs: ["text"] },
-                { name: "Base64 Decode", description: "Decode Base64 to text", type: "decoder", inputs: ["text"] },
-                { name: "Convert SRT to VTT", description: "Convert subtitle files from SRT to VTT", type: "converter", inputs: ["file"] },
-                { name: "RGB to HEX Converter", description: "Convert RGB colors to HEX format", type: "converter", inputs: ["r", "g", "b"] },
-                { name: "HEX to RGB Converter", description: "Convert HEX colors to RGB format", type: "converter", inputs: ["hex"] },
-                { name: "URL Opener", description: "Open multiple URLs at once", type: "opener", inputs: ["urls"] },
-                { name: "Unit Converter", description: "Convert between different units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Time Zone Converter", description: "Convert between time zones", type: "converter", inputs: ["time", "from", "to"] },
-                { name: "Random Number/Password Generator", description: "Generate random numbers and passwords", type: "generator", inputs: ["type", "length", "count"] }
+                { name: "QR Code Generator & Scanner", description: "Generate and scan QR codes", type: "generator", icon: "fas fa-qrcode" },
+                { name: "Barcode Generator", description: "Generate barcodes from text", type: "generator", icon: "fas fa-barcode" },
+                { name: "UUID Generator", description: "Generate unique identifiers", type: "generator", icon: "fas fa-fingerprint" },
+                { name: "MD5 Generator", description: "Generate MD5 hashes from text", type: "generator", icon: "fas fa-hashtag" },
+                { name: "Base64 Encode", description: "Encode text to Base64", type: "encoder", icon: "fas fa-code" },
+                { name: "Base64 Decode", description: "Decode Base64 to text", type: "decoder", icon: "fas fa-code" },
+                { name: "Convert SRT to VTT", description: "Convert subtitle files from SRT to VTT", type: "converter", icon: "fas fa-closed-captioning" },
+                { name: "RGB to HEX Converter", description: "Convert RGB colors to HEX format", type: "converter", icon: "fas fa-palette" },
+                { name: "HEX to RGB Converter", description: "Convert HEX colors to RGB format", type: "converter", icon: "fas fa-palette" },
+                { name: "URL Opener", description: "Open multiple URLs at once", type: "opener", icon: "fas fa-external-link-alt" },
+                { name: "Unit Converter", description: "Convert between different units", type: "converter", icon: "fas fa-balance-scale" },
+                { name: "Time Zone Converter", description: "Convert between time zones", type: "converter", icon: "fas fa-globe" },
+                { name: "Random Number/Password Generator", description: "Generate random numbers and passwords", type: "generator", icon: "fas fa-key" }
             ],
             "youtube": [
-                { name: "YouTube Tag Generator", description: "Generate tags for YouTube videos", type: "generator", inputs: ["title", "description"] },
-                { name: "YouTube Hashtag Generator", description: "Generate hashtags for YouTube videos", type: "generator", inputs: ["title", "description"] },
-                { name: "YouTube Title Length Generator", description: "Generate titles with optimal length", type: "generator", inputs: ["topic", "keywords"] },
-                { name: "YouTube Description Generator", description: "Generate video descriptions", type: "generator", inputs: ["title", "keywords"] },
-                { name: "YouTube Video Statistics", description: "Get statistics for YouTube videos", type: "analyzer", inputs: ["videoUrl"] },
-                { name: "YouTube Tag Extractor", description: "Extract tags from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
-                { name: "YouTube Hashtag Extractor", description: "Extract hashtags from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
-                { name: "YouTube Title Extractor", description: "Extract titles from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
-                { name: "YouTube Title Length Checker", description: "Check if title length is optimal", type: "checker", inputs: ["title"] },
-                { name: "YouTube Channel Statistics", description: "Get statistics for YouTube channels", type: "analyzer", inputs: ["channelUrl"] },
-                { name: "YouTube Channel Banner Downloader", description: "Download YouTube channel banners", type: "downloader", inputs: ["channelUrl"] },
-                { name: "YouTube Subscribe Link Generator", description: "Generate subscribe links for channels", type: "generator", inputs: ["channelId"] },
-                { name: "YouTube Comment Picker", description: "Pick random comments from videos", type: "picker", inputs: ["videoUrl", "count"] },
-                { name: "YouTube Channel Age Checker", description: "Check how old a YouTube channel is", type: "checker", inputs: ["channelUrl"] },
-                { name: "YouTube Channel ID Extractor", description: "Extract channel ID from URL", type: "extractor", inputs: ["channelUrl"] },
-                { name: "YouTube Channel Logo Downloader", description: "Download YouTube channel logos", type: "downloader", inputs: ["channelUrl"] },
-                { name: "YouTube Channel Finder", description: "Find YouTube channels by topic", type: "finder", inputs: ["topic"] },
-                { name: "YouTube Money Calculator", description: "Calculate potential YouTube earnings", type: "calculator", inputs: ["views", "cpm"] },
-                { name: "YouTube Video Title Capitalizer", description: "Capitalize video titles properly", type: "converter", inputs: ["title"] },
-                { name: "YouTube Views Ratio Calculator", description: "Calculate view-to-like ratios", type: "calculator", inputs: ["views", "likes"] }
+                { name: "YouTube Tag Generator", description: "Generate tags for YouTube videos", type: "generator", icon: "fab fa-youtube" },
+                { name: "YouTube Hashtag Generator", description: "Generate hashtags for YouTube videos", type: "generator", icon: "fas fa-hashtag" },
+                { name: "YouTube Title Length Generator", description: "Generate titles with optimal length", type: "generator", icon: "fas fa-heading" },
+                { name: "YouTube Description Generator", description: "Generate video descriptions", type: "generator", icon: "fas fa-align-left" },
+                { name: "YouTube Video Statistics", description: "Get statistics for YouTube videos", type: "analyzer", icon: "fas fa-chart-bar" },
+                { name: "YouTube Tag Extractor", description: "Extract tags from YouTube videos", type: "extractor", icon: "fab fa-youtube" },
+                { name: "YouTube Hashtag Extractor", description: "Extract hashtags from YouTube videos", type: "extractor", icon: "fas fa-hashtag" },
+                { name: "YouTube Title Extractor", description: "Extract titles from YouTube videos", type: "extractor", icon: "fas fa-heading" },
+                { name: "YouTube Title Length Checker", description: "Check if title length is optimal", type: "checker", icon: "fas fa-ruler" },
+                { name: "YouTube Channel Statistics", description: "Get statistics for YouTube channels", type: "analyzer", icon: "fas fa-chart-line" },
+                { name: "YouTube Channel Banner Downloader", description: "Download YouTube channel banners", type: "downloader", icon: "fas fa-download" },
+                { name: "YouTube Subscribe Link Generator", description: "Generate subscribe links for channels", type: "generator", icon: "fas fa-user-plus" },
+                { name: "YouTube Comment Picker", description: "Pick random comments from videos", type: "picker", icon: "fas fa-comments" },
+                { name: "YouTube Channel Age Checker", description: "Check how old a YouTube channel is", type: "checker", icon: "fas fa-clock" },
+                { name: "YouTube Channel ID Extractor", description: "Extract channel ID from URL", type: "extractor", icon: "fas fa-id-card" },
+                { name: "YouTube Channel Logo Downloader", description: "Download YouTube channel logos", type: "downloader", icon: "fas fa-download" },
+                { name: "YouTube Channel Finder", description: "Find YouTube channels by topic", type: "finder", icon: "fas fa-search" },
+                { name: "YouTube Money Calculator", description: "Calculate potential YouTube earnings", type: "calculator", icon: "fas fa-calculator" },
+                { name: "YouTube Video Title Capitalizer", description: "Capitalize video titles properly", type: "converter", icon: "fas fa-text-height" },
+                { name: "YouTube Views Ratio Calculator", description: "Calculate view-to-like ratios", type: "calculator", icon: "fas fa-percentage" }
             ],
             "binary": [
-                { name: "Text to Binary Converter", description: "Convert text to binary code", type: "converter", inputs: ["text"] },
-                { name: "HEX to Binary Converter", description: "Convert hexadecimal to binary", type: "converter", inputs: ["hex"] },
-                { name: "ASCII to Binary Converter", description: "Convert ASCII to binary", type: "converter", inputs: ["text"] },
-                { name: "Decimal to Binary Converter", description: "Convert decimal to binary", type: "converter", inputs: ["decimal"] },
-                { name: "Text to ASCII Converter", description: "Convert text to ASCII codes", type: "converter", inputs: ["text"] },
-                { name: "HEX to Decimal Converter", description: "Convert hexadecimal to decimal", type: "converter", inputs: ["hex"] },
-                { name: "HEX to Octal Converter", description: "Convert hexadecimal to octal", type: "converter", inputs: ["hex"] },
-                { name: "Octal to Binary Converter", description: "Convert octal to binary", type: "converter", inputs: ["octal"] },
-                { name: "Text to Octal Converter", description: "Convert text to octal", type: "converter", inputs: ["text"] },
-                { name: "Binary to Text Converter", description: "Convert binary to text", type: "converter", inputs: ["binary"] },
-                { name: "Text to Decimal Converter", description: "Convert text to decimal", type: "converter", inputs: ["text"] },
-                { name: "Binary to HEX Converter", description: "Convert binary to hexadecimal", type: "converter", inputs: ["binary"] },
-                { name: "Binary to ASCII Converter", description: "Convert binary to ASCII", type: "converter", inputs: ["binary"] },
-                { name: "ASCII to Text Converter", description: "Convert ASCII codes to text", type: "converter", inputs: ["ascii"] },
-                { name: "Binary to Decimal Converter", description: "Convert binary to decimal", type: "converter", inputs: ["binary"] },
-                { name: "Decimal to HEX Converter", description: "Convert decimal to hexadecimal", type: "converter", inputs: ["decimal"] },
-                { name: "Binary to Octal Converter", description: "Convert binary to octal", type: "converter", inputs: ["binary"] },
-                { name: "Decimal to Octal Converter", description: "Convert decimal to octal", type: "converter", inputs: ["decimal"] },
-                { name: "Octal to HEX Converter", description: "Convert octal to hexadecimal", type: "converter", inputs: ["octal"] },
-                { name: "Octal to Text Converter", description: "Convert octal to text", type: "converter", inputs: ["octal"] },
-                { name: "HEX to Text Converter", description: "Convert hexadecimal to text", type: "converter", inputs: ["hex"] },
-                { name: "Decimal to Text Converter", description: "Convert decimal to text", type: "converter", inputs: ["decimal"] }
+                { name: "Text to Binary Converter", description: "Convert text to binary code", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "HEX to Binary Converter", description: "Convert hexadecimal to binary", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "ASCII to Binary Converter", description: "Convert ASCII to binary", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Decimal to Binary Converter", description: "Convert decimal to binary", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Text to ASCII Converter", description: "Convert text to ASCII codes", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "HEX to Decimal Converter", description: "Convert hexadecimal to decimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "HEX to Octal Converter", description: "Convert hexadecimal to octal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Octal to Binary Converter", description: "Convert octal to binary", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Text to Octal Converter", description: "Convert text to octal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Binary to Text Converter", description: "Convert binary to text", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Text to Decimal Converter", description: "Convert text to decimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Binary to HEX Converter", description: "Convert binary to hexadecimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Binary to ASCII Converter", description: "Convert binary to ASCII", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "ASCII to Text Converter", description: "Convert ASCII codes to text", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Binary to Decimal Converter", description: "Convert binary to decimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Decimal to HEX Converter", description: "Convert decimal to hexadecimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Binary to Octal Converter", description: "Convert binary to octal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Decimal to Octal Converter", description: "Convert decimal to octal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Octal to HEX Converter", description: "Convert octal to hexadecimal", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Octal to Text Converter", description: "Convert octal to text", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "HEX to Text Converter", description: "Convert hexadecimal to text", type: "converter", icon: "fas fa-exchange-alt" },
+                { name: "Decimal to Text Converter", description: "Convert decimal to text", type: "converter", icon: "fas fa-exchange-alt" }
             ],
             "domain": [
-                { name: "Domain to IP Converter", description: "Convert domain names to IP addresses", type: "converter", inputs: ["domain"] },
-                { name: "Whois Domain Lookup", description: "Look up domain registration information", type: "lookup", inputs: ["domain"] },
-                { name: "Domain Age Checker", description: "Check how old a domain is", type: "checker", inputs: ["domain"] },
-                { name: "Hosting Checker", description: "Check where a website is hosted", type: "checker", inputs: ["domain"] },
-                { name: "DNS Records Checker", description: "Check DNS records of a domain", type: "checker", inputs: ["domain"] },
-                { name: "IP Address Lookup", description: "Look up information about an IP address", type: "lookup", inputs: ["ip"] },
-                { name: "What Is My IP Address", description: "Find your public IP address", type: "checker", inputs: [] }
+                { name: "Domain to IP Converter", description: "Convert domain names to IP addresses", type: "converter", icon: "fas fa-globe" },
+                { name: "Whois Domain Lookup", description: "Look up domain registration information", type: "lookup", icon: "fas fa-search" },
+                { name: "Domain Age Checker", description: "Check how old a domain is", type: "checker", icon: "fas fa-clock" },
+                { name: "Hosting Checker", description: "Check where a website is hosted", type: "checker", icon: "fas fa-server" },
+                { name: "DNS Records Checker", description: "Check DNS records of a domain", type: "checker", icon: "fas fa-list" },
+                { name: "IP Address Lookup", description: "Look up information about an IP address", type: "lookup", icon: "fas fa-map-marker-alt" },
+                { name: "What Is My IP Address", description: "Find your public IP address", type: "checker", icon: "fas fa-laptop" }
             ],
             "website": [
-                { name: "Random UUID Generator", description: "Generate random UUIDs", type: "generator", inputs: ["version", "count"] },
-                { name: "URL Encode", description: "Encode text for use in URLs", type: "encoder", inputs: ["text"] },
-                { name: "URL Decode", description: "Decode URL-encoded text", type: "decoder", inputs: ["text"] },
-                { name: "Terms & Condition Generator", description: "Generate terms and conditions", type: "generator", inputs: ["businessType", "details"] },
-                { name: "Privacy Policy Generator", description: "Generate privacy policies", type: "generator", inputs: ["businessType", "details"] },
-                { name: "Disclaimer Generator", description: "Generate disclaimers", type: "generator", inputs: ["businessType", "details"] },
-                { name: "URL Parser", description: "Parse URLs into components", type: "parser", inputs: ["url"] },
-                { name: "WordPress Theme Detector", description: "Detect WordPress themes on websites", type: "detector", inputs: ["url"] },
-                { name: "URL Rewriting Tool", description: "Create URL rewriting rules", type: "generator", inputs: ["oldUrl", "newUrl"] },
-                { name: "Page Size Checker", description: "Check the size of web pages", type: "checker", inputs: ["url"] },
-                { name: "FAQ Schema Generator", description: "Generate FAQ schema markup", type: "generator", inputs: ["questions", "answers"] },
-                { name: "Server Status Checker", description: "Check if a server is online", type: "checker", inputs: ["url"] },
-                { name: "HTTP Status Checker", description: "Check HTTP status codes", type: "checker", inputs: ["url"] },
-                { name: "Robots.txt Generator", description: "Generate robots.txt files", type: "generator", inputs: ["rules"] },
-                { name: "Htaccess Redirect Generator", description: "Generate .htaccess redirect rules", type: "generator", inputs: ["from", "to", "type"] },
-                { name: "Redirect Checker", description: "Check redirect chains", type: "checker", inputs: ["url"] },
-                { name: "Get HTTP Headers", description: "Get HTTP headers of a URL", type: "checker", inputs: ["url"] }
+                { name: "Random UUID Generator", description: "Generate random UUIDs", type: "generator", icon: "fas fa-fingerprint" },
+                { name: "URL Encode", description: "Encode text for use in URLs", type: "encoder", icon: "fas fa-percent" },
+                { name: "URL Decode", description: "Decode URL-encoded text", type: "decoder", icon: "fas fa-percent" },
+                { name: "Terms & Condition Generator", description: "Generate terms and conditions", type: "generator", icon: "fas fa-file-contract" },
+                { name: "Privacy Policy Generator", description: "Generate privacy policies", type: "generator", icon: "fas fa-user-shield" },
+                { name: "Disclaimer Generator", description: "Generate disclaimers", type: "generator", icon: "fas fa-exclamation-triangle" },
+                { name: "URL Parser", description: "Parse URLs into components", type: "parser", icon: "fas fa-link" },
+                { name: "WordPress Theme Detector", description: "Detect WordPress themes on websites", type: "detector", icon: "fab fa-wordpress" },
+                { name: "URL Rewriting Tool", description: "Create URL rewriting rules", type: "generator", icon: "fas fa-pen" },
+                { name: "Page Size Checker", description: "Check the size of web pages", type: "checker", icon: "fas fa-weight" },
+                { name: "FAQ Schema Generator", description: "Generate FAQ schema markup", type: "generator", icon: "fas fa-question-circle" },
+                { name: "Server Status Checker", description: "Check if a server is online", type: "checker", icon: "fas fa-server" },
+                { name: "HTTP Status Checker", description: "Check HTTP status codes", type: "checker", icon: "fas fa-code" },
+                { name: "Robots.txt Generator", description: "Generate robots.txt files", type: "generator", icon: "fas fa-robot" },
+                { name: "Htaccess Redirect Generator", description: "Generate .htaccess redirect rules", type: "generator", icon: "fas fa-directions" },
+                { name: "Redirect Checker", description: "Check redirect chains", type: "checker", icon: "fas fa-exchange-alt" },
+                { name: "Get HTTP Headers", description: "Get HTTP headers of a URL", type: "checker", icon: "fas fa-heading" }
             ],
             "unit": [
-                { name: "Length Converter", description: "Convert between length units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Weight Converter", description: "Convert between weight units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Temperature Converter", description: "Convert between temperature units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Time Converter", description: "Convert between time units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Parts Per Converter", description: "Convert between parts-per units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Pace Converter", description: "Convert between pace units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Power Converter", description: "Convert between power units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Apparent Power Converter", description: "Convert between apparent power units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Reactive Energy Converter", description: "Convert between reactive energy units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Angle Converter", description: "Convert between angle units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Torque Converter", description: "Convert between torque units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Number to Roman Numerals", description: "Convert numbers to Roman numerals", type: "converter", inputs: ["number"] },
-                { name: "Area Converter", description: "Convert between area units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Volume Converter", description: "Convert between volume units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Digital Converter", description: "Convert between digital storage units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Speed Converter", description: "Convert between speed units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Pressure Converter", description: "Convert between pressure units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Voltage Converter", description: "Convert between voltage units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Energy Converter", description: "Convert between energy units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Volumetric Flow Rate Converter", description: "Convert between flow rate units", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Currency Converter", description: "Convert between currencies", type: "converter", inputs: ["value", "from", "to"] },
-                { name: "Roman Numerals to Number", description: "Convert Roman numerals to numbers", type: "converter", inputs: ["roman"] }
+                { name: "Length Converter", description: "Convert between length units", type: "converter", icon: "fas fa-ruler" },
+                { name: "Weight Converter", description: "Convert between weight units", type: "converter", icon: "fas fa-weight" },
+                { name: "Temperature Converter", description: "Convert between temperature units", type: "converter", icon: "fas fa-thermometer-half" },
+                { name: "Time Converter", description: "Convert between time units", type: "converter", icon: "fas fa-clock" },
+                { name: "Parts Per Converter", description: "Convert between parts-per units", type: "converter", icon: "fas fa-divide" },
+                { name: "Pace Converter", description: "Convert between pace units", type: "converter", icon: "fas fa-running" },
+                { name: "Power Converter", description: "Convert between power units", type: "converter", icon: "fas fa-bolt" },
+                { name: "Apparent Power Converter", description: "Convert between apparent power units", type: "converter", icon: "fas fa-bolt" },
+                { name: "Reactive Energy Converter", description: "Convert between reactive energy units", type: "converter", icon: "fas fa-battery-half" },
+                { name: "Angle Converter", description: "Convert between angle units", type: "converter", icon: "fas fa-compass" },
+                { name: "Torque Converter", description: "Convert between torque units", type: "converter", icon: "fas fa-cog" },
+                { name: "Number to Roman Numerals", description: "Convert numbers to Roman numerals", type: "converter", icon: "fas fa-sort-numeric-down" },
+                { name: "Area Converter", description: "Convert between area units", type: "converter", icon: "fas fa-border-all" },
+                { name: "Volume Converter", description: "Convert between volume units", type: "converter", icon: "fas fa-cube" },
+                { name: "Digital Converter", description: "Convert between digital storage units", type: "converter", icon: "fas fa-hdd" },
+                { name: "Speed Converter", description: "Convert between speed units", type: "converter", icon: "fas fa-tachometer-alt" },
+                { name: "Pressure Converter", description: "Convert between pressure units", type: "converter", icon: "fas fa-tachometer-alt" },
+                { name: "Voltage Converter", description: "Convert between voltage units", type: "converter", icon: "fas fa-bolt" },
+                { name: "Energy Converter", description: "Convert between energy units", type: "converter", icon: "fas fa-battery-full" },
+                { name: "Volumetric Flow Rate Converter", description: "Convert between flow rate units", type: "converter", icon: "fas fa-tint" },
+                { name: "Currency Converter", description: "Convert between currencies", type: "converter", icon: "fas fa-money-bill-wave" },
+                { name: "Roman Numerals to Number", description: "Convert Roman numerals to numbers", type: "converter", icon: "fas fa-sort-numeric-down-alt" }
             ]
         };
 
@@ -1104,9 +1142,9 @@
                 
                 toolCard.innerHTML = `
                     <div class="tool-icon-small">
-                        <i class="fas fa-tools"></i>
+                        <i class="${tool.icon}"></i>
+                        ${tool.name}
                     </div>
-                    <h3 class="tool-name">${tool.name}</h3>
                     <p class="tool-description">${tool.description}</p>
                     <button class="tool-button" data-tool="${tool.name.toLowerCase().replace(/\s+/g, '-')}">Use Tool</button>
                 `;
@@ -1126,7 +1164,7 @@
             const toolCards = document.querySelectorAll('.tool-card');
             
             toolCards.forEach(card => {
-                const toolName = card.querySelector('.tool-name').textContent.toLowerCase();
+                const toolName = card.querySelector('.tool-icon-small').textContent.toLowerCase();
                 const toolDescription = card.querySelector('.tool-description').textContent.toLowerCase();
                 
                 if (toolName.includes(searchTerm) || toolDescription.includes(searchTerm)) {
@@ -1196,7 +1234,7 @@
             if (!toolData) return;
             
             // Update modal content
-            document.getElementById('modal-tool-name').textContent = toolData.name;
+            document.getElementById('modal-tool-name').innerHTML = `<i class="${toolData.icon}"></i>${toolData.name}`;
             document.getElementById('modal-tool-description').textContent = toolData.description;
             
             // Generate tool interface based on type
