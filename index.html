@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-red: #dc2626;
-            --dark-red: #b91c1c;
-            --light-red: #fef2f2;
-            --accent-yellow: #fbbf24;
-            --dark-yellow: #f59e0b;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
+            --primary-red: #d32f2f;
+            --dark-red: #b71c1c;
+            --light-red: #ff5252;
+            --accent-yellow: #ffc107;
+            --dark-yellow: #ff8f00;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #424242;
             --white: #ffffff;
-            --gray-light: #f9fafb;
-            --border-radius: 8px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -29,21 +28,9 @@
         }
 
         body {
-            color: var(--text-dark);
             background-color: var(--white);
+            color: var(--dark-gray);
             line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
 
         /* Header Styles */
@@ -55,6 +42,13 @@
             z-index: 100;
         }
 
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -63,39 +57,45 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--primary-red);
+            text-decoration: none;
         }
 
         .logo span {
-            color: var(--accent-yellow);
+            color: var(--dark-gray);
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
         }
 
-        nav a {
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-gray);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: var(--transition);
         }
 
-        nav a:hover {
+        nav ul li a:hover {
             color: var(--primary-red);
         }
 
-        .contact-info {
+        .contact-email {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--text-light);
+            color: var(--dark-gray);
             font-size: 14px;
         }
 
-        .contact-info i {
+        .contact-email i {
+            margin-right: 5px;
             color: var(--primary-red);
         }
 
@@ -110,69 +110,71 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--light-red) 0%, var(--white) 100%);
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: var(--white);
             padding: 80px 0;
             text-align: center;
         }
 
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 42px;
             margin-bottom: 20px;
-            color: var(--text-dark);
             line-height: 1.2;
         }
 
         .hero p {
-            font-size: 20px;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 40px;
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
         }
 
         .cta-button {
             display: inline-block;
             background-color: var(--accent-yellow);
-            color: var(--text-dark);
-            padding: 14px 32px;
-            border-radius: var(--border-radius);
+            color: var(--dark-gray);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s;
+            font-size: 16px;
+            transition: var(--transition);
             box-shadow: var(--shadow);
         }
 
         .cta-button:hover {
             background-color: var(--dark-yellow);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
         }
 
         .tool-icons {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 60px;
+            margin-top: 40px;
             flex-wrap: wrap;
         }
 
         .tool-icon {
-            background-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 0 10px;
             width: 80px;
             height: 80px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--shadow);
             font-size: 32px;
-            color: var(--primary-red);
         }
 
         /* Search Section */
         .search-section {
             padding: 40px 0;
-            background-color: var(--gray-light);
+            background-color: var(--light-gray);
         }
 
         .search-container {
@@ -183,17 +185,15 @@
 
         .search-bar {
             width: 100%;
-            padding: 16px 20px;
-            border: 1px solid #e5e7eb;
-            border-radius: var(--border-radius);
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
             font-size: 16px;
             box-shadow: var(--shadow);
-            transition: border-color 0.3s;
         }
 
         .search-bar:focus {
-            outline: none;
-            border-color: var(--primary-red);
+            outline: 2px solid var(--accent-yellow);
         }
 
         .search-icon {
@@ -201,27 +201,33 @@
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-light);
+            color: var(--dark-gray);
         }
 
-        /* Tools Section */
+        /* Tools Sections */
         .tools-section {
-            padding: 80px 0;
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
         }
 
         .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
+            font-size: 32px;
+            color: var(--primary-red);
             margin-bottom: 10px;
-            color: var(--text-dark);
         }
 
-        .section-title p {
-            color: var(--text-light);
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--dark-gray);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -230,58 +236,56 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
-            margin-bottom: 60px;
         }
 
         .tool-card {
             background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 25px;
+            border-radius: 10px;
+            padding: 20px;
             box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 1px solid #f3f4f6;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
         .tool-icon-small {
-            width: 50px;
-            height: 50px;
-            background-color: var(--light-red);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
+            font-size: 24px;
             color: var(--primary-red);
-            font-size: 20px;
+            margin-bottom: 15px;
         }
 
-        .tool-card h3 {
+        .tool-name {
             font-size: 18px;
+            font-weight: 600;
             margin-bottom: 10px;
-            color: var(--text-dark);
+            color: var(--dark-gray);
         }
 
-        .tool-card p {
+        .tool-description {
             font-size: 14px;
-            color: var(--text-light);
+            color: var(--dark-gray);
+            opacity: 0.8;
             margin-bottom: 20px;
-            min-height: 40px;
+            flex-grow: 1;
         }
 
         .tool-button {
-            display: inline-block;
             background-color: var(--accent-yellow);
-            color: var(--text-dark);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s;
+            color: var(--dark-gray);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            align-self: flex-start;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .tool-button:hover {
@@ -296,56 +300,49 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
             background-color: var(--white);
-            border-radius: var(--border-radius);
+            border-radius: 10px;
             width: 90%;
             max-width: 600px;
+            padding: 30px;
+            position: relative;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 30px;
-            box-shadow: var(--shadow-hover);
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e5e7eb;
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-gray);
         }
 
         .modal-title {
             font-size: 24px;
-            color: var(--text-dark);
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-light);
+            color: var(--primary-red);
+            margin-bottom: 15px;
         }
 
         .tool-interface {
-            margin: 20px 0;
+            margin-top: 20px;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 500;
         }
 
@@ -354,8 +351,8 @@
         .input-group select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
             font-size: 16px;
         }
 
@@ -364,147 +361,142 @@
             resize: vertical;
         }
 
-        .tool-actions {
+        .tool-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            display: none;
+        }
+
+        .action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 20px;
         }
 
-        .btn {
-            padding: 10px 20px;
+        .action-button {
+            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
+            transition: var(--transition);
         }
 
-        .btn-primary {
+        .primary-button {
             background-color: var(--primary-red);
             color: var(--white);
         }
 
-        .btn-primary:hover {
+        .primary-button:hover {
             background-color: var(--dark-red);
         }
 
-        .btn-secondary {
-            background-color: var(--gray-light);
-            color: var(--text-dark);
+        .secondary-button {
+            background-color: var(--medium-gray);
+            color: var(--dark-gray);
         }
 
-        .btn-secondary:hover {
-            background-color: #e5e7eb;
-        }
-
-        .result-area {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--gray-light);
-            border-radius: 4px;
-            min-height: 100px;
-            border: 1px dashed #d1d5db;
+        .secondary-button:hover {
+            background-color: #d0d0d0;
         }
 
         /* Footer */
         footer {
-            background-color: var(--text-dark);
+            background-color: var(--dark-gray);
             color: var(--white);
             padding: 60px 0 30px;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
         }
 
-        .footer-about .logo {
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
             color: var(--white);
             margin-bottom: 15px;
-            display: block;
         }
 
-        .footer-about p {
-            color: #d1d5db;
-            max-width: 400px;
+        .footer-tagline {
+            opacity: 0.8;
             margin-bottom: 20px;
         }
 
-        .contact-email {
+        .footer-contact {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--accent-yellow);
         }
 
         .footer-links h3 {
             font-size: 18px;
             margin-bottom: 20px;
-            color: var(--white);
+            color: var(--accent-yellow);
         }
 
         .footer-links ul {
             list-style: none;
         }
 
-        .footer-links li {
+        .footer-links ul li {
             margin-bottom: 10px;
         }
 
-        .footer-links a {
-            color: #d1d5db;
-            transition: color 0.3s;
+        .footer-links ul li a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
         }
 
-        .footer-links a:hover {
+        .footer-links ul li a:hover {
+            opacity: 1;
             color: var(--accent-yellow);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 14px;
+            opacity: 0.7;
         }
 
-        /* Responsive Styles */
+        /* Responsive Design */
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 36px;
             }
             
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .tool-icons {
-                gap: 20px;
-            }
-            
-            .tool-icon {
-                width: 70px;
-                height: 70px;
+            .section-title {
                 font-size: 28px;
             }
         }
 
         @media (max-width: 768px) {
             .header-content {
-                padding: 15px 0;
+                flex-wrap: wrap;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             nav {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
                 width: 100%;
-                background-color: var(--white);
-                box-shadow: var(--shadow);
-                padding: 20px;
+                display: none;
+                margin-top: 15px;
             }
             
             nav.active {
@@ -513,15 +505,16 @@
             
             nav ul {
                 flex-direction: column;
-                gap: 15px;
             }
             
-            .mobile-menu-btn {
-                display: block;
+            nav ul li {
+                margin: 10px 0;
             }
             
-            .contact-info {
-                display: none;
+            .contact-email {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
             }
             
             .hero {
@@ -532,33 +525,23 @@
                 font-size: 32px;
             }
             
-            .hero p {
-                font-size: 16px;
-            }
-            
             .tool-icons {
-                margin-top: 40px;
-                gap: 15px;
+                margin-top: 30px;
             }
             
             .tool-icon {
                 width: 60px;
                 height: 60px;
                 font-size: 24px;
-            }
-            
-            .section-title h2 {
-                font-size: 28px;
+                margin: 5px;
             }
             
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
+            .modal-content {
+                padding: 20px;
             }
         }
 
@@ -567,21 +550,24 @@
                 font-size: 28px;
             }
             
-            .cta-button {
-                padding: 12px 24px;
+            .hero p {
                 font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 24px;
             }
             
             .tools-grid {
                 grid-template-columns: 1fr;
             }
             
-            .tool-card {
-                padding: 20px;
+            .footer-content {
+                grid-template-columns: 1fr;
             }
             
-            .modal-content {
-                padding: 20px;
+            .action-buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -591,7 +577,11 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">Tools <span>Jet</span></a>
+                <a href="#" class="logo">Tools<span>Jet</span></a>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 
                 <nav id="main-nav">
                     <ul>
@@ -601,14 +591,10 @@
                     </ul>
                 </nav>
                 
-                <div class="contact-info">
+                <div class="contact-email">
                     <i class="fas fa-envelope"></i>
-                    <span>toolsjet1@gmail.com</span>
+                    toolsjet1@gmail.com
                 </div>
-                
-                <button class="mobile-menu-btn" id="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </header>
@@ -616,25 +602,27 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Your Daily Tools, All in One Place</h1>
-            <p>Convert, calculate, compress, and simplify your everyday tasks — fast and free.</p>
-            <a href="#tools" class="cta-button">Explore Tools</a>
-            
-            <div class="tool-icons">
-                <div class="tool-icon">
-                    <i class="fas fa-image"></i>
-                </div>
-                <div class="tool-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <div class="tool-icon">
-                    <i class="fas fa-calculator"></i>
-                </div>
-                <div class="tool-icon">
-                    <i class="fas fa-font"></i>
-                </div>
-                <div class="tool-icon">
-                    <i class="fas fa-code"></i>
+            <div class="hero-content">
+                <h1>Your Daily Tools, All in One Place</h1>
+                <p>Convert, calculate, compress, and simplify your everyday tasks — fast and free.</p>
+                <a href="#tools" class="cta-button">Explore Tools</a>
+                
+                <div class="tool-icons">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="tool-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="tool-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="tool-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -653,123 +641,146 @@
     <!-- Tools Sections -->
     <section class="tools-section" id="tools">
         <div class="container">
-            <!-- Image Tools -->
-            <div class="section-title">
-                <h2>🖼 Image Tools & Design Tools</h2>
-                <p>Edit, convert, and optimize your images with our comprehensive toolkit</p>
+            <!-- Image Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🖼</div>
+                <h2 class="section-title">Image Tools & Design Tools</h2>
+                <p class="section-subtitle">Edit, convert, and optimize your images with our comprehensive image toolset</p>
             </div>
             
             <div class="tools-grid" id="image-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Document Tools -->
-            <div class="section-title">
-                <h2>📄 Document Tools</h2>
-                <p>Manage, convert, and optimize your documents with ease</p>
+            <!-- Document Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">📄</div>
+                <h2 class="section-title">Document Tools</h2>
+                <p class="section-subtitle">Manage, convert, and optimize your documents with ease</p>
             </div>
             
             <div class="tools-grid" id="document-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Calculator Tools -->
-            <div class="section-title">
-                <h2>🧮 Calculator Tools</h2>
-                <p>Calculate anything from simple math to complex financial formulas</p>
+            <!-- Calculator Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🧮</div>
+                <h2 class="section-title">Calculator Tools</h2>
+                <p class="section-subtitle">Perform various calculations from simple math to complex financial computations</p>
             </div>
             
             <div class="tools-grid" id="calculator-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Text Tools -->
-            <div class="section-title">
-                <h2>🔤 Text Tools</h2>
-                <p>Manipulate, analyze, and transform text with our text utilities</p>
+            <!-- Text Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🔤</div>
+                <h2 class="section-title">Text Tools</h2>
+                <p class="section-subtitle">Manipulate, analyze, and transform text with our text processing utilities</p>
             </div>
             
             <div class="tools-grid" id="text-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Web/Developer Tools -->
-            <div class="section-title">
-                <h2>🌐 Web/Developer Tools</h2>
-                <p>Essential tools for developers and web professionals</p>
+            <!-- Web/Developer Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🌐</div>
+                <h2 class="section-title">Web/Developer Tools</h2>
+                <p class="section-subtitle">Tools for developers to optimize, validate, and convert code</p>
             </div>
             
             <div class="tools-grid" id="web-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Color Tools -->
-            <div class="section-title">
-                <h2>🎨 Color Tools</h2>
-                <p>Work with colors, create palettes, and check accessibility</p>
+            <!-- Color Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🎨</div>
+                <h2 class="section-title">Color Tools</h2>
+                <p class="section-subtitle">Generate, convert, and analyze colors for your designs</p>
             </div>
             
             <div class="tools-grid" id="color-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- SEO & Marketing Tools -->
-            <div class="section-title">
-                <h2>🌍 SEO & Marketing Tools</h2>
-                <p>Optimize your website and content for search engines</p>
+            <!-- SEO & Marketing Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🌍</div>
+                <h2 class="section-title">SEO & Marketing Tools</h2>
+                <p class="section-subtitle">Optimize your website and content for search engines</p>
             </div>
             
             <div class="tools-grid" id="seo-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Utility Tools -->
-            <div class="section-title">
-                <h2>🛠️ Utility Tools</h2>
-                <p>Miscellaneous tools for everyday tasks</p>
+            <!-- Utility Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🛠️</div>
+                <h2 class="section-title">Utility Tools</h2>
+                <p class="section-subtitle">Various utilities for everyday tasks and conversions</p>
             </div>
             
             <div class="tools-grid" id="utility-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- YouTube Tools -->
-            <div class="section-title">
-                <h2>📺 YouTube Tools</h2>
-                <p>Enhance and analyze your YouTube content</p>
+            <!-- YouTube Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">📹</div>
+                <h2 class="section-title">YouTube Tools</h2>
+                <p class="section-subtitle">Enhance and analyze your YouTube channel and videos</p>
             </div>
             
             <div class="tools-grid" id="youtube-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Binary Converter Tools -->
-            <div class="section-title">
-                <h2>🔢 Binary Converter Tools</h2>
-                <p>Convert between different number systems and encodings</p>
+            <!-- Binary Converter Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🔢</div>
+                <h2 class="section-title">Binary Converter Tools</h2>
+                <p class="section-subtitle">Convert between different number systems and text encodings</p>
             </div>
             
             <div class="tools-grid" id="binary-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Domain & IP Tools -->
-            <div class="section-title">
-                <h2>🌐 Domain & IP Tools</h2>
-                <p>Analyze domains, IP addresses, and network information</p>
+            <!-- Domain & IP Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">🌐</div>
+                <h2 class="section-title">Domain & IP Tools</h2>
+                <p class="section-subtitle">Analyze domains, IP addresses, and hosting information</p>
             </div>
             
             <div class="tools-grid" id="domain-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
             
-            <!-- Website Management Tools -->
-            <div class="section-title">
-                <h2>💼 Website Management Tools</h2>
-                <p>Tools for website administrators and developers</p>
+            <!-- Website Management Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">💻</div>
+                <h2 class="section-title">Website Management Tools</h2>
+                <p class="section-subtitle">Tools for website administrators and developers</p>
             </div>
             
             <div class="tools-grid" id="website-tools">
+                <!-- Tools will be populated by JavaScript -->
+            </div>
+            
+            <!-- Unit Converter Tools Section -->
+            <div class="section-header">
+                <div class="section-icon">📏</div>
+                <h2 class="section-title">Unit Converter Tools</h2>
+                <p class="section-subtitle">Convert between different units of measurement</p>
+            </div>
+            
+            <div class="tools-grid" id="unit-tools">
                 <!-- Tools will be populated by JavaScript -->
             </div>
         </div>
@@ -778,10 +789,10 @@
     <!-- Tool Modal -->
     <div class="modal" id="tool-modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modal-tool-name">Tool Name</h2>
-                <button class="close-modal" id="close-modal">&times;</button>
-            </div>
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title" id="modal-tool-name">Tool Name</h2>
+            <p id="modal-tool-description">Tool description will appear here.</p>
+            
             <div class="tool-interface" id="tool-interface">
                 <!-- Tool-specific interface will be loaded here -->
             </div>
@@ -793,11 +804,11 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <a href="#" class="logo">Tools <span>Jet</span></a>
-                    <p>Simplifying your digital life with powerful, easy-to-use online tools.</p>
-                    <div class="contact-email">
+                    <div class="footer-logo">ToolsJet</div>
+                    <p class="footer-tagline">Simplifying your digital life.</p>
+                    <div class="footer-contact">
                         <i class="fas fa-envelope"></i>
-                        <span>toolsjet1@gmail.com</span>
+                        toolsjet1@gmail.com
                     </div>
                 </div>
                 
@@ -810,6 +821,16 @@
                         <li><a href="#">Disclaimer</a></li>
                     </ul>
                 </div>
+                
+                <div class="footer-links">
+                    <h3>Popular Tools</h3>
+                    <ul>
+                        <li><a href="#" data-tool="image-converter">Image Converter</a></li>
+                        <li><a href="#" data-tool="pdf-to-word">PDF to Word</a></li>
+                        <li><a href="#" data-tool="text-case-converter">Text Case Converter</a></li>
+                        <li><a href="#" data-tool="qr-code-generator">QR Code Generator</a></li>
+                    </ul>
+                </div>
             </div>
             
             <div class="footer-bottom">
@@ -820,366 +841,447 @@
 
     <script>
         // Mobile menu toggle
-        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             document.getElementById('main-nav').classList.toggle('active');
         });
 
-        // Modal functionality
-        const modal = document.getElementById('tool-modal');
-        const closeModal = document.getElementById('close-modal');
-        
-        closeModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Complete tools database
+        // Tool data - containing all tools from the prompt
         const toolsData = {
             "image": [
-                { id: "image-converter", name: "Image Converter", desc: "Convert between various image formats", icon: "fas fa-exchange-alt" },
-                { id: "image-compressor", name: "Image Compressor", desc: "Reduce image file size without losing quality", icon: "fas fa-compress-alt" },
-                { id: "image-resizer", name: "Image Resizer", desc: "Change image dimensions easily", icon: "fas fa-expand-alt" },
-                { id: "image-enlarger", name: "Image Enlarger", desc: "Upscale images without losing clarity", icon: "fas fa-search-plus" },
-                { id: "jpg-to-png", name: "JPG to PNG Converter", desc: "Convert JPG images to PNG format", icon: "fas fa-file-image" },
-                { id: "png-to-jpg", name: "PNG to JPG Converter", desc: "Convert PNG images to JPG format", icon: "fas fa-file-image" },
-                { id: "png-to-gif", name: "PNG to GIF Converter", desc: "Convert PNG images to GIF format", icon: "fas fa-file-image" },
-                { id: "png-to-webp", name: "PNG to WebP Converter", desc: "Convert PNG images to WebP format", icon: "fas fa-file-image" },
-                { id: "image-to-base64", name: "Image to Base64 Converter", desc: "Convert images to Base64 encoding", icon: "fas fa-code" },
-                { id: "jpg-converter", name: "JPG Converter", desc: "Convert JPG images to various formats", icon: "fas fa-file-image" },
-                { id: "jpg-to-webp", name: "JPG to WebP Converter", desc: "Convert JPG images to WebP format", icon: "fas fa-file-image" },
-                { id: "ascii-art", name: "ASCII Art Generator", desc: "Create ASCII art from images", icon: "fas fa-font" },
-                { id: "favicon-generator", name: "Favicon Generator", desc: "Create favicons for websites", icon: "fas fa-icons" },
-                { id: "image-cropper", name: "Image Cropper", desc: "Crop images to specific dimensions", icon: "fas fa-crop-alt" },
-                { id: "image-to-text", name: "Image to Text (OCR)", desc: "Extract text from images using OCR", icon: "fas fa-text-height" },
-                { id: "image-rotator", name: "Image Rotator/Flipper", desc: "Rotate and flip images", icon: "fas fa-redo-alt" },
-                { id: "jpg-to-gif", name: "JPG to GIF Converter", desc: "Convert JPG images to GIF format", icon: "fas fa-file-image" },
-                { id: "webp-to-png", name: "WebP to PNG Converter", desc: "Convert WebP images to PNG format", icon: "fas fa-file-image" },
-                { id: "con-to-ico", name: "Convert to ICO", desc: "Convert images to ICO format", icon: "fas fa-file-image" },
-                { id: "base64-to-image", name: "Base64 to Image Converter", desc: "Convert Base64 to images", icon: "fas fa-code" },
-                { id: "rotate-image", name: "Rotate Image", desc: "Rotate images by specific angles", icon: "fas fa-sync-alt" },
-                { id: "ico-to-png", name: "ICO to PNG Converter", desc: "Convert ICO images to PNG format", icon: "fas fa-file-image" },
-                { id: "webp-to-jpg", name: "WebP to JPG Converter", desc: "Convert WebP images to JPG format", icon: "fas fa-file-image" },
-                { id: "png-to-bmp", name: "PNG to BMP Converter", desc: "Convert PNG images to BMP format", icon: "fas fa-file-image" },
-                { id: "jpg-to-ico", name: "JPG to ICO Converter", desc: "Convert JPG images to ICO format", icon: "fas fa-file-image" }
+                { name: "Image Converter", description: "Convert images between different formats", type: "converter", inputs: ["file"] },
+                { name: "Image Compressor", description: "Reduce image file size without losing quality", type: "compressor", inputs: ["file", "quality"] },
+                { name: "Image Resizer", description: "Change image dimensions to fit your needs", type: "resizer", inputs: ["file", "width", "height"] },
+                { name: "Image Enlarger", description: "Increase image size while maintaining quality", type: "enlarger", inputs: ["file", "scale"] },
+                { name: "JPG to PNG Converter", description: "Convert JPG images to PNG format", type: "converter", inputs: ["file"] },
+                { name: "PNG to JPG Converter", description: "Convert PNG images to JPG format", type: "converter", inputs: ["file"] },
+                { name: "PNG to GIF Converter", description: "Convert PNG images to GIF format", type: "converter", inputs: ["file"] },
+                { name: "PNG to WebP Converter", description: "Convert PNG images to WebP format", type: "converter", inputs: ["file"] },
+                { name: "Image to Base64 Converter", description: "Convert images to Base64 encoding", type: "converter", inputs: ["file"] },
+                { name: "JPG Converter", description: "Convert JPG images to various formats", type: "converter", inputs: ["file", "format"] },
+                { name: "JPG to WebP Converter", description: "Convert JPG images to WebP format", type: "converter", inputs: ["file"] },
+                { name: "ASCII Art Generator", description: "Convert images to ASCII art", type: "generator", inputs: ["file", "width"] },
+                { name: "Favicon Generator", description: "Create favicons from images", type: "generator", inputs: ["file"] },
+                { name: "Image Cropper", description: "Crop images to specific dimensions", type: "editor", inputs: ["file", "x", "y", "width", "height"] },
+                { name: "Image to Text (OCR)", description: "Extract text from images using OCR", type: "extractor", inputs: ["file"] },
+                { name: "Image Rotator/Flipper", description: "Rotate and flip images", type: "editor", inputs: ["file", "angle", "flip"] },
+                { name: "JPG to GIF Converter", description: "Convert JPG images to GIF format", type: "converter", inputs: ["file"] },
+                { name: "WebP to PNG Converter", description: "Convert WebP images to PNG format", type: "converter", inputs: ["file"] },
+                { name: "PNG to BMP Converter", description: "Convert PNG images to BMP format", type: "converter", inputs: ["file"] },
+                { name: "JPG to ICO Converter", description: "Convert JPG images to ICO format", type: "converter", inputs: ["file"] },
+                { name: "Base64 to Image Converter", description: "Convert Base64 strings to images", type: "converter", inputs: ["text"] },
+                { name: "Rotate Image", description: "Rotate images by specified degrees", type: "editor", inputs: ["file", "angle"] },
+                { name: "ICO to PNG Converter", description: "Convert ICO images to PNG format", type: "converter", inputs: ["file"] },
+                { name: "WebP to JPG Converter", description: "Convert WebP images to JPG format", type: "converter", inputs: ["file"] }
             ],
             "document": [
-                { id: "pdf-to-word", name: "PDF to Word", desc: "Convert PDF files to editable Word documents", icon: "fas fa-file-word" },
-                { id: "word-to-pdf", name: "Word to PDF", desc: "Convert Word documents to PDF format", icon: "fas fa-file-pdf" },
-                { id: "pdf-compressor", name: "PDF Compressor", desc: "Reduce PDF file size for easier sharing", icon: "fas fa-compress-alt" },
-                { id: "pdf-merger", name: "PDF Merger & Splitter", desc: "Combine or split PDF files", icon: "fas fa-copy" },
-                { id: "document-converter", name: "Document Converter", desc: "Convert between various document formats", icon: "fas fa-exchange-alt" },
-                { id: "pdf-lock", name: "PDF Lock/Unlock", desc: "Add or remove password protection from PDFs", icon: "fas fa-lock" },
-                { id: "esign-pdf", name: "eSign PDF", desc: "Add electronic signatures to PDF documents", icon: "fas fa-signature" },
-                { id: "excel-to-pdf", name: "Excel to PDF", desc: "Convert Excel spreadsheets to PDF format", icon: "fas fa-file-excel" },
-                { id: "pdf-to-excel", name: "PDF to Excel", desc: "Convert PDF tables to Excel format", icon: "fas fa-file-excel" },
-                { id: "powerpoint-to-pdf", name: "PowerPoint to PDF", desc: "Convert PowerPoint presentations to PDF", icon: "fas fa-file-powerpoint" },
-                { id: "pdf-to-powerpoint", name: "PDF to PowerPoint", desc: "Convert PDF to PowerPoint format", icon: "fas fa-file-powerpoint" },
-                { id: "html-to-pdf", name: "HTML to PDF", desc: "Convert HTML pages to PDF documents", icon: "fas fa-code" },
-                { id: "edit-pdf", name: "Edit PDF", desc: "Edit text and images in PDF files", icon: "fas fa-edit" },
-                { id: "scan-to-pdf", name: "Scan to PDF", desc: "Convert scanned documents to PDF", icon: "fas fa-scanner" },
-                { id: "crop-pdf", name: "Crop PDF", desc: "Crop PDF pages to specific dimensions", icon: "fas fa-crop-alt" },
-                { id: "jpg-to-pdf", name: "JPG to PDF", desc: "Convert JPG images to PDF documents", icon: "fas fa-file-pdf" }
+                { name: "PDF to Word", description: "Convert PDF documents to editable Word format", type: "converter", inputs: ["file"] },
+                { name: "Word to PDF", description: "Convert Word documents to PDF format", type: "converter", inputs: ["file"] },
+                { name: "PDF Compressor", description: "Reduce PDF file size for easier sharing", type: "compressor", inputs: ["file", "quality"] },
+                { name: "PDF Merger & Splitter", description: "Combine or separate PDF pages", type: "editor", inputs: ["files", "pages"] },
+                { name: "Document Converter", description: "Convert between various document formats", type: "converter", inputs: ["file", "format"] },
+                { name: "PDF Lock/Unlock", description: "Add or remove password protection from PDFs", type: "security", inputs: ["file", "password"] },
+                { name: "eSign PDF", description: "Add electronic signatures to PDF documents", type: "editor", inputs: ["file", "signature"] },
+                { name: "Excel to PDF", description: "Convert Excel spreadsheets to PDF format", type: "converter", inputs: ["file"] },
+                { name: "PDF to Excel", description: "Convert PDF tables to Excel format", type: "converter", inputs: ["file"] },
+                { name: "PowerPoint to PDF", description: "Convert PowerPoint presentations to PDF", type: "converter", inputs: ["file"] },
+                { name: "PDF to PowerPoint", description: "Convert PDF to editable PowerPoint", type: "converter", inputs: ["file"] },
+                { name: "HTML to PDF", description: "Convert HTML pages to PDF documents", type: "converter", inputs: ["url", "html"] },
+                { name: "Edit PDF", description: "Edit text and images in PDF documents", type: "editor", inputs: ["file"] },
+                { name: "Scan to PDF", description: "Convert scanned documents to PDF", type: "converter", inputs: ["file"] },
+                { name: "Crop PDF", description: "Crop PDF pages to remove margins", type: "editor", inputs: ["file", "margins"] },
+                { name: "JPG to PDF", description: "Convert JPG images to PDF documents", type: "converter", inputs: ["files"] }
             ],
             "calculator": [
-                { id: "scientific-calculator", name: "Scientific Calculator", desc: "Advanced calculator for complex calculations", icon: "fas fa-calculator" },
-                { id: "age-calculator", name: "Age Calculator", desc: "Calculate age based on birth date", icon: "fas fa-birthday-cake" },
-                { id: "percentage-calculator", name: "Percentage Calculator", desc: "Calculate percentages easily", icon: "fas fa-percentage" },
-                { id: "confidence-interval", name: "Confidence Interval Calculator", desc: "Calculate statistical confidence intervals", icon: "fas fa-chart-bar" },
-                { id: "margin-calculator", name: "Margin Calculator", desc: "Calculate profit margins and markups", icon: "fas fa-dollar-sign" },
-                { id: "paypal-fee-calculator", name: "PayPal Fee Calculator", desc: "Calculate PayPal transaction fees", icon: "fab fa-paypal" },
-                { id: "cpm-calculator", name: "CPM Calculator", desc: "Calculate cost per thousand impressions", icon: "fas fa-ad" },
-                { id: "average-calculator", name: "Average Calculator", desc: "Calculate mean, median, and mode", icon: "fas fa-chart-line" },
-                { id: "sales-tax-calculator", name: "Sales Tax Calculator", desc: "Calculate sales tax amounts", icon: "fas fa-receipt" },
-                { id: "probability-calculator", name: "Probability Calculator", desc: "Calculate probabilities and odds", icon: "fas fa-dice" },
-                { id: "discount-calculator", name: "Discount Calculator", desc: "Calculate discounts and sale prices", icon: "fas fa-tag" },
-                { id: "bmi-calculator", name: "BMI Calculator", desc: "Calculate Body Mass Index", icon: "fas fa-weight" },
-                { id: "loan-emi-calculator", name: "Loan EMI Calculator", desc: "Calculate monthly loan payments", icon: "fas fa-money-check-alt" },
-                { id: "gst-calculator", name: "GST Calculator", desc: "Calculate Goods and Services Tax", icon: "fas fa-receipt" },
-                { id: "currency-converter", name: "Currency Converter", desc: "Convert between world currencies", icon: "fas fa-exchange-alt" }
+                { name: "Scientific Calculator", description: "Advanced calculator for complex calculations", type: "calculator", inputs: ["expression"] },
+                { name: "Age Calculator", description: "Calculate age based on birth date", type: "calculator", inputs: ["birthdate"] },
+                { name: "Percentage Calculator", description: "Calculate percentages easily", type: "calculator", inputs: ["value", "percentage"] },
+                { name: "Confidence Interval Calculator", description: "Calculate statistical confidence intervals", type: "calculator", inputs: ["data", "confidence"] },
+                { name: "Margin Calculator", description: "Calculate profit margins", type: "calculator", inputs: ["cost", "price"] },
+                { name: "PayPal Fee Calculator", description: "Calculate PayPal transaction fees", type: "calculator", inputs: ["amount"] },
+                { name: "CPM Calculator", description: "Calculate cost per thousand impressions", type: "calculator", inputs: ["cost", "impressions"] },
+                { name: "Average Calculator", description: "Calculate averages from a set of numbers", type: "calculator", inputs: ["numbers"] },
+                { name: "Sales Tax Calculator", description: "Calculate sales tax amounts", type: "calculator", inputs: ["amount", "taxRate"] },
+                { name: "Probability Calculator", description: "Calculate probabilities of events", type: "calculator", inputs: ["events", "outcomes"] },
+                { name: "Discount Calculator", description: "Calculate discounts and final prices", type: "calculator", inputs: ["price", "discount"] },
+                { name: "BMI Calculator", description: "Calculate Body Mass Index", type: "calculator", inputs: ["weight", "height"] },
+                { name: "Loan EMI Calculator", description: "Calculate Equated Monthly Installments", type: "calculator", inputs: ["principal", "rate", "term"] },
+                { name: "GST Calculator", description: "Calculate Goods and Services Tax", type: "calculator", inputs: ["amount", "gstRate"] },
+                { name: "Currency Converter", description: "Convert between world currencies", type: "converter", inputs: ["amount", "from", "to"] }
             ],
             "text": [
-                { id: "text-case-converter", name: "Text Case Converter", desc: "Change text between uppercase, lowercase, etc.", icon: "fas fa-text-height" },
-                { id: "word-counter", name: "Word & Character Counter", desc: "Count words and characters in text", icon: "fas fa-sort-numeric-up" },
-                { id: "text-sorter", name: "Text Sorter", desc: "Sort lines of text alphabetically", icon: "fas fa-sort-alpha-down" },
-                { id: "text-reverser", name: "Text Reverser", desc: "Reverse text or strings", icon: "fas fa-retweet" },
-                { id: "article-rewriter", name: "Article Rewriter", desc: "Rephrase text while keeping the meaning", icon: "fas fa-pen-alt" },
-                { id: "backwards-text", name: "Backwards Text Generator", desc: "Generate backwards text", icon: "fas fa-text-width" },
-                { id: "text-compare", name: "Text Compare", desc: "Compare two texts for differences", icon: "fas fa-code-compare" },
-                { id: "lorem-ipsum", name: "Lorem Ipsum Generator", desc: "Generate placeholder text", icon: "fas fa-paragraph" },
-                { id: "remove-line-breaks", name: "Remove Line Breaks", desc: "Remove line breaks from text", icon: "fas fa-align-left" },
-                { id: "text-repeater", name: "Text Repeater", desc: "Repeat text multiple times", icon: "fas fa-redo" },
-                { id: "comma-separator", name: "Comma Separator", desc: "Add or remove commas from lists", icon: "fas fa-comma" },
-                { id: "word-to-number", name: "Word to Number Converter", desc: "Convert written numbers to digits", icon: "fas fa-sort-numeric-down" },
-                { id: "text-to-hashtags", name: "Text to Hashtags Converter", desc: "Convert text to hashtags", icon: "fas fa-hashtag" },
-                { id: "text-to-slug", name: "Text to Slug Converter", desc: "Convert text to URL-friendly slugs", icon: "fas fa-link" },
-                { id: "case-converter", name: "Case Converter", desc: "Convert text between different cases", icon: "fas fa-font" },
-                { id: "random-word", name: "Random Word Generator", desc: "Generate random words", icon: "fas fa-dice" },
-                { id: "number-to-word", name: "Number to Word Converter", desc: "Convert numbers to words", icon: "fas fa-spell-check" },
-                { id: "text-to-tags", name: "Text to Tags Converter", desc: "Convert text to HTML tags", icon: "fas fa-code" },
-                { id: "text-encryptor", name: "Text Encryptor/Decryptor", desc: "Encrypt and decrypt text", icon: "fas fa-lock" }
+                { name: "Text Case Converter", description: "Change text between uppercase, lowercase and more", type: "converter", inputs: ["text", "caseType"] },
+                { name: "Word & Character Counter", description: "Count words and characters in your text", type: "counter", inputs: ["text"] },
+                { name: "Text Sorter", description: "Alphabetically sort lines of text", type: "sorter", inputs: ["text", "order"] },
+                { name: "Text Reverser", description: "Reverse the order of text characters", type: "converter", inputs: ["text"] },
+                { name: "Article Rewriter", description: "Rephrase text while keeping the meaning", type: "rewriter", inputs: ["text"] },
+                { name: "Backwards Text Generator", description: "Generate text that reads backwards", type: "generator", inputs: ["text"] },
+                { name: "Text Compare", description: "Compare two texts for differences", type: "comparator", inputs: ["text1", "text2"] },
+                { name: "Lorem Ipsum Generator", description: "Generate placeholder text for designs", type: "generator", inputs: ["paragraphs", "words"] },
+                { name: "Remove Line Breaks", description: "Remove line breaks from text", type: "cleaner", inputs: ["text"] },
+                { name: "Text Repeater", description: "Repeat text multiple times", type: "generator", inputs: ["text", "times"] },
+                { name: "Comma Separator", description: "Add or remove commas from text", type: "editor", inputs: ["text", "action"] },
+                { name: "Word to Number Converter", description: "Convert written numbers to digits", type: "converter", inputs: ["text"] },
+                { name: "Text to Hashtags Converter", description: "Convert text to social media hashtags", type: "converter", inputs: ["text"] },
+                { name: "Text to Slug Converter", description: "Convert text to URL-friendly slugs", type: "converter", inputs: ["text"] },
+                { name: "Case Converter", description: "Convert text between different case styles", type: "converter", inputs: ["text", "caseStyle"] },
+                { name: "Random Word Generator", description: "Generate random words", type: "generator", inputs: ["count", "length"] },
+                { name: "Number to Word Converter", description: "Convert numbers to written words", type: "converter", inputs: ["number"] },
+                { name: "Text to Tags Converter", description: "Convert text to HTML tags", type: "converter", inputs: ["text", "tag"] },
+                { name: "Text Encryptor/Decryptor", description: "Encrypt and decrypt text securely", type: "security", inputs: ["text", "key", "action"] }
             ],
             "web": [
-                { id: "html-minifier", name: "HTML Minifier", desc: "Minify HTML code for faster loading", icon: "fas fa-code" },
-                { id: "css-minifier", name: "CSS Minifier", desc: "Minify CSS code to reduce file size", icon: "fab fa-css3-alt" },
-                { id: "html-beautifier", name: "HTML Beautifier", desc: "Format and beautify HTML code", icon: "fas fa-code" },
-                { id: "javascript-deobfuscator", name: "JavaScript DeObfuscator", desc: "Deobfuscate JavaScript code", icon: "fab fa-js-square" },
-                { id: "json-to-schema", name: "JSON to JSON Schema", desc: "Convert JSON to JSON Schema", icon: "fas fa-database" },
-                { id: "json-editor", name: "JSON Editor", desc: "Edit and validate JSON data", icon: "fas fa-edit" },
-                { id: "xml-to-json", name: "XML to JSON Converter", desc: "Convert XML data to JSON format", icon: "fas fa-exchange-alt" },
-                { id: "tsv-to-json", name: "TSV to JSON Converter", desc: "Convert TSV data to JSON format", icon: "fas fa-table" },
-                { id: "json-to-csv", name: "JSON to CSV Converter", desc: "Convert JSON data to CSV format", icon: "fas fa-file-csv" },
-                { id: "json-to-tsv", name: "JSON to TSV Converter", desc: "Convert JSON data to TSV format", icon: "fas fa-table" },
-                { id: "html-encoder", name: "HTML Encoder", desc: "Encode HTML entities", icon: "fas fa-code" },
-                { id: "javascript-minifier", name: "JavaScript Minifier", desc: "Minify JavaScript code", icon: "fab fa-js-square" },
-                { id: "javascript-viewer", name: "JavaScript Viewer", desc: "View and analyze JavaScript code", icon: "fab fa-js-square" },
-                { id: "json-validator", name: "JSON Validator", desc: "Validate JSON syntax", icon: "fas fa-check-circle" },
-                { id: "json-minify", name: "JSON Minify", desc: "Minify JSON data", icon: "fas fa-compress-alt" },
-                { id: "csv-to-json", name: "CSV to JSON Converter", desc: "Convert CSV data to JSON format", icon: "fas fa-file-csv" },
-                { id: "json-to-xml", name: "JSON to XML Converter", desc: "Convert JSON data to XML format", icon: "fas fa-exchange-alt" },
-                { id: "json-to-text", name: "JSON to Text Converter", desc: "Convert JSON to plain text", icon: "fas fa-file-alt" },
-                { id: "json-formatter", name: "JSON Formatter & Validator", desc: "Format and validate JSON data", icon: "fas fa-database" },
-                { id: "base64-encoder", name: "Base64 Encoder/Decoder", desc: "Encode and decode Base64 strings", icon: "fas fa-code" },
-                { id: "url-encoder", name: "URL Encoder/Decoder", desc: "Encode and decode URL strings", icon: "fas fa-link" },
-                { id: "color-picker", name: "Color Picker & Converter", desc: "Pick colors and convert between formats", icon: "fas fa-eye-dropper" },
-                { id: "regex-tester", name: "Regex Tester", desc: "Test and debug regular expressions", icon: "fas fa-terminal" }
+                { name: "HTML Minifier", description: "Minify HTML code to reduce file size", type: "minifier", inputs: ["html"] },
+                { name: "CSS Minifier", description: "Minify CSS code to reduce file size", type: "minifier", inputs: ["css"] },
+                { name: "HTML Beautifier", description: "Format and beautify HTML code", type: "formatter", inputs: ["html"] },
+                { name: "JavaScript DeObfuscator", description: "Deobfuscate JavaScript code", type: "deobfuscator", inputs: ["javascript"] },
+                { name: "JSON to JSON Schema", description: "Convert JSON to JSON Schema", type: "converter", inputs: ["json"] },
+                { name: "JSON Editor", description: "Edit and validate JSON data", type: "editor", inputs: ["json"] },
+                { name: "XML to JSON Converter", description: "Convert XML to JSON format", type: "converter", inputs: ["xml"] },
+                { name: "TSV to JSON Converter", description: "Convert TSV to JSON format", type: "converter", inputs: ["tsv"] },
+                { name: "JSON to CSV Converter", description: "Convert JSON to CSV format", type: "converter", inputs: ["json"] },
+                { name: "JSON to TSV Converter", description: "Convert JSON to TSV format", type: "converter", inputs: ["json"] },
+                { name: "HTML Encoder", description: "Encode HTML entities", type: "encoder", inputs: ["html"] },
+                { name: "JavaScript Minifier", description: "Minify JavaScript code", type: "minifier", inputs: ["javascript"] },
+                { name: "JavaScript Viewer", description: "View and analyze JavaScript code", type: "viewer", inputs: ["javascript"] },
+                { name: "JSON Validator", description: "Validate JSON syntax", type: "validator", inputs: ["json"] },
+                { name: "JSON Minify", description: "Minify JSON by removing whitespace", type: "minifier", inputs: ["json"] },
+                { name: "CSV to JSON Converter", description: "Convert CSV to JSON format", type: "converter", inputs: ["csv"] },
+                { name: "JSON to XML Converter", description: "Convert JSON to XML format", type: "converter", inputs: ["json"] },
+                { name: "JSON to Text Converter", description: "Convert JSON to plain text", type: "converter", inputs: ["json"] },
+                { name: "JSON Formatter & Validator", description: "Format and validate JSON data", type: "formatter", inputs: ["json"] },
+                { name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", type: "converter", inputs: ["text", "action"] },
+                { name: "URL Encoder/Decoder", description: "Encode and decode URL strings", type: "converter", inputs: ["text", "action"] },
+                { name: "Color Picker & Converter", description: "Pick colors and convert between formats", type: "converter", inputs: ["color", "format"] },
+                { name: "Regex Tester", description: "Test regular expressions", type: "tester", inputs: ["regex", "text"] }
             ],
             "color": [
-                { id: "color-picker-image", name: "Color Picker from Image", desc: "Extract colors from images", icon: "fas fa-eye-dropper" },
-                { id: "gradient-generator", name: "Gradient Generator", desc: "Create beautiful color gradients", icon: "fas fa-palette" },
-                { id: "contrast-checker", name: "Contrast Checker", desc: "Check color contrast for accessibility", icon: "fas fa-adjust" },
-                { id: "palette-generator", name: "Palette Generator", desc: "Generate color palettes from images", icon: "fas fa-swatchbook" },
-                { id: "color-blindness", name: "Color Blindness Simulator", desc: "Simulate different types of color blindness", icon: "fas fa-low-vision" }
+                { name: "Color Picker from Image", description: "Extract colors from images", type: "picker", inputs: ["file"] },
+                { name: "Gradient Generator", description: "Create beautiful color gradients", type: "generator", inputs: ["colors", "direction"] },
+                { name: "Contrast Checker", description: "Check color contrast for accessibility", type: "checker", inputs: ["color1", "color2"] },
+                { name: "Palette Generator", description: "Generate color palettes from base colors", type: "generator", inputs: ["color", "scheme"] },
+                { name: "Color Blindness Simulator", description: "Simulate how colors appear to colorblind users", type: "simulator", inputs: ["color", "type"] }
             ],
             "seo": [
-                { id: "keyword-density", name: "Keyword Density Checker", desc: "Analyze keyword density in text", icon: "fas fa-chart-pie" },
-                { id: "meta-tag-generator", name: "Meta Tag Generator", desc: "Generate meta tags for SEO", icon: "fas fa-tags" },
-                { id: "hashtag-generator", name: "Hashtag Generator", desc: "Generate relevant hashtags", icon: "fas fa-hashtag" },
-                { id: "meta-tag-analyzer", name: "Meta Tag Analyzer", desc: "Analyze meta tags on web pages", icon: "fas fa-search" },
-                { id: "word-character-counter", name: "Word Counter/Character Counter", desc: "Count words and characters", icon: "fas fa-sort-numeric-up" },
-                { id: "website-ranking", name: "Website Ranking Checker", desc: "Check website search engine rankings", icon: "fas fa-trophy" },
-                { id: "google-index", name: "Google Index Checker", desc: "Check if pages are indexed by Google", icon: "fab fa-google" },
-                { id: "utm-builder", name: "UTM Builder", desc: "Create UTM parameters for tracking", icon: "fas fa-chart-line" },
-                { id: "open-graph-generator", name: "Open Graph Generator", desc: "Generate Open Graph meta tags", icon: "fab fa-facebook" },
-                { id: "keyword-suggestion", name: "Keywords Suggestion", desc: "Get keyword suggestions for SEO", icon: "fas fa-lightbulb" },
-                { id: "open-graph-checker", name: "Open Graph Checker", desc: "Check Open Graph meta tags", icon: "fab fa-facebook" },
-                { id: "google-cache", name: "Google Cache Checker", desc: "Check Google's cached version of pages", icon: "fab fa-google" },
-                { id: "twitter-card-generator", name: "Twitter Card Generator", desc: "Generate Twitter Card meta tags", icon: "fab fa-twitter" }
+                { name: "Keyword Density Checker", description: "Analyze keyword density in text", type: "analyzer", inputs: ["text", "keywords"] },
+                { name: "Meta Tag Generator", description: "Generate meta tags for SEO", type: "generator", inputs: ["title", "description", "keywords"] },
+                { name: "Hashtag Generator", description: "Generate relevant hashtags for social media", type: "generator", inputs: ["text"] },
+                { name: "Meta Tag Analyzer", description: "Analyze meta tags of a webpage", type: "analyzer", inputs: ["url"] },
+                { name: "Word Counter/Character Counter", description: "Count words and characters in text", type: "counter", inputs: ["text"] },
+                { name: "Website Ranking Checker", description: "Check website ranking for keywords", type: "checker", inputs: ["url", "keywords"] },
+                { name: "Google Index Checker", description: "Check if pages are indexed by Google", type: "checker", inputs: ["url"] },
+                { name: "UTM Builder", description: "Build UTM parameters for tracking", type: "builder", inputs: ["url", "source", "medium", "campaign"] },
+                { name: "Open Graph Generator", description: "Generate Open Graph meta tags", type: "generator", inputs: ["title", "description", "image"] },
+                { name: "Keywords Suggestion", description: "Get keyword suggestions for content", type: "suggester", inputs: ["topic"] },
+                { name: "Open Graph Checker", description: "Check Open Graph tags of a webpage", type: "checker", inputs: ["url"] },
+                { name: "Google Cache Checker", description: "Check Google's cached version of a page", type: "checker", inputs: ["url"] },
+                { name: "Twitter Card Generator", description: "Generate Twitter Card meta tags", type: "generator", inputs: ["title", "description", "image"] }
             ],
             "utility": [
-                { id: "qr-generator", name: "QR Code Generator & Scanner", desc: "Create and scan QR codes", icon: "fas fa-qrcode" },
-                { id: "barcode-generator", name: "Barcode Generator", desc: "Generate barcodes in various formats", icon: "fas fa-barcode" },
-                { id: "uuid-generator", name: "UUID Generator", desc: "Generate unique identifiers", icon: "fas fa-fingerprint" },
-                { id: "md5-generator", name: "MD5 Generator", desc: "Generate MD5 hashes", icon: "fas fa-hashtag" },
-                { id: "base64-encode", name: "Base64 Encode", desc: "Encode data to Base64", icon: "fas fa-code" },
-                { id: "base64-decode", name: "Base64 Decode", desc: "Decode Base64 data", icon: "fas fa-code" },
-                { id: "srt-to-vtt", name: "Convert SRT to VTT", desc: "Convert subtitle files to WebVTT format", icon: "fas fa-closed-captioning" },
-                { id: "rgb-to-hex", name: "RGB to HEX Converter", desc: "Convert RGB colors to HEX format", icon: "fas fa-palette" },
-                { id: "hex-to-rgb", name: "HEX to RGB Converter", desc: "Convert HEX colors to RGB format", icon: "fas fa-palette" },
-                { id: "url-opener", name: "URL Opener", desc: "Open multiple URLs at once", icon: "fas fa-external-link-alt" },
-                { id: "unit-converter", name: "Unit Converter", desc: "Convert between different units", icon: "fas fa-balance-scale" },
-                { id: "time-zone-converter", name: "Time Zone Converter", desc: "Convert between time zones", icon: "fas fa-globe" },
-                { id: "random-generator", name: "Random Number/Password Generator", desc: "Generate random numbers and passwords", icon: "fas fa-random" }
+                { name: "QR Code Generator & Scanner", description: "Generate and scan QR codes", type: "generator", inputs: ["text", "size"] },
+                { name: "Barcode Generator", description: "Generate barcodes from text", type: "generator", inputs: ["text", "type"] },
+                { name: "UUID Generator", description: "Generate unique identifiers", type: "generator", inputs: ["version", "count"] },
+                { name: "MD5 Generator", description: "Generate MD5 hashes from text", type: "generator", inputs: ["text"] },
+                { name: "Base64 Encode", description: "Encode text to Base64", type: "encoder", inputs: ["text"] },
+                { name: "Base64 Decode", description: "Decode Base64 to text", type: "decoder", inputs: ["text"] },
+                { name: "Convert SRT to VTT", description: "Convert subtitle files from SRT to VTT", type: "converter", inputs: ["file"] },
+                { name: "RGB to HEX Converter", description: "Convert RGB colors to HEX format", type: "converter", inputs: ["r", "g", "b"] },
+                { name: "HEX to RGB Converter", description: "Convert HEX colors to RGB format", type: "converter", inputs: ["hex"] },
+                { name: "URL Opener", description: "Open multiple URLs at once", type: "opener", inputs: ["urls"] },
+                { name: "Unit Converter", description: "Convert between different units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Time Zone Converter", description: "Convert between time zones", type: "converter", inputs: ["time", "from", "to"] },
+                { name: "Random Number/Password Generator", description: "Generate random numbers and passwords", type: "generator", inputs: ["type", "length", "count"] }
             ],
             "youtube": [
-                { id: "youtube-tag-generator", name: "YouTube Tag Generator", desc: "Generate tags for YouTube videos", icon: "fab fa-youtube" },
-                { id: "youtube-hashtag-generator", name: "YouTube Hashtag Generator", desc: "Generate hashtags for YouTube", icon: "fab fa-youtube" },
-                { id: "youtube-title-length", name: "YouTube Title Length Generator", desc: "Optimize YouTube title length", icon: "fab fa-youtube" },
-                { id: "youtube-description-generator", name: "YouTube Description Generator", desc: "Generate YouTube descriptions", icon: "fab fa-youtube" },
-                { id: "youtube-video-statistics", name: "YouTube Video Statistics", desc: "Get statistics for YouTube videos", icon: "fab fa-youtube" },
-                { id: "youtube-tag-extractor", name: "YouTube Tag Extractor", desc: "Extract tags from YouTube videos", icon: "fab fa-youtube" },
-                { id: "youtube-hashtag-extractor", name: "YouTube Hashtag Extractor", desc: "Extract hashtags from YouTube videos", icon: "fab fa-youtube" },
-                { id: "youtube-title-extractor", name: "YouTube Title Extractor", desc: "Extract titles from YouTube videos", icon: "fab fa-youtube" },
-                { id: "youtube-title-length-checker", name: "YouTube Title Length Checker", desc: "Check YouTube title length", icon: "fab fa-youtube" },
-                { id: "youtube-channel-statistics", name: "YouTube Channel Statistics", desc: "Get statistics for YouTube channels", icon: "fab fa-youtube" },
-                { id: "youtube-banner-downloader", name: "YouTube Channel Banner Downloader", desc: "Download YouTube channel banners", icon: "fab fa-youtube" },
-                { id: "youtube-subscribe-link", name: "YouTube Subscribe Link Generator", desc: "Generate YouTube subscribe links", icon: "fab fa-youtube" },
-                { id: "youtube-comment-picker", name: "YouTube Comment Picker", desc: "Pick random YouTube comments", icon: "fab fa-youtube" },
-                { id: "youtube-channel-age", name: "YouTube Channel Age Checker", desc: "Check how old a YouTube channel is", icon: "fab fa-youtube" },
-                { id: "youtube-channel-id-extractor", name: "YouTube Channel ID Extractor", desc: "Extract YouTube channel IDs", icon: "fab fa-youtube" },
-                { id: "youtube-channel-logo-downloader", name: "YouTube Channel Logo Downloader", desc: "Download YouTube channel logos", icon: "fab fa-youtube" },
-                { id: "youtube-channel-finder", name: "YouTube Channel Finder", desc: "Find YouTube channels by keyword", icon: "fab fa-youtube" },
-                { id: "youtube-money-calculator", name: "YouTube Money Calculator", desc: "Calculate YouTube revenue", icon: "fab fa-youtube" },
-                { id: "youtube-title-capitalizer", name: "YouTube Title Capitalizer", desc: "Capitalize YouTube titles properly", icon: "fab fa-youtube" },
-                { id: "youtube-views-ratio", name: "YouTube Views Ratio Calculator", desc: "Calculate views to engagement ratio", icon: "fab fa-youtube" }
+                { name: "YouTube Tag Generator", description: "Generate tags for YouTube videos", type: "generator", inputs: ["title", "description"] },
+                { name: "YouTube Hashtag Generator", description: "Generate hashtags for YouTube videos", type: "generator", inputs: ["title", "description"] },
+                { name: "YouTube Title Length Generator", description: "Generate titles with optimal length", type: "generator", inputs: ["topic", "keywords"] },
+                { name: "YouTube Description Generator", description: "Generate video descriptions", type: "generator", inputs: ["title", "keywords"] },
+                { name: "YouTube Video Statistics", description: "Get statistics for YouTube videos", type: "analyzer", inputs: ["videoUrl"] },
+                { name: "YouTube Tag Extractor", description: "Extract tags from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
+                { name: "YouTube Hashtag Extractor", description: "Extract hashtags from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
+                { name: "YouTube Title Extractor", description: "Extract titles from YouTube videos", type: "extractor", inputs: ["videoUrl"] },
+                { name: "YouTube Title Length Checker", description: "Check if title length is optimal", type: "checker", inputs: ["title"] },
+                { name: "YouTube Channel Statistics", description: "Get statistics for YouTube channels", type: "analyzer", inputs: ["channelUrl"] },
+                { name: "YouTube Channel Banner Downloader", description: "Download YouTube channel banners", type: "downloader", inputs: ["channelUrl"] },
+                { name: "YouTube Subscribe Link Generator", description: "Generate subscribe links for channels", type: "generator", inputs: ["channelId"] },
+                { name: "YouTube Comment Picker", description: "Pick random comments from videos", type: "picker", inputs: ["videoUrl", "count"] },
+                { name: "YouTube Channel Age Checker", description: "Check how old a YouTube channel is", type: "checker", inputs: ["channelUrl"] },
+                { name: "YouTube Channel ID Extractor", description: "Extract channel ID from URL", type: "extractor", inputs: ["channelUrl"] },
+                { name: "YouTube Channel Logo Downloader", description: "Download YouTube channel logos", type: "downloader", inputs: ["channelUrl"] },
+                { name: "YouTube Channel Finder", description: "Find YouTube channels by topic", type: "finder", inputs: ["topic"] },
+                { name: "YouTube Money Calculator", description: "Calculate potential YouTube earnings", type: "calculator", inputs: ["views", "cpm"] },
+                { name: "YouTube Video Title Capitalizer", description: "Capitalize video titles properly", type: "converter", inputs: ["title"] },
+                { name: "YouTube Views Ratio Calculator", description: "Calculate view-to-like ratios", type: "calculator", inputs: ["views", "likes"] }
             ],
             "binary": [
-                { id: "text-to-binary", name: "Text to Binary Converter", desc: "Convert text to binary code", icon: "fas fa-exchange-alt" },
-                { id: "hex-to-binary", name: "HEX to Binary Converter", desc: "Convert hexadecimal to binary", icon: "fas fa-exchange-alt" },
-                { id: "ascii-to-binary", name: "ASCII to Binary Converter", desc: "Convert ASCII to binary", icon: "fas fa-exchange-alt" },
-                { id: "decimal-to-binary", name: "Decimal to Binary Converter", desc: "Convert decimal to binary", icon: "fas fa-exchange-alt" },
-                { id: "text-to-ascii", name: "Text to ASCII Converter", desc: "Convert text to ASCII codes", icon: "fas fa-exchange-alt" },
-                { id: "hex-to-decimal", name: "HEX to Decimal Converter", desc: "Convert hexadecimal to decimal", icon: "fas fa-exchange-alt" },
-                { id: "hex-to-octal", name: "HEX to Octal Converter", desc: "Convert hexadecimal to octal", icon: "fas fa-exchange-alt" },
-                { id: "octal-to-binary", name: "Octal to Binary Converter", desc: "Convert octal to binary", icon: "fas fa-exchange-alt" },
-                { id: "text-to-octal", name: "Text to Octal Converter", desc: "Convert text to octal", icon: "fas fa-exchange-alt" },
-                { id: "binary-to-text", name: "Binary to Text Converter", desc: "Convert binary to text", icon: "fas fa-exchange-alt" },
-                { id: "text-to-decimal", name: "Text to Decimal Converter", desc: "Convert text to decimal", icon: "fas fa-exchange-alt" },
-                { id: "binary-to-hex", name: "Binary to HEX Converter", desc: "Convert binary to hexadecimal", icon: "fas fa-exchange-alt" },
-                { id: "binary-to-ascii", name: "Binary to ASCII Converter", desc: "Convert binary to ASCII", icon: "fas fa-exchange-alt" },
-                { id: "ascii-to-text", name: "ASCII to Text Converter", desc: "Convert ASCII to text", icon: "fas fa-exchange-alt" },
-                { id: "binary-to-decimal", name: "Binary to Decimal Converter", desc: "Convert binary to decimal", icon: "fas fa-exchange-alt" },
-                { id: "decimal-to-hex", name: "Decimal to HEX Converter", desc: "Convert decimal to hexadecimal", icon: "fas fa-exchange-alt" },
-                { id: "binary-to-octal", name: "Binary to Octal Converter", desc: "Convert binary to octal", icon: "fas fa-exchange-alt" },
-                { id: "decimal-to-octal", name: "Decimal to Octal Converter", desc: "Convert decimal to octal", icon: "fas fa-exchange-alt" },
-                { id: "octal-to-hex", name: "Octal to HEX Converter", desc: "Convert octal to hexadecimal", icon: "fas fa-exchange-alt" },
-                { id: "octal-to-text", name: "Octal to Text Converter", desc: "Convert octal to text", icon: "fas fa-exchange-alt" },
-                { id: "hex-to-text", name: "HEX to Text Converter", desc: "Convert hexadecimal to text", icon: "fas fa-exchange-alt" },
-                { id: "decimal-to-text", name: "Decimal to Text Converter", desc: "Convert decimal to text", icon: "fas fa-exchange-alt" }
+                { name: "Text to Binary Converter", description: "Convert text to binary code", type: "converter", inputs: ["text"] },
+                { name: "HEX to Binary Converter", description: "Convert hexadecimal to binary", type: "converter", inputs: ["hex"] },
+                { name: "ASCII to Binary Converter", description: "Convert ASCII to binary", type: "converter", inputs: ["text"] },
+                { name: "Decimal to Binary Converter", description: "Convert decimal to binary", type: "converter", inputs: ["decimal"] },
+                { name: "Text to ASCII Converter", description: "Convert text to ASCII codes", type: "converter", inputs: ["text"] },
+                { name: "HEX to Decimal Converter", description: "Convert hexadecimal to decimal", type: "converter", inputs: ["hex"] },
+                { name: "HEX to Octal Converter", description: "Convert hexadecimal to octal", type: "converter", inputs: ["hex"] },
+                { name: "Octal to Binary Converter", description: "Convert octal to binary", type: "converter", inputs: ["octal"] },
+                { name: "Text to Octal Converter", description: "Convert text to octal", type: "converter", inputs: ["text"] },
+                { name: "Binary to Text Converter", description: "Convert binary to text", type: "converter", inputs: ["binary"] },
+                { name: "Text to Decimal Converter", description: "Convert text to decimal", type: "converter", inputs: ["text"] },
+                { name: "Binary to HEX Converter", description: "Convert binary to hexadecimal", type: "converter", inputs: ["binary"] },
+                { name: "Binary to ASCII Converter", description: "Convert binary to ASCII", type: "converter", inputs: ["binary"] },
+                { name: "ASCII to Text Converter", description: "Convert ASCII codes to text", type: "converter", inputs: ["ascii"] },
+                { name: "Binary to Decimal Converter", description: "Convert binary to decimal", type: "converter", inputs: ["binary"] },
+                { name: "Decimal to HEX Converter", description: "Convert decimal to hexadecimal", type: "converter", inputs: ["decimal"] },
+                { name: "Binary to Octal Converter", description: "Convert binary to octal", type: "converter", inputs: ["binary"] },
+                { name: "Decimal to Octal Converter", description: "Convert decimal to octal", type: "converter", inputs: ["decimal"] },
+                { name: "Octal to HEX Converter", description: "Convert octal to hexadecimal", type: "converter", inputs: ["octal"] },
+                { name: "Octal to Text Converter", description: "Convert octal to text", type: "converter", inputs: ["octal"] },
+                { name: "HEX to Text Converter", description: "Convert hexadecimal to text", type: "converter", inputs: ["hex"] },
+                { name: "Decimal to Text Converter", description: "Convert decimal to text", type: "converter", inputs: ["decimal"] }
             ],
             "domain": [
-                { id: "domain-to-ip", name: "Domain to IP Converter", desc: "Convert domain names to IP addresses", icon: "fas fa-globe" },
-                { id: "whois-lookup", name: "Whois Domain Lookup", desc: "Look up domain registration information", icon: "fas fa-search" },
-                { id: "domain-age-checker", name: "Domain Age Checker", desc: "Check how old a domain is", icon: "fas fa-calendar-alt" },
-                { id: "hosting-checker", name: "Hosting Checker", desc: "Check where a website is hosted", icon: "fas fa-server" },
-                { id: "dns-records-checker", name: "DNS Records Checker", desc: "Check DNS records for a domain", icon: "fas fa-network-wired" },
-                { id: "ip-lookup", name: "IP Address Lookup", desc: "Look up information about an IP address", icon: "fas fa-map-marker-alt" },
-                { id: "what-is-my-ip", name: "What Is My IP Address", desc: "Find your public IP address", icon: "fas fa-desktop" }
+                { name: "Domain to IP Converter", description: "Convert domain names to IP addresses", type: "converter", inputs: ["domain"] },
+                { name: "Whois Domain Lookup", description: "Look up domain registration information", type: "lookup", inputs: ["domain"] },
+                { name: "Domain Age Checker", description: "Check how old a domain is", type: "checker", inputs: ["domain"] },
+                { name: "Hosting Checker", description: "Check where a website is hosted", type: "checker", inputs: ["domain"] },
+                { name: "DNS Records Checker", description: "Check DNS records of a domain", type: "checker", inputs: ["domain"] },
+                { name: "IP Address Lookup", description: "Look up information about an IP address", type: "lookup", inputs: ["ip"] },
+                { name: "What Is My IP Address", description: "Find your public IP address", type: "checker", inputs: [] }
             ],
             "website": [
-                { id: "random-uuid-generator", name: "Random UUID Generator", desc: "Generate random UUIDs", icon: "fas fa-fingerprint" },
-                { id: "url-encode", name: "URL Encode", desc: "Encode URLs for web use", icon: "fas fa-link" },
-                { id: "url-decode", name: "URL Decode", desc: "Decode encoded URLs", icon: "fas fa-link" },
-                { id: "terms-generator", name: "Terms & Condition Generator", desc: "Generate terms and conditions", icon: "fas fa-file-contract" },
-                { id: "privacy-policy-generator", name: "Privacy Policy Generator", desc: "Generate privacy policies", icon: "fas fa-user-shield" },
-                { id: "disclaimer-generator", name: "Disclaimer Generator", desc: "Generate disclaimers", icon: "fas fa-exclamation-triangle" },
-                { id: "url-parser", name: "URL Parser", desc: "Parse URLs into components", icon: "fas fa-link" },
-                { id: "wordpress-theme-detector", name: "WordPress Theme Detector", desc: "Detect WordPress themes", icon: "fab fa-wordpress" },
-                { id: "url-rewriting-tool", name: "URL Rewriting Tool", desc: "Create URL rewriting rules", icon: "fas fa-pen" },
-                { id: "page-size-checker", name: "Page Size Checker", desc: "Check the size of web pages", icon: "fas fa-weight" },
-                { id: "faq-schema-generator", name: "FAQ Schema Generator", desc: "Generate FAQ schema markup", icon: "fas fa-question-circle" },
-                { id: "server-status-checker", name: "Server Status Checker", desc: "Check if a server is online", icon: "fas fa-server" },
-                { id: "http-status-checker", name: "HTTP Status Checker", desc: "Check HTTP status codes", icon: "fas fa-code" },
-                { id: "robots-txt-generator", name: "Robots.txt Generator", desc: "Generate robots.txt files", icon: "fas fa-robot" },
-                { id: "htaccess-redirect-generator", name: "Htaccess Redirect Generator", desc: "Generate .htaccess redirect rules", icon: "fas fa-directions" },
-                { id: "redirect-checker", name: "Redirect Checker", desc: "Check URL redirect chains", icon: "fas fa-exchange-alt" },
-                { id: "http-headers", name: "Get HTTP Headers", desc: "Get HTTP headers for a URL", icon: "fas fa-heading" }
+                { name: "Random UUID Generator", description: "Generate random UUIDs", type: "generator", inputs: ["version", "count"] },
+                { name: "URL Encode", description: "Encode text for use in URLs", type: "encoder", inputs: ["text"] },
+                { name: "URL Decode", description: "Decode URL-encoded text", type: "decoder", inputs: ["text"] },
+                { name: "Terms & Condition Generator", description: "Generate terms and conditions", type: "generator", inputs: ["businessType", "details"] },
+                { name: "Privacy Policy Generator", description: "Generate privacy policies", type: "generator", inputs: ["businessType", "details"] },
+                { name: "Disclaimer Generator", description: "Generate disclaimers", type: "generator", inputs: ["businessType", "details"] },
+                { name: "URL Parser", description: "Parse URLs into components", type: "parser", inputs: ["url"] },
+                { name: "WordPress Theme Detector", description: "Detect WordPress themes on websites", type: "detector", inputs: ["url"] },
+                { name: "URL Rewriting Tool", description: "Create URL rewriting rules", type: "generator", inputs: ["oldUrl", "newUrl"] },
+                { name: "Page Size Checker", description: "Check the size of web pages", type: "checker", inputs: ["url"] },
+                { name: "FAQ Schema Generator", description: "Generate FAQ schema markup", type: "generator", inputs: ["questions", "answers"] },
+                { name: "Server Status Checker", description: "Check if a server is online", type: "checker", inputs: ["url"] },
+                { name: "HTTP Status Checker", description: "Check HTTP status codes", type: "checker", inputs: ["url"] },
+                { name: "Robots.txt Generator", description: "Generate robots.txt files", type: "generator", inputs: ["rules"] },
+                { name: "Htaccess Redirect Generator", description: "Generate .htaccess redirect rules", type: "generator", inputs: ["from", "to", "type"] },
+                { name: "Redirect Checker", description: "Check redirect chains", type: "checker", inputs: ["url"] },
+                { name: "Get HTTP Headers", description: "Get HTTP headers of a URL", type: "checker", inputs: ["url"] }
+            ],
+            "unit": [
+                { name: "Length Converter", description: "Convert between length units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Weight Converter", description: "Convert between weight units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Temperature Converter", description: "Convert between temperature units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Time Converter", description: "Convert between time units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Parts Per Converter", description: "Convert between parts-per units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Pace Converter", description: "Convert between pace units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Power Converter", description: "Convert between power units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Apparent Power Converter", description: "Convert between apparent power units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Reactive Energy Converter", description: "Convert between reactive energy units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Angle Converter", description: "Convert between angle units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Torque Converter", description: "Convert between torque units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Number to Roman Numerals", description: "Convert numbers to Roman numerals", type: "converter", inputs: ["number"] },
+                { name: "Area Converter", description: "Convert between area units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Volume Converter", description: "Convert between volume units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Digital Converter", description: "Convert between digital storage units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Speed Converter", description: "Convert between speed units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Pressure Converter", description: "Convert between pressure units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Voltage Converter", description: "Convert between voltage units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Energy Converter", description: "Convert between energy units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Volumetric Flow Rate Converter", description: "Convert between flow rate units", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Currency Converter", description: "Convert between currencies", type: "converter", inputs: ["value", "from", "to"] },
+                { name: "Roman Numerals to Number", description: "Convert Roman numerals to numbers", type: "converter", inputs: ["roman"] }
             ]
-        };
-
-        // Icons for different tool categories
-        const categoryIcons = {
-            "image": "fas fa-image",
-            "document": "fas fa-file-alt",
-            "calculator": "fas fa-calculator",
-            "text": "fas fa-font",
-            "web": "fas fa-code",
-            "color": "fas fa-palette",
-            "seo": "fas fa-search",
-            "utility": "fas fa-tools",
-            "youtube": "fab fa-youtube",
-            "binary": "fas fa-exchange-alt",
-            "domain": "fas fa-globe",
-            "website": "fas fa-laptop-code"
         };
 
         // Function to generate tool cards
         function generateToolCards(category, containerId) {
             const container = document.getElementById(containerId);
             const tools = toolsData[category];
-            const iconClass = categoryIcons[category];
             
-            if (tools && container) {
-                container.innerHTML = tools.map(tool => `
-                    <div class="tool-card" data-tool-id="${tool.id}">
-                        <div class="tool-icon-small">
-                            <i class="${tool.icon || iconClass}"></i>
-                        </div>
-                        <h3>${tool.name}</h3>
-                        <p>${tool.desc}</p>
-                        <a href="#" class="tool-button use-tool-btn" data-tool-id="${tool.id}">Use Tool</a>
+            if (!tools || !container) return;
+            
+            tools.forEach(tool => {
+                const toolCard = document.createElement('div');
+                toolCard.className = 'tool-card';
+                
+                toolCard.innerHTML = `
+                    <div class="tool-icon-small">
+                        <i class="fas fa-tools"></i>
                     </div>
-                `).join('');
-            }
+                    <h3 class="tool-name">${tool.name}</h3>
+                    <p class="tool-description">${tool.description}</p>
+                    <button class="tool-button" data-tool="${tool.name.toLowerCase().replace(/\s+/g, '-')}">Use Tool</button>
+                `;
+                
+                container.appendChild(toolCard);
+            });
         }
 
-        // Function to open tool modal
-        function openToolModal(toolId) {
-            const tool = Object.values(toolsData).flat().find(t => t.id === toolId);
-            if (!tool) return;
-            
-            document.getElementById('modal-tool-name').textContent = tool.name;
-            
-            // Basic tool interface template
-            const toolInterface = `
-                <div class="input-group">
-                    <label for="tool-input">Input:</label>
-                    <textarea id="tool-input" placeholder="Enter your data here..."></textarea>
-                </div>
-                <div class="tool-actions">
-                    <button class="btn btn-primary" id="process-tool">Process</button>
-                    <button class="btn btn-secondary" id="clear-tool">Clear</button>
-                </div>
-                <div class="result-area" id="tool-result">
-                    Results will appear here...
-                </div>
-            `;
-            
-            document.getElementById('tool-interface').innerHTML = toolInterface;
-            
-            // Add event listeners for the tool buttons
-            document.getElementById('process-tool').addEventListener('click', function() {
-                const input = document.getElementById('tool-input').value;
-                let result = `Processing "${tool.name}" with input: ${input.substring(0, 50)}...`;
-                
-                // Simple processing based on tool type
-                if (tool.id.includes('converter') || tool.id.includes('convert')) {
-                    result = `Converted result for: ${input}`;
-                } else if (tool.id.includes('generator')) {
-                    result = `Generated content based on: ${input}`;
-                } else if (tool.id.includes('calculator')) {
-                    result = `Calculation result for: ${input}`;
-                }
-                
-                document.getElementById('tool-result').textContent = result;
-            });
-            
-            document.getElementById('clear-tool').addEventListener('click', function() {
-                document.getElementById('tool-input').value = '';
-                document.getElementById('tool-result').textContent = 'Results will appear here...';
-            });
-            
-            modal.style.display = 'flex';
+        // Generate tool cards for each category
+        for (const category in toolsData) {
+            generateToolCards(category, `${category}-tools`);
         }
 
-        // Generate tool cards for each category when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Generate all tool categories
-            for (const category in toolsData) {
-                generateToolCards(category, `${category}-tools`);
-            }
+        // Search functionality
+        document.querySelector('.search-bar').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const toolCards = document.querySelectorAll('.tool-card');
             
-            // Add event listeners to all "Use Tool" buttons
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('use-tool-btn')) {
-                    e.preventDefault();
-                    const toolId = e.target.getAttribute('data-tool-id');
-                    openToolModal(toolId);
+            toolCards.forEach(card => {
+                const toolName = card.querySelector('.tool-name').textContent.toLowerCase();
+                const toolDescription = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                if (toolName.includes(searchTerm) || toolDescription.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
                 }
             });
             
-            // Search functionality
-            const searchBar = document.querySelector('.search-bar');
-            searchBar.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const allToolCards = document.querySelectorAll('.tool-card');
+            // Hide empty sections
+            document.querySelectorAll('.tools-section').forEach(section => {
+                const visibleTools = section.querySelectorAll('.tool-card[style="display: flex;"]');
                 
-                allToolCards.forEach(card => {
-                    const toolName = card.querySelector('h3').textContent.toLowerCase();
-                    const toolDesc = card.querySelector('p').textContent.toLowerCase();
-                    
-                    if (toolName.includes(searchTerm) || toolDesc.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+                if (visibleTools.length === 0 && searchTerm) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
             });
         });
+
+        // Modal functionality
+        const modal = document.getElementById('tool-modal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Close modal when clicking X
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Tool button click handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('tool-button')) {
+                const toolId = e.target.getAttribute('data-tool');
+                openToolModal(toolId);
+            }
+            
+            // Footer popular tools
+            if (e.target.hasAttribute('data-tool')) {
+                e.preventDefault();
+                const toolId = e.target.getAttribute('data-tool');
+                openToolModal(toolId);
+            }
+        });
+        
+        // Function to open tool modal with appropriate interface
+        function openToolModal(toolId) {
+            // Find the tool data
+            let toolData = null;
+            for (const category in toolsData) {
+                const tool = toolsData[category].find(t => 
+                    t.name.toLowerCase().replace(/\s+/g, '-') === toolId
+                );
+                if (tool) {
+                    toolData = tool;
+                    break;
+                }
+            }
+            
+            if (!toolData) return;
+            
+            // Update modal content
+            document.getElementById('modal-tool-name').textContent = toolData.name;
+            document.getElementById('modal-tool-description').textContent = toolData.description;
+            
+            // Generate tool interface based on type
+            const interfaceDiv = document.getElementById('tool-interface');
+            interfaceDiv.innerHTML = generateToolInterface(toolData);
+            
+            // Show modal
+            modal.style.display = 'flex';
+        }
+        
+        // Function to generate tool interface based on type
+        function generateToolInterface(tool) {
+            let html = '';
+            
+            switch(tool.type) {
+                case 'converter':
+                    html = `
+                        <div class="input-group">
+                            <label for="input-data">Input:</label>
+                            <textarea id="input-data" placeholder="Enter your data here..."></textarea>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-button primary-button" id="convert-button">Convert</button>
+                            <button class="action-button secondary-button" id="clear-button">Clear</button>
+                        </div>
+                        <div class="tool-result" id="result">
+                            <h3>Result:</h3>
+                            <p id="result-text"></p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'calculator':
+                    html = `
+                        <div class="input-group">
+                            <label for="input-data">Input:</label>
+                            <input type="text" id="input-data" placeholder="Enter values...">
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-button primary-button" id="calculate-button">Calculate</button>
+                            <button class="action-button secondary-button" id="clear-button">Clear</button>
+                        </div>
+                        <div class="tool-result" id="result">
+                            <h3>Result:</h3>
+                            <p id="result-text"></p>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'generator':
+                    html = `
+                        <div class="input-group">
+                            <label for="input-data">Input (optional):</label>
+                            <textarea id="input-data" placeholder="Enter parameters..."></textarea>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-button primary-button" id="generate-button">Generate</button>
+                            <button class="action-button secondary-button" id="clear-button">Clear</button>
+                        </div>
+                        <div class="tool-result" id="result">
+                            <h3>Output:</h3>
+                            <p id="result-text"></p>
+                        </div>
+                    `;
+                    break;
+                    
+                default:
+                    html = `
+                        <div class="input-group">
+                            <label for="input-data">Input:</label>
+                            <textarea id="input-data" placeholder="Enter your data here..."></textarea>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-button primary-button" id="process-button">Process</button>
+                            <button class="action-button secondary-button" id="clear-button">Clear</button>
+                        </div>
+                        <div class="tool-result" id="result">
+                            <h3>Result:</h3>
+                            <p id="result-text"></p>
+                        </div>
+                    `;
+            }
+            
+            return html;
+        }
     </script>
 </body>
 </html>
