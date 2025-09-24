@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image to Base64 Converter</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff9c4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #2196f3;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+    input[type="file"] {
+        display: block;
+        margin: 20px auto;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px 5px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+        background-color: #ffeb3b;
+        color: #000;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #fdd835;
+    }
+    img {
+        max-width: 100%;
+        margin: 20px 0;
+        border: 3px solid #fff;
+        border-radius: 10px;
+        display: none;
+    }
+    textarea {
+        width: 100%;
+        height: 150px;
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        resize: none;
+        font-size: 0.9em;
+    }
+    @media(max-width: 600px){
+        .container {
+            margin: 20px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+        textarea {
+            height: 120px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Image to Base64 Converter</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="copyBtn">Copy Base64</button>
+    <button id="downloadBtn">Download Base64</button>
+    <img id="preview" alt="Preview will appear here">
+    <textarea id="base64Output" readonly placeholder="Base64 encoding will appear here..."></textarea>
+</div>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const base64Output = document.getElementById('base64Output');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    let base64String = "";
+
+    // Show preview and convert to Base64
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            base64String = event.target.result;
+            preview.src = base64String;
+            preview.style.display = 'block';
+            base64Output.value = base64String;
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Copy Base64 to clipboard
+    copyBtn.addEventListener('click', () => {
+        if (!base64String) {
+            alert("Please upload an image first!");
+            return;
+        }
+        base64Output.select();
+        document.execCommand('copy');
+        alert("Base64 copied to clipboard!");
+    });
+
+    // Download Base64 as text file
+    downloadBtn.addEventListener('click', () => {
+        if (!base64String) {
+            alert("Please upload an image first!");
+            return;
+        }
+        const blob = new Blob([base64String], {type: "text/plain"});
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = "image_base64.txt";
+        link.click();
+    });
+</script>
+
+</body>
+</html>
