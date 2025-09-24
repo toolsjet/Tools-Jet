@@ -1,330 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Image Enlarger — Bright Yellow & Blue</title>
-  <style>
-    :root{
-      --brand-yellow:#ffdd00;
-      --brand-blue:#0066cc;
-      --bg:#fff9db;
-      --card:#ffffff;
-      --muted:#666;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Enlarger Tool</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff9c4;
+        color: #333;
+        margin: 0;
+        padding: 0;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,var(--bg),#fff);color:#111;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .app{width:100%;max-width:980px;background:var(--card);border-radius:14px;box-shadow:0 8px 30px rgba(2,6,23,0.08);overflow:hidden}
-    header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:4px solid var(--brand-yellow)}
-    .logo{display:flex;gap:12px;align-items:center}
-    .mark{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--brand-yellow),var(--brand-blue));display:flex;align-items:center;justify-content:center;font-weight:700;color:#003;box-shadow:0 6px 18px rgba(0,102,204,0.12)}
-    h1{font-size:18px;margin:0}
-    p.lead{margin:0;color:var(--muted);font-size:13px}
-
-    .content{display:grid;grid-template-columns:1fr 420px;gap:18px;padding:20px}
-    @media(max-width:900px){.content{grid-template-columns:1fr;}}
-
-    .left{padding:16px;border-radius:10px;background:linear-gradient(180deg,rgba(255,221,0,0.03),transparent);border:1px dashed rgba(0,102,204,0.06)}
-    .drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:26px;border-radius:10px;border:2px dashed rgba(0,0,0,0.06);background:linear-gradient(180deg,rgba(0,102,204,0.02),transparent)}
-    .drop input{display:none}
-    .drop .hint{font-size:14px;color:var(--muted)}
-    .controls{margin-top:12px;display:flex;flex-direction:column;gap:12px}
-
-    label{font-size:13px;color:#123;margin-bottom:6px;display:block}
-    .row{display:flex;gap:10px;align-items:center}
-    .row .field{flex:1}
-    input[type="range"]{width:100%}
-    input[type="number"], input[type="text"], select {width:100%;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);font-size:14px}
-    button{background:var(--brand-blue);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
-    button.secondary{background:transparent;color:var(--brand-blue);border:1px solid rgba(0,102,204,0.12)}
-
-    .right{padding:16px;border-left:1px solid rgba(0,0,0,0.03)}
-    .preview{display:flex;flex-direction:column;gap:10px;align-items:center}
-    .canvas-wrap{width:100%;max-width:380px;border-radius:10px;background:#f7faff;border:1px solid rgba(0,102,204,0.06);padding:10px;display:flex;align-items:center;justify-content:center}
-    .canvas-wrap img{max-width:100%;max-height:360px;border-radius:8px}
-    .meta{font-size:13px;color:var(--muted)}
-
-    .foot{padding:12px 20px;border-top:1px solid rgba(0,0,0,0.03);display:flex;justify-content:space-between;align-items:center}
-    .small{font-size:13px;color:var(--muted)}
-
-    /* mobile tweaks */
-    @media(max-width:480px){
-      .mark{width:42px;height:42px}
-      header{padding:12px}
-      .content{padding:12px}
+    .container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #2196f3;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        text-align: center;
     }
-
-  </style>
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+    input[type="file"] {
+        display: block;
+        margin: 20px auto;
+    }
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+        background-color: #ffeb3b;
+        color: #000;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #fdd835;
+    }
+    img {
+        max-width: 100%;
+        margin: 20px 0;
+        border: 3px solid #fff;
+        border-radius: 10px;
+    }
+    label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    @media(max-width: 600px){
+        .container {
+            margin: 20px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+    }
+</style>
 </head>
 <body>
-  <div class="app">
-    <header>
-      <div class="logo">
-        <div class="mark">IE</div>
-        <div>
-          <h1>Image Enlarger</h1>
-          <p class="lead">Bright yellow & blue theme — upscale images while keeping quality.</p>
-        </div>
-      </div>
-    </header>
 
-    <div class="content">
-      <section class="left">
-        <div class="drop" id="dropzone">
-          <input id="fileInput" type="file" accept="image/*">
-          <div style="text-align:center">
-            <strong style="color:var(--brand-blue)">Upload or drop an image</strong>
-            <div class="hint">PNG, JPG, WebP — up to 20MB</div>
-          </div>
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <button id="pickBtn" class="secondary">Choose File</button>
-            <button id="clearBtn" class="secondary">Clear</button>
-          </div>
-        </div>
+<div class="container">
+    <h1>Image Enlarger</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    
+    <label for="scaleInput">Enlarge Scale (e.g., 2 = 200%)</label>
+    <input type="number" id="scaleInput" value="2" min="1" step="0.1">
 
-        <div class="controls">
-          <div>
-            <label for="scaleRange">Scale (100% - 400%)</label>
-            <input id="scaleRange" type="range" min="100" max="400" value="150">
-            <div class="row"><div class="field"><input id="scaleVal" type="text" readonly></div></div>
-          </div>
-
-          <div>
-            <label>Target Dimensions</label>
-            <div class="row">
-              <input id="targetW" type="number" placeholder="Width (px)">
-              <input id="targetH" type="number" placeholder="Height (px)">
-            </div>
-            <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
-              <label style="display:flex;gap:8px;align-items:center"><input id="lockRatio" type="checkbox" checked> Maintain aspect ratio</label>
-            </div>
-          </div>
-
-          <div class="row">
-            <button id="previewBtn">Preview Enlarged</button>
-            <button id="downloadBtn">Enlarge & Download</button>
-          </div>
-
-          <div style="font-size:13px;color:var(--muted)">Tip: Modern browsers perform high-quality scaling. For best results, start with images that are not tiny (<200px).</div>
-        </div>
-      </section>
-
-      <aside class="right">
-        <div class="preview">
-          <div class="canvas-wrap" id="previewWrap">
-            <div style="text-align:center;color:var(--muted)">No image loaded</div>
-          </div>
-          <div class="meta" id="meta">Nothing to show</div>
-        </div>
-      </aside>
-    </div>
-
-    <div class="foot">
-      <div class="small">Built for multi-tool websites • Theme: Yellow & Blue</div>
-      <div style="font-size:13px;color:var(--muted)">Supported: modern browsers (Chrome/Edge/Firefox/Safari)</div>
-    </div>
-  </div>
+    <button id="enlargeBtn">Enlarge & Download</button>
+    <img id="preview" src="" alt="Preview will appear here">
+</div>
 
 <script>
-(async function(){
-  const fileInput = document.getElementById('fileInput');
-  const pickBtn = document.getElementById('pickBtn');
-  const clearBtn = document.getElementById('clearBtn');
-  const dropzone = document.getElementById('dropzone');
-  const previewWrap = document.getElementById('previewWrap');
-  const meta = document.getElementById('meta');
-  const scaleRange = document.getElementById('scaleRange');
-  const scaleVal = document.getElementById('scaleVal');
-  const targetW = document.getElementById('targetW');
-  const targetH = document.getElementById('targetH');
-  const lockRatio = document.getElementById('lockRatio');
-  const previewBtn = document.getElementById('previewBtn');
-  const downloadBtn = document.getElementById('downloadBtn');
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const scaleInput = document.getElementById('scaleInput');
+    const enlargeBtn = document.getElementById('enlargeBtn');
 
-  let currentFile = null;
-  let currentBitmap = null;
-  let naturalW = 0, naturalH = 0;
+    let selectedFile;
 
-  function resetPreview(){
-    previewWrap.innerHTML = '<div style="text-align:center;color:var(--muted)">No image loaded</div>';
-    meta.textContent = 'Nothing to show';
-    currentBitmap = null; currentFile = null; naturalW = 0; naturalH = 0;
-    targetW.value = '';
-    targetH.value = '';
-  }
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                preview.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-  function showMeta(){
-    if(!currentFile) return;
-    meta.textContent = `${currentFile.name} — ${naturalW}×${naturalH}px — ${(currentFile.size/1024/1024).toFixed(2)}MB`;
-  }
+    enlargeBtn.addEventListener('click', () => {
+        if (!selectedFile) {
+            alert("Please select an image first!");
+            return;
+        }
 
-  function showPreviewImage(src){
-    previewWrap.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Preview';
-    previewWrap.appendChild(img);
-  }
+        const scale = parseFloat(scaleInput.value);
+        if (scale <= 0) {
+            alert("Please enter a valid scale greater than 0.");
+            return;
+        }
 
-  // Handle file selection
-  pickBtn.addEventListener('click', ()=>fileInput.click());
-  clearBtn.addEventListener('click', ()=>resetPreview());
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-  fileInput.addEventListener('change', async (e)=>{
-    const f = e.target.files && e.target.files[0];
-    if(f) await loadFile(f);
-  });
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
 
-  // drag & drop
-  ['dragenter','dragover'].forEach(ev=>{dropzone.addEventListener(ev,(e)=>{e.preventDefault();dropzone.style.boxShadow='inset 0 0 0 2px rgba(0,102,204,0.06)';});});
-  ['dragleave','drop'].forEach(ev=>{dropzone.addEventListener(ev,(e)=>{e.preventDefault();dropzone.style.boxShadow='none';});});
-  dropzone.addEventListener('drop', async (e)=>{
-    const f = e.dataTransfer.files && e.dataTransfer.files[0];
-    if(f) await loadFile(f);
-  });
+            // Draw enlarged image using drawImage with smooth scaling
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-  async function loadFile(file){
-    if(!file.type.startsWith('image/')){alert('Please upload an image file.');return}
-    currentFile = file;
-    // create preview URL
-    const url = URL.createObjectURL(file);
-    showPreviewImage(url);
-    // load natural size using Image
-    const img = new Image();
-    img.src = url;
-    await img.decode().catch(()=>{});
-    naturalW = img.naturalWidth || img.width;
-    naturalH = img.naturalHeight || img.height;
-    showMeta();
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `enlarged_${selectedFile.name}`;
+            link.click();
 
-    // createImageBitmap for better drawing path if available
-    try{
-      if('createImageBitmap' in window){
-        currentBitmap = await createImageBitmap(file);
-      } else {
-        // fallback: draw from Image object when needed
-        currentBitmap = null;
-      }
-    }catch(err){
-      currentBitmap = null;
-    }
+            // Update preview
+            preview.src = canvas.toDataURL('image/png');
+        }
 
-    // set default target dimensions to 1.5x
-    const defaultScale = parseInt(scaleRange.value,10)/100;
-    targetW.value = Math.round(naturalW * defaultScale);
-    targetH.value = Math.round(naturalH * defaultScale);
-  }
-
-  // scale UI
-  function updateScaleUI(){
-    const s = parseInt(scaleRange.value,10);
-    scaleVal.value = s + '%';
-    // update target dims if none set or if user hasn't typed them manually
-    if(currentFile && (!targetW.value || !targetH.value)){
-      targetW.value = Math.round(naturalW * s/100);
-      targetH.value = Math.round(naturalH * s/100);
-    }
-  }
-  scaleRange.addEventListener('input',updateScaleUI);
-  updateScaleUI();
-
-  // maintain ratio
-  targetW.addEventListener('input',()=>{
-    if(lockRatio.checked && naturalW>0){
-      const w = parseInt(targetW.value,10)||0;
-      const h = Math.round(w * naturalH / naturalW);
-      targetH.value = h;
-      // update slider to reflect scale roughly
-      if(naturalW>0) scaleRange.value = Math.round((w/naturalW)*100);
-      updateScaleUI();
-    }
-  });
-  targetH.addEventListener('input',()=>{
-    if(lockRatio.checked && naturalH>0){
-      const h = parseInt(targetH.value,10)||0;
-      const w = Math.round(h * naturalW / naturalH);
-      targetW.value = w;
-      if(naturalW>0) scaleRange.value = Math.round((w/naturalW)*100);
-      updateScaleUI();
-    }
-  });
-
-  // core resize function
-  async function resizeImageTo(width,height){
-    if(!currentFile) throw new Error('No file loaded');
-    // create canvas
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    // high quality
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-
-    if(currentBitmap){
-      ctx.drawImage(currentBitmap,0,0,width,height);
-    } else {
-      // fallback: use Image element
-      const img = new Image();
-      img.src = URL.createObjectURL(currentFile);
-      await img.decode().catch(()=>{});
-      ctx.drawImage(img,0,0,width,height);
-    }
-    return canvas;
-  }
-
-  previewBtn.addEventListener('click', async ()=>{
-    try{
-      if(!currentFile){alert('Load an image first');return}
-      const w = parseInt(targetW.value,10) || Math.round(naturalW * (parseInt(scaleRange.value,10)/100));
-      const h = parseInt(targetH.value,10) || Math.round(naturalH * (parseInt(scaleRange.value,10)/100));
-      previewWrap.innerHTML = '<div style="padding:18px;color:var(--muted)">Processing preview…</div>';
-      const canvas = await resizeImageTo(w,h);
-      // show result as image
-      const dataUrl = canvas.toDataURL('image/png');
-      showPreviewImage(dataUrl);
-      meta.textContent = `Preview: ${w}×${h}px`;
-    }catch(err){
-      alert('Error while creating preview: '+(err.message||err));
-      console.error(err);
-    }
-  });
-
-  downloadBtn.addEventListener('click', async ()=>{
-    try{
-      if(!currentFile){alert('Load an image first');return}
-      const w = parseInt(targetW.value,10) || Math.round(naturalW * (parseInt(scaleRange.value,10)/100));
-      const h = parseInt(targetH.value,10) || Math.round(naturalH * (parseInt(scaleRange.value,10)/100));
-      downloadBtn.disabled = true; downloadBtn.textContent = 'Enlarging...';
-      const canvas = await resizeImageTo(w,h);
-      // blob and download
-      canvas.toBlob((blob)=>{
-        if(!blob){alert('Could not create file.'); downloadBtn.disabled=false; downloadBtn.textContent='Enlarge & Download'; return}
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        const ext = currentFile.type.split('/')[1] || 'png';
-        link.download = `${currentFile.name.replace(/\.[^.]+$/, '')}_enlarged_${w}x${h}.${ext}`;
-        document.body.appendChild(link);
-        link.click();
-        // cleanup
-        setTimeout(()=>{URL.revokeObjectURL(link.href); link.remove();},1500);
-        downloadBtn.disabled=false; downloadBtn.textContent='Enlarge & Download';
-      }, 'image/png', 0.92);
-    }catch(err){
-      alert('Error while enlarging: '+(err.message||err));
-      downloadBtn.disabled=false; downloadBtn.textContent='Enlarge & Download';
-      console.error(err);
-    }
-  });
-
-  // small enhancement: allow clicking preview image to open in new tab
-  previewWrap.addEventListener('click',(e)=>{
-    const img = previewWrap.querySelector('img');
-    if(img) window.open(img.src,'_blank');
-  });
-
-})();
+        img.src = preview.src;
+    });
 </script>
+
 </body>
 </html>
