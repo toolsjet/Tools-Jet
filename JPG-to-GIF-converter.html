@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPG to GIF Converter</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff9c4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    .container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+        text-align: center;
+        background: #2196f3;
+        border-radius: 10px;
+        color: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+    input[type="file"] {
+        display: block;
+        margin: 15px auto;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        background: #ffeb3b;
+        color: #000;
+        cursor: pointer;
+        font-size: 1em;
+        transition: 0.3s;
+    }
+    button:hover {
+        background: #fdd835;
+    }
+    #preview {
+        margin-top: 20px;
+        border: 3px solid #fff;
+        border-radius: 10px;
+        max-width: 100%;
+        display: none;
+    }
+    @media(max-width: 600px){
+        .container {
+            margin: 15px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+        button {
+            font-size: 0.9em;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>JPG to GIF Converter</h1>
+    <input type="file" id="imageInput" accept="image/jpeg">
+    <button id="convertBtn">Convert to GIF & Download</button>
+    <img id="preview" alt="Preview">
+</div>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const convertBtn = document.getElementById('convertBtn');
+    const preview = document.getElementById('preview');
+    let selectedFile = null;
+
+    // Show preview when user selects JPG
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.type !== "image/jpeg") {
+            alert("Please select a JPG image.");
+            return;
+        }
+
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            preview.src = event.target.result;
+            preview.style.display = "block";
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Convert JPG to GIF
+    convertBtn.addEventListener('click', () => {
+        if (!selectedFile) {
+            alert("Please select a JPG image first!");
+            return;
+        }
+
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            canvas.toBlob(function(blob) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = selectedFile.name.replace(/\.[^/.]+$/, "") + ".gif";
+                link.click();
+            }, "image/gif");
+        };
+        img.src = preview.src;
+    });
+</script>
+
+</body>
+</html>
