@@ -1,114 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Converter - Yellow & Blue</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Converter Tool</title>
+<style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ffeb3b, #2196f3);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+        font-family: Arial, sans-serif;
+        background: #fff9c4;
+        color: #333;
+        margin: 0;
+        padding: 0;
     }
     .container {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #2196f3;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        text-align: center;
     }
-    h2 {
-      color: #2196f3;
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
     }
-    input[type="file"], select, button, input[type="range"] {
-      margin: 10px 0;
-      padding: 8px;
-      width: 100%;
+    input[type="file"] {
+        display: block;
+        margin: 20px auto;
     }
-    .preview {
-      margin: 15px 0;
+    select, button {
+        padding: 10px 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
     }
-    .preview img {
-      max-width: 100%;
-      border-radius: 5px;
+    select {
+        width: 100%;
     }
     button {
-      background: #2196f3;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
+        background-color: #ffeb3b;
+        color: #000;
+        cursor: pointer;
+        transition: 0.3s;
     }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
+    button:hover {
+        background-color: #fdd835;
     }
-  </style>
+    img {
+        max-width: 100%;
+        margin: 20px 0;
+        border: 3px solid #fff;
+        border-radius: 10px;
+    }
+    @media(max-width: 600px){
+        .container {
+            margin: 20px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+    }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h2>Image Converter</h2>
-    <input type="file" id="fileInput" accept="image/*">
-    <div class="preview">
-      <img id="preview" src="" alt="Preview" style="display:none;">
-    </div>
-    <label for="format">Choose Format:</label>
-    <select id="format">
-      <option value="image/png">PNG</option>
-      <option value="image/jpeg">JPEG</option>
-      <option value="image/webp">WEBP</option>
+
+<div class="container">
+    <h1>Image Converter</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <select id="formatSelect">
+        <option value="image/png">PNG</option>
+        <option value="image/jpeg">JPEG</option>
+        <option value="image/webp">WEBP</option>
     </select>
-    <label for="quality">Quality:</label>
-    <input type="range" id="quality" min="0.1" max="1" step="0.1" value="0.8">
     <button id="convertBtn">Convert & Download</button>
-  </div>
+    <img id="preview" src="" alt="Preview will appear here">
+</div>
 
-  <script>
-    const fileInput = document.getElementById("fileInput");
-    const preview = document.getElementById("preview");
-    const format = document.getElementById("format");
-    const quality = document.getElementById("quality");
-    const convertBtn = document.getElementById("convertBtn");
-    let uploadedImage = null;
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const formatSelect = document.getElementById('formatSelect');
+    const convertBtn = document.getElementById('convertBtn');
 
-    fileInput.addEventListener("change", () => {
-      const file = fileInput.files[0];
-      if (file && file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          uploadedImage = new Image();
-          uploadedImage.src = e.target.result;
-          preview.src = e.target.result;
-          preview.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-      }
+    let selectedFile;
+
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                preview.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
     });
 
-    convertBtn.addEventListener("click", () => {
-      if (!uploadedImage) {
-        alert("Please upload an image first.");
-        return;
-      }
-      const canvas = document.createElement("canvas");
-      canvas.width = uploadedImage.width;
-      canvas.height = uploadedImage.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(uploadedImage, 0, 0);
-      canvas.toBlob(blob => {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `converted.${format.value.split("/")[1]}`;
-        link.click();
-      }, format.value, parseFloat(quality.value));
+    convertBtn.addEventListener('click', () => {
+        if (!selectedFile) {
+            alert("Please select an image first!");
+            return;
+        }
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+
+        img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const selectedFormat = formatSelect.value;
+            canvas.toBlob(function(blob){
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `converted.${selectedFormat.split('/')[1]}`;
+                link.click();
+            }, selectedFormat);
+        }
+
+        img.src = preview.src;
     });
-  </script>
+</script>
+
 </body>
 </html>
