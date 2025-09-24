@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PNG to GIF Converter</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fff9c4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #2196f3;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+    input[type="file"] {
+        display: block;
+        margin: 20px auto;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: none;
+        font-size: 1em;
+        background-color: #ffeb3b;
+        color: #000;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        background-color: #fdd835;
+    }
+    img {
+        max-width: 100%;
+        margin: 20px 0;
+        border: 3px solid #fff;
+        border-radius: 10px;
+        display: none;
+    }
+    @media(max-width: 600px){
+        .container {
+            margin: 20px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.5em;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>PNG to GIF Converter</h1>
+    <input type="file" id="imageInput" accept="image/png">
+    <button id="convertBtn">Convert to GIF & Download</button>
+    <img id="preview" alt="Preview will appear here">
+</div>
+
+<!-- Include gif.js library -->
+<script src="https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.js"></script>
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const convertBtn = document.getElementById('convertBtn');
+
+    let selectedFile = null;
+
+    // Show preview when user selects PNG
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (file.type !== 'image/png') {
+            alert("Please select a PNG image.");
+            imageInput.value = "";
+            preview.style.display = 'none';
+            selectedFile = null;
+            return;
+        }
+
+        selectedFile = file;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            preview.src = event.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    });
+
+    convertBtn.addEventListener('click', () => {
+        if (!selectedFile) {
+            alert("Please select a PNG image first!");
+            return;
+        }
+
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            // Create GIF
+            const gif = new GIF({
+                workers: 2,
+                quality: 10
+            });
+
+            gif.addFrame(ctx, {copy: true, delay: 200});
+            gif.on('finished', function(blob) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${selectedFile.name.split('.').slice(0,-1).join('.')}.gif`;
+                link.click();
+            });
+
+            gif.render();
+        }
+
+        img.src = preview.src;
+    });
+</script>
+
+</body>
+</html>
