@@ -49,6 +49,7 @@
         margin: 20px 0;
         border: 3px solid #fff;
         border-radius: 10px;
+        display: none;
     }
     @media(max-width: 600px){
         .container {
@@ -67,7 +68,7 @@
     <h1>JPG to PNG Converter</h1>
     <input type="file" id="imageInput" accept="image/jpeg">
     <button id="convertBtn">Convert to PNG & Download</button>
-    <img id="preview" src="" alt="Preview will appear here">
+    <img id="preview" alt="Preview will appear here">
 </div>
 
 <script>
@@ -75,23 +76,29 @@
     const preview = document.getElementById('preview');
     const convertBtn = document.getElementById('convertBtn');
 
-    let selectedFile;
+    let selectedFile = null;
 
-    // Show preview when user selects JPG
+    // Handle file selection and show preview
     imageInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (file && file.type === "image/jpeg") {
-            selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                preview.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        } else {
+        if (!file) return;
+
+        if (file.type !== 'image/jpeg') {
             alert("Please select a JPG image.");
             imageInput.value = "";
-            preview.src = "";
+            preview.style.display = 'none';
+            selectedFile = null;
+            return;
         }
+
+        selectedFile = file;
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            preview.src = event.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
     });
 
     // Convert JPG to PNG
