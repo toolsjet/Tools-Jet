@@ -46,7 +46,7 @@
     button:hover {
         background: #fdd835;
     }
-    #canvas {
+    canvas {
         margin-top: 20px;
         border: 3px solid #fff;
         border-radius: 10px;
@@ -74,18 +74,14 @@
 <div class="container">
     <h1>Image Rotator & Flipper Tool</h1>
     <input type="file" id="imageInput" accept="image/*">
-    
     <div class="buttons">
         <button onclick="rotate(-90)">Rotate Left ⟲</button>
         <button onclick="rotate(90)">Rotate Right ⟳</button>
         <button onclick="flip('h')">Flip Horizontal ↔</button>
         <button onclick="flip('v')">Flip Vertical ↕</button>
     </div>
-
     <canvas id="canvas"></canvas><br>
-    <a id="downloadLink" style="display:none;">
-        <button>Download Image</button>
-    </a>
+    <a id="downloadLink" style="display:none;"><button>Download Image</button></a>
 </div>
 
 <script>
@@ -99,12 +95,13 @@
     let flipH = 1;
     let flipV = 1;
 
+    // Upload and preview image
     imageInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (!file) return;
+        if(!file) return;
 
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function(event){
             img = new Image();
             img.onload = () => {
                 resetTransforms();
@@ -115,39 +112,41 @@
         reader.readAsDataURL(file);
     });
 
-    function resetTransforms() {
+    // Reset transformations
+    function resetTransforms(){
         rotation = 0;
         flipH = 1;
         flipV = 1;
     }
 
-    function drawImage() {
-        // handle rotation dimensions
+    // Draw image on canvas
+    function drawImage(){
         const angle = rotation % 180 === 0 ? 0 : 90;
         canvas.width = angle ? img.height : img.width;
         canvas.height = angle ? img.width : img.height;
 
         ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.translate(canvas.width/2, canvas.height/2);
         ctx.scale(flipH, flipV);
-        ctx.rotate(rotation * Math.PI / 180);
-        ctx.drawImage(img, -img.width / 2, -img.height / 2);
+        ctx.rotate(rotation * Math.PI/180);
+        ctx.drawImage(img, -img.width/2, -img.height/2);
         ctx.restore();
 
-        // enable download
         downloadLink.style.display = "inline-block";
         downloadLink.href = canvas.toDataURL("image/png");
-        downloadLink.download = "edited-image.png";
+        downloadLink.download = "rotated-image.png";
     }
 
-    function rotate(deg) {
+    // Rotate function
+    function rotate(deg){
         rotation = (rotation + deg) % 360;
         drawImage();
     }
 
-    function flip(dir) {
-        if (dir === 'h') flipH *= -1;
-        if (dir === 'v') flipV *= -1;
+    // Flip function
+    function flip(dir){
+        if(dir === 'h') flipH *= -1;
+        if(dir === 'v') flipV *= -1;
         drawImage();
     }
 </script>
