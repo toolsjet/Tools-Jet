@@ -8,71 +8,58 @@
     body {
         font-family: Arial, sans-serif;
         background: #fff9c4;
-        color: #333;
         margin: 0;
         padding: 0;
+        color: #333;
     }
     .container {
-        max-width: 600px;
-        margin: 50px auto;
+        max-width: 700px;
+        margin: 40px auto;
         padding: 20px;
-        background: #2196f3;
-        color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         text-align: center;
+        background: #2196f3;
+        border-radius: 10px;
+        color: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     h1 {
         margin-bottom: 20px;
-        font-size: 1.8em;
     }
-    input[type="file"], select {
+    input[type="file"], select, button {
         display: block;
         margin: 15px auto;
-        padding: 8px;
-        border-radius: 5px;
-        border: none;
-        font-size: 1em;
     }
     button {
         padding: 10px 20px;
-        margin: 10px 5px;
+        margin: 10px;
         border-radius: 5px;
         border: none;
-        font-size: 1em;
-        background-color: #ffeb3b;
+        background: #ffeb3b;
         color: #000;
         cursor: pointer;
+        font-size: 1em;
         transition: 0.3s;
     }
     button:hover {
-        background-color: #fdd835;
+        background: #fdd835;
     }
-    img {
-        max-width: 100%;
-        margin: 20px 0;
+    #preview {
+        margin-top: 20px;
         border: 3px solid #fff;
         border-radius: 10px;
-        display: none;
-    }
-    textarea {
-        width: 100%;
-        height: 150px;
-        margin-top: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        border: none;
-        resize: none;
-        font-size: 0.9em;
+        max-width: 100%;
         display: none;
     }
     @media(max-width: 600px){
         .container {
-            margin: 20px;
+            margin: 15px;
             padding: 15px;
         }
         h1 {
             font-size: 1.5em;
+        }
+        button {
+            font-size: 0.9em;
         }
     }
 </style>
@@ -84,85 +71,64 @@
     <input type="file" id="imageInput" accept="image/jpeg">
     <select id="formatSelect">
         <option value="png">Convert to PNG</option>
-        <option value="gif">Convert to GIF</option>
         <option value="webp">Convert to WebP</option>
-        <option value="base64">Convert to Base64</option>
+        <option value="gif">Convert to GIF</option>
     </select>
     <button id="convertBtn">Convert & Download</button>
-    <img id="preview" alt="Preview will appear here">
-    <textarea id="base64Output" readonly></textarea>
+    <img id="preview" alt="Preview">
 </div>
 
-<!-- gif.js library for JPG → GIF conversion -->
-<script src="https://cdn.jsdelivr.net/npm/gif.js.optimized/dist/gif.js"></script>
 <script>
-    const imageInput = document.getElementById('imageInput');
-    const preview = document.getElementById('preview');
-    const formatSelect = document.getElementById('formatSelect');
-    const convertBtn = document.getElementById('convertBtn');
-    const base64Output = document.getElementById('base64Output');
+const imageInput = document.getElementById('imageInput');
+const formatSelect = document.getElementById('formatSelect');
+const convertBtn = document.getElementById('convertBtn');
+const preview = document.getElementById('preview');
 
-    let selectedFile = null;
+let selectedFile = null;
 
-    // Show preview when user selects JPG
-    imageInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+// Preview uploaded image
+imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.type !== "image/jpeg") {
+        alert("Please select a JPG image.");
+        return;
+    }
+    selectedFile = file;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        preview.src = event.target.result;
+        preview.style.display = "block";
+    }
+    reader.readAsDataURL(file);
+});
 
-        if (file.type !== 'image/jpeg') {
-            alert("Please select a JPG image.");
-            imageInput.value = "";
-            preview.style.display = 'none';
-            selectedFile = null;
-            return;
-        }
+// Convert JPG to selected format
+convertBtn.addEventListener('click', () => {
+    if(!selectedFile){
+        alert("Please upload a JPG image first!");
+        return;
+    }
 
-        selectedFile = file;
-
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            preview.src = event.target.result;
-            preview.style.display = 'block';
-        }
-        reader.readAsDataURL(file);
-    });
-
-    // Convert JPG to selected format
-    convertBtn.addEventListener('click', () => {
-        if (!selectedFile) {
-            alert("Please select a JPG image first!");
-            return;
-        }
+    const img = new Image();
+    img.onload = function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
 
         const format = formatSelect.value;
-        const img = new Image();
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
+        canvas.toBlob(function(blob){
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = selectedFile.name.replace(/\.[^/.]+$/, "") + "." + format;
+            link.click();
+        }, 'image/' + format);
+    };
+    img.src = preview.src;
+});
+</script>
 
-            if (format === 'png' || format === 'webp') {
-                const mime = format === 'png' ? 'image/png' : 'image/webp';
-                canvas.toBlob(function(blob) {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = `${selectedFile.name.split('.').slice(0, -1).join('.')}.${format}`;
-                    link.click();
-                }, mime, 0.9);
-
-            } else if (format === 'gif') {
-                const gif = new GIF({ workers: 2, quality: 10 });
-                gif.addFrame(ctx, {copy: true, delay: 200});
-                gif.on('finished', function(blob) {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = `${selectedFile.name.split('.').slice(0, -1).join('.')}.gif`;
-                    link.click();
-                });
-                gif.render();
-
-            } else if (format === 'base64') {
-                const base64String = canvas.toDataURL("image/jpeg");
-                base64Output.st
+</body>
+</html>
