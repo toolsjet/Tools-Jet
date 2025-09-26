@@ -1,126 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word to PDF Converter</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff3b0; /* softer yellow */
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      background: #2196f3; /* bright blue */
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      max-width: 450px;
-      width: 90%;
-      text-align: center;
-      color: #333;
-    }
-
-    h1 {
-      margin-bottom: 15px;
-      font-size: 1.5rem;
-    }
-
-    input[type="file"] {
-      margin: 15px 0;
-      padding: 10px;
-      background: #fff;
-      border-radius: 8px;
-      border: 2px solid #ddd;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button {
-      padding: 12px;
-      background: #fff176; /* softer yellow */
-      color: #000;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-      width: 100%;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #ffee58;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #downloadLink {
-      display: none;
-      margin-top: 15px;
-    }
-
-    #downloadLink button {
-      background: #4caf50;
-      color: white;
-    }
-
-    @media (max-width: 500px) {
-      .container {
-        padding: 15px;
-      }
-      h1 {
-        font-size: 1.2rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word to PDF Converter</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff3b0; /* softer yellow */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background: #2196f3; /* bright blue */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    color: #333;
+  }
+  h1 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+  input[type="file"] {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    width: 100%;
+  }
+  button {
+    padding: 12px;
+    background: #fff176; /* softer yellow */
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: 0.3s;
+  }
+  button:hover { background: #ffee58; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  #downloadLink { display: none; margin-top: 15px; }
+  #downloadLink button { background: #4caf50; color: white; }
+  @media(max-width:500px){ .container{padding:15px;} h1{font-size:1.2rem;} }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Word to PDF Converter</h1>
 
-    <input type="file" id="wordInput" accept=".docx"><br>
-    <button id="convertBtn" disabled>Convert to PDF</button>
+<div class="container">
+  <h1>Word to PDF Converter</h1>
+  <input type="file" id="wordInput" accept=".docx">
+  <button id="convertBtn" disabled>Convert to PDF</button>
+  <a id="downloadLink"><button>Download PDF</button></a>
+</div>
 
-    <a id="downloadLink">
-      <button>Download PDF</button>
-    </a>
-  </div>
+<script>
+const wordInput = document.getElementById("wordInput");
+const convertBtn = document.getElementById("convertBtn");
+const downloadLink = document.getElementById("downloadLink");
+let selectedFile = null;
 
-  <script>
-    const wordInput = document.getElementById("wordInput");
-    const convertBtn = document.getElementById("convertBtn");
-    const downloadLink = document.getElementById("downloadLink");
+wordInput.addEventListener("change", (e) => {
+  selectedFile = e.target.files[0];
+  convertBtn.disabled = !selectedFile;
+});
 
-    let selectedFile = null;
+convertBtn.addEventListener("click", async () => {
+  if(!selectedFile) return;
 
-    wordInput.addEventListener("change", (e) => {
-      selectedFile = e.target.files[0];
-      convertBtn.disabled = !selectedFile;
-    });
+  // Read Word file
+  const arrayBuffer = await selectedFile.arrayBuffer();
+  
+  // Extract text using Mammoth.js
+  const { value: text } = await mammoth.extractRawText({ arrayBuffer });
 
-    convertBtn.addEventListener("click", () => {
-      if (!selectedFile) return;
+  // Create PDF using pdf-lib
+  const pdfDoc = await PDFLib.PDFDocument.create();
+  const page = pdfDoc.addPage();
+  const { width, height } = page.getSize();
+  const fontSize = 12;
+  page.drawText(text || "No text found in this DOCX file", {
+    x: 50,
+    y: height - 50,
+    size: fontSize,
+    maxWidth: width - 100,
+  });
 
-      // ⚠️ Placeholder PDF content for demo
-      const pdfContent = `This is a dummy PDF converted from: ${selectedFile.name}`;
+  const pdfBytes = await pdfDoc.save();
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
 
-      const blob = new Blob([pdfContent], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
+  downloadLink.href = url;
+  downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
+  downloadLink.style.display = "block";
+});
+</script>
 
-      downloadLink.href = url;
-      downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
-      downloadLink.style.display = "block";
-    });
-  </script>
 </body>
 </html>
