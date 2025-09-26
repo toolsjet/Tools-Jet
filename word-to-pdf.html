@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Word to PDF Converter</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -73,39 +71,47 @@ const convertBtn = document.getElementById("convertBtn");
 const downloadLink = document.getElementById("downloadLink");
 let selectedFile = null;
 
-wordInput.addEventListener("change", (e) => {
+// Enable convert button when a file is selected
+wordInput.addEventListener("change", e => {
   selectedFile = e.target.files[0];
   convertBtn.disabled = !selectedFile;
 });
 
+// Convert Word to PDF using CloudConvert
 convertBtn.addEventListener("click", async () => {
-  if(!selectedFile) return;
+  if (!selectedFile) return;
 
-  // Read Word file
-  const arrayBuffer = await selectedFile.arrayBuffer();
-  
-  // Extract text using Mammoth.js
-  const { value: text } = await mammoth.extractRawText({ arrayBuffer });
+  convertBtn.textContent = "Converting...";
+  convertBtn.disabled = true;
 
-  // Create PDF using pdf-lib
-  const pdfDoc = await PDFLib.PDFDocument.create();
-  const page = pdfDoc.addPage();
-  const { width, height } = page.getSize();
-  const fontSize = 12;
-  page.drawText(text || "No text found in this DOCX file", {
-    x: 50,
-    y: height - 50,
-    size: fontSize,
-    maxWidth: width - 100,
-  });
+  const formData = new FormData();
+  formData.append("file", selectedFile);
 
-  const pdfBytes = await pdfDoc.save();
-  const blob = new Blob([pdfBytes], { type: "application/pdf" });
-  const url = URL.createObjectURL(blob);
+  try {
+    // Replace this URL with your own CloudConvert API endpoint
+    // and use your API key in the Authorization header
+    const response = await fetch("https://api.cloudconvert.com/v2/convert", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer YOUR_CLOUDCONVERT_API_KEY"
+      },
+      body: formData
+    });
 
-  downloadLink.href = url;
-  downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
-  downloadLink.style.display = "block";
+    if (!response.ok) throw new Error("Conversion failed");
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+
+    downloadLink.href = url;
+    downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
+    downloadLink.style.display = "block";
+  } catch (err) {
+    alert("Error converting file: " + err.message);
+  } finally {
+    convertBtn.textContent = "Convert to PDF";
+    convertBtn.disabled = false;
+  }
 });
 </script>
 
