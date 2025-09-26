@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ICO → PNG Converter</title>
+<style>
+  :root{
+    --blue:#2196f3;
+    --yellow:#ffeb3b;
+    --bg:#fff9c4;
+    --card-bg:rgba(255,255,255,0.06);
+    --text:#333;
+  }
+  html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{
+    max-width:720px;margin:24px auto;padding:18px;background:var(--blue);border-radius:12px;color:#fff;
+    box-shadow:0 8px 30px rgba(0,0,0,0.12);
+  }
+  h1{margin:0 0 12px;font-size:1.4rem;text-align:center}
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center}
+  .card{width:100%;background:var(--card-bg);padding:14px;border-radius:10px;margin-top:14px}
+  label.file{
+    display:inline-block;padding:10px 16px;border-radius:8px;background:#fff;color:#000;cursor:pointer;
+    font-weight:600;border:2px dashed rgba(0,0,0,0.05);
+  }
+  input[type=file]{display:none}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+  button{
+    background:var(--yellow);color:#000;border:none;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;
+    box-shadow:0 4px 8px rgba(0,0,0,0.08);
+  }
+  button:disabled{opacity:.6;cursor:not-allowed}
+  #previewWrap{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  #preview{max-width:100%;border-radius:10px;border:3px solid #fff;display:none}
+  canvas{display:none}
+  .info{font-size:0.9rem;margin-top:8px;text-align:center;color:rgba(255,255,255,0.9)}
+  .small{font-size:0.85rem;color:rgba(255,255,255,0.85)}
+  @media (min-width:720px){
+    .row{align-items:start}
+    .card{display:flex;gap:18px;align-items:center}
+    #preview{max-width:320px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>ICO → PNG Converter</h1>
+
+    <div class="card">
+      <div style="flex:1">
+        <div class="row">
+          <label class="file" id="fileLabel">Select ICO file
+            <input id="fileInput" type="file" accept=".ico,image/x-icon,image/vnd.microsoft.icon" />
+          </label>
+
+          <div class="controls">
+            <button id="convertBtn" disabled>Convert & Download</button>
+            <button id="resetBtn" type="button" style="background:#ffffff;color:#000;font-weight:600">Reset</button>
+          </div>
+        </div>
+
+        <div class="info small" id="fileInfo">Supported: .ico files — modern browsers can decode many ICOs.</div>
+      </div>
+
+      <div id="previewWrap" style="min-width:160px">
+        <img id="preview" alt="Preview (PNG)"/>
+      </div>
+    </div>
+
+    <canvas id="workCanvas"></canvas>
+  </div>
+
+<script>
+(function(){
+  const fileInput = document.getElementById('fileInput');
+  const convertBtn = document.getElementById('convertBtn');
+  const resetBtn   = document.getElementById('resetBtn');
+  const preview    = document.getElementById('preview');
+  const canvas     = document.getElementById('workCanvas');
+  const ctx        = canvas.getContext('2d');
+
+  let currentObjectURL = null;
+  let loadedImage = null;
+  let currentFileName = 'converted';
+
+  function resetAll(){
+    if(currentObjectURL) URL.revokeObjectURL(currentObjectURL);
+    currentObjectURL = null;
+    fileInput.value = '';
+    preview.src = '';
+    preview.style.display = 'none';
+    canvas.width = canvas.height = 0;
+    loadedImage = null;
+    convertBtn.disabled = true;
+    currentFileName = 'converted';
+  }
+
+  resetBtn.addEventListener('click', resetAll);
+
+  // When user picks a file
+  fileInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    if(!f) return resetAll();
+    // allow only .ico or image
+    if(!f.name.toLowerCase().endsWith('.ico') && !f.type.includes('icon')){
+      // still allow though if user forces a differently typed ICO
+      // but alert them
+      const ok = confirm('File does not have .ico extension. Continue if you know this is an ICO file?');
+      if(!ok){ resetAll(); return; }
+    }
+
+    currentFileName = f.name.replace(/\.[^/.]+$/, '');
+    // create object url for image decoding
+    if(currentObjectURL) URL.revokeObjectURL(currentObjectURL);
+    currentObjectURL = URL.createObjectURL(f);
+
+    const img = new Image();
+    // try to ensure cross-origin not an issue
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      loadedImage = img;
+      // choose natural size (ICO often small). We'll render at native size; user can scale later.
+      const w = img.naturalWidth || img.width || 64;
+      const h = img.naturalHeight || img.height || 64;
+
+      // draw to canvas at native size
+      canvas.width = w;
+      canvas.height = h;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      // fill transparent background with white for PNG? No — PNG supports alpha. We preserve alpha.
+      ctx.drawImage(img, 0, 0, w, h);
+
+      // set preview to PNG dataURL
+      try {
+        const pngData = canvas.toDataURL('image/png');
+        preview.src = pngData;
+        preview.style.display = 'block';
+        convertBtn.disabled = false;
+      } catch(err){
+        alert('Failed to render ICO in browser — this ICO might be an uncommon format. If conversion fails, ask me to add a fallback decoder (icojs).');
+        resetAll();
+      }
+    };
+    img.onerror = () => {
+      alert('Could not load the ICO image. Some ICO files include multiple embedded images that browsers may not decode. I can add a JS ICO decoder fallback on request.');
+      resetAll();
+    };
+    img.src = currentObjectURL;
+  });
+
+  // Convert & download
+  convertBtn.addEventListener('click', () => {
+    if(!loadedImage){
+      alert('No image loaded.');
+      return;
+    }
+    // by default, keep original width/height. Offer user scaling by changing canvas size before drawing if needed.
+    // We will export PNG preserving transparency.
+    // Convert canvas to blob and trigger download
+    canvas.toBlob((blob) => {
+      if(!blob){ alert('Conversion failed.'); return; }
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = currentFileName + '.png';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      // revoke after short time
+      setTimeout(()=> URL.revokeObjectURL(link.href), 2000);
+    }, 'image/png');
+  });
+
+  // cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    if(currentObjectURL) URL.revokeObjectURL(currentObjectURL);
+  });
+})();
+</script>
+</body>
+</html>
