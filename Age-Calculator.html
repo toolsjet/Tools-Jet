@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff9c4; /* light yellow */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .age-calculator {
+    background: #2196f3; /* blue */
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    text-align: center;
+    color: #fff;
+  }
+  h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+  }
+  input[type="date"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    outline: none;
+  }
+  .result {
+    background: #fff176; /* yellow */
+    color: #000;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  @media(max-width:500px) {
+    .age-calculator { padding: 15px; }
+    h2 { font-size: 1.2rem; }
+    .result { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="age-calculator">
+  <h2>Age Calculator</h2>
+  <input type="date" id="birthdate">
+  <div class="result" id="result">Select your birthdate</div>
+</div>
+
+<script>
+document.getElementById("birthdate").addEventListener("input", function() {
+  const birthdate = new Date(this.value);
+  const today = new Date();
+
+  if (birthdate > today) {
+    document.getElementById("result").innerText = "Invalid date!";
+    return;
+  }
+
+  let years = today.getFullYear() - birthdate.getFullYear();
+  let months = today.getMonth() - birthdate.getMonth();
+  let days = today.getDate() - birthdate.getDate();
+
+  if (days < 0) {
+    months--;
+    const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  document.getElementById("result").innerText =
+    `You are ${years} years, ${months} months, and ${days} days old.`;
+});
+</script>
+
+</body>
+</html>
