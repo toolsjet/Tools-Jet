@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JPG to ICO Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffeb3b; /* bright yellow */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #2196f3; /* bright blue */
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    input[type="file"] {
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #ffeb3b;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #preview {
+      max-width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      display: none;
+      border: 3px solid white;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JPG to ICO Converter</h1>
+
+    <input type="file" id="imageInput" accept="image/jpeg"><br>
+    <button id="convertBtn" disabled>Convert to ICO</button>
+    <a id="downloadLink" style="display:none;">
+      <button>Download ICO</button>
+    </a>
+
+    <img id="preview" alt="Preview">
+  </div>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const convertBtn = document.getElementById("convertBtn");
+    const preview = document.getElementById("preview");
+    const downloadLink = document.getElementById("downloadLink");
+
+    let img = new Image();
+
+    imageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        img.onload = () => {
+          preview.src = event.target.result;
+          preview.style.display = "block";
+          convertBtn.disabled = false;
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    convertBtn.addEventListener("click", () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 64; // ICO standard size
+      canvas.height = 64;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, 64, 64);
+
+      // Generate ICO data (using PNG encoding but saved as .ico)
+      const icoData = canvas.toDataURL("image/png");
+
+      // Update preview
+      preview.src = icoData;
+
+      // Enable download
+      downloadLink.style.display = "inline-block";
+      downloadLink.href = icoData;
+      downloadLink.download = "converted-image.ico";
+    });
+  </script>
+</body>
+</html>
