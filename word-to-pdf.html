@@ -1,119 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Word to PDF Converter</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #fff3b0; /* softer yellow */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  .container {
-    background: #2196f3; /* bright blue */
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    max-width: 450px;
-    width: 90%;
-    text-align: center;
-    color: #333;
-  }
-  h1 {
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-    color: #fff;
-  }
-  input[type="file"] {
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 8px;
-    border: 2px solid #ddd;
-    width: 100%;
-  }
-  button {
-    padding: 12px;
-    background: #fff176; /* softer yellow */
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100%;
-    transition: 0.3s;
-  }
-  button:hover { background: #ffee58; }
-  button:disabled { opacity: 0.6; cursor: not-allowed; }
-  #downloadLink { display: none; margin-top: 15px; }
-  #downloadLink button { background: #4caf50; color: white; }
-  @media(max-width:500px){ .container{padding:15px;} h1{font-size:1.2rem;} }
-</style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word to PDF Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Libraries: Mammoth (DOCX->HTML), pdfmake, html-to-pdfmake -->
+    <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="container">
+        <h1 class="title">Word to PDF</h1>
+        <p class="subtitle">Convert .docx files to editable PDFs</p>
+      </div>
+    </header>
 
-<div class="container">
-  <h1>Word to PDF Converter</h1>
-  <input type="file" id="wordInput" accept=".docx">
-  <button id="convertBtn" disabled>Convert to PDF</button>
-  <a id="downloadLink"><button>Download PDF</button></a>
-</div>
+    <main class="container">
+      <section class="card">
+        <div class="uploader" id="dropzone">
+          <input type="file" id="fileInput" accept=".docx" />
+          <div class="uploader__content">
+            <div class="uploader__icon" aria-hidden="true">📄</div>
+            <p class="uploader__text">
+              <strong>Upload .docx</strong> or drag & drop
+            </p>
+            <button id="browseBtn" class="btn btn-primary" type="button">Choose File</button>
+            <p class="uploader__hint">Only .docx files are supported</p>
+          </div>
+        </div>
 
-<script>
-const wordInput = document.getElementById("wordInput");
-const convertBtn = document.getElementById("convertBtn");
-const downloadLink = document.getElementById("downloadLink");
-let selectedFile = null;
+        <div class="actions">
+          <button id="convertBtn" class="btn btn-accent" disabled>
+            Convert & Download PDF
+          </button>
+          <button id="resetBtn" class="btn btn-ghost" disabled>Reset</button>
+        </div>
 
-// Enable convert button when a file is selected
-wordInput.addEventListener("change", e => {
-  selectedFile = e.target.files[0];
-  convertBtn.disabled = !selectedFile;
-});
+        <div id="status" class="status" role="status" aria-live="polite"></div>
 
-// Convert Word to PDF using CloudConvert
-convertBtn.addEventListener("click", async () => {
-  if (!selectedFile) return;
+        <div class="preview-wrap">
+          <h2 class="preview-title">Preview</h2>
+          <div id="preview" class="preview" tabindex="0"></div>
+        </div>
+      </section>
+    </main>
 
-  convertBtn.textContent = "Converting...";
-  convertBtn.disabled = true;
+    <footer class="app-footer">
+      <div class="container">
+        <small>Your Multi-Tool • Word → PDF</small>
+      </div>
+    </footer>
 
-  const formData = new FormData();
-  formData.append("file", selectedFile);
+    <script src="./app.js"></script>
+  </body>
+  </html>
 
-  try {
-    // Replace this URL with your own CloudConvert API endpoint
-    // and use your API key in the Authorization header
-    const response = await fetch("https://api.cloudconvert.com/v2/convert", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer YOUR_CLOUDCONVERT_API_KEY"
-      },
-      body: formData
-    });
 
-    if (!response.ok) throw new Error("Conversion failed");
-
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-
-    downloadLink.href = url;
-    downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
-    downloadLink.style.display = "block";
-  } catch (err) {
-    alert("Error converting file: " + err.message);
-  } finally {
-    convertBtn.textContent = "Convert to PDF";
-    convertBtn.disabled = false;
-  }
-});
-</script>
-
-</body>
-</html>
