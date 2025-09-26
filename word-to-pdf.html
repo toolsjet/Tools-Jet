@@ -1,4 +1,10 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word to PDF Converter</title>
+  <style>
     body {
       font-family: Arial, sans-serif;
       background: #fff3b0; /* softer yellow */
@@ -18,7 +24,7 @@
       max-width: 450px;
       width: 90%;
       text-align: center;
-      color: #333; /* darker text for contrast */
+      color: #333;
     }
 
     h1 {
@@ -38,7 +44,7 @@
 
     button {
       padding: 12px;
-      background: #fff176; /* softer yellow for buttons */
+      background: #fff176; /* softer yellow */
       color: #000;
       font-weight: bold;
       border: none;
@@ -76,4 +82,45 @@
         font-size: 1.2rem;
       }
     }
-</style>
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Word to PDF Converter</h1>
+
+    <input type="file" id="wordInput" accept=".docx"><br>
+    <button id="convertBtn" disabled>Convert to PDF</button>
+
+    <a id="downloadLink">
+      <button>Download PDF</button>
+    </a>
+  </div>
+
+  <script>
+    const wordInput = document.getElementById("wordInput");
+    const convertBtn = document.getElementById("convertBtn");
+    const downloadLink = document.getElementById("downloadLink");
+
+    let selectedFile = null;
+
+    wordInput.addEventListener("change", (e) => {
+      selectedFile = e.target.files[0];
+      convertBtn.disabled = !selectedFile;
+    });
+
+    convertBtn.addEventListener("click", () => {
+      if (!selectedFile) return;
+
+      // ⚠️ Placeholder PDF content for demo
+      const pdfContent = `This is a dummy PDF converted from: ${selectedFile.name}`;
+
+      const blob = new Blob([pdfContent], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+
+      downloadLink.href = url;
+      downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
+      downloadLink.style.display = "block";
+    });
+  </script>
+</body>
+</html>
