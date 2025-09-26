@@ -1,65 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Word to PDF Converter</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
-    <!-- Libraries: Mammoth (DOCX->HTML), pdfmake, html-to-pdfmake -->
-    <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html-to-pdfmake/browser.js"></script>
-  </head>
-  <body>
-    <header class="app-header">
-      <div class="container">
-        <h1 class="title">Word to PDF</h1>
-        <p class="subtitle">Convert .docx files to editable PDFs</p>
-      </div>
-    </header>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word to PDF Converter</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff3b0; /* soft yellow */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background: #2196f3; /* bright blue */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    color: #333;
+  }
+  h1 {
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  input[type="file"] {
+    margin: 15px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+  }
+  button {
+    padding: 12px;
+    width: 100%;
+    margin-top: 10px;
+    background: #fff176; /* soft yellow */
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover { background: #ffee58; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  #downloadLink { display: none; margin-top: 15px; }
+  #downloadLink button { background: #4caf50; color: #fff; }
+  @media(max-width:500px){ .container{padding:15px;} h1{font-size:1.2rem;} }
+</style>
+</head>
+<body>
 
-    <main class="container">
-      <section class="card">
-        <div class="uploader" id="dropzone">
-          <input type="file" id="fileInput" accept=".docx" />
-          <div class="uploader__content">
-            <div class="uploader__icon" aria-hidden="true">📄</div>
-            <p class="uploader__text">
-              <strong>Upload .docx</strong> or drag & drop
-            </p>
-            <button id="browseBtn" class="btn btn-primary" type="button">Choose File</button>
-            <p class="uploader__hint">Only .docx files are supported</p>
-          </div>
-        </div>
+<div class="container">
+  <h1>Word to PDF Converter</h1>
+  <input type="file" id="wordInput" accept=".docx">
+  <button id="convertBtn" disabled>Convert to PDF</button>
+  <a id="downloadLink"><button>Download PDF</button></a>
+</div>
 
-        <div class="actions">
-          <button id="convertBtn" class="btn btn-accent" disabled>
-            Convert & Download PDF
-          </button>
-          <button id="resetBtn" class="btn btn-ghost" disabled>Reset</button>
-        </div>
+<script>
+const wordInput = document.getElementById("wordInput");
+const convertBtn = document.getElementById("convertBtn");
+const downloadLink = document.getElementById("downloadLink");
 
-        <div id="status" class="status" role="status" aria-live="polite"></div>
+let selectedFile = null;
 
-        <div class="preview-wrap">
-          <h2 class="preview-title">Preview</h2>
-          <div id="preview" class="preview" tabindex="0"></div>
-        </div>
-      </section>
-    </main>
+wordInput.addEventListener("change", e => {
+  selectedFile = e.target.files[0];
+  convertBtn.disabled = !selectedFile;
+});
 
-    <footer class="app-footer">
-      <div class="container">
-        <small>Your Multi-Tool • Word → PDF</small>
-      </div>
-    </footer>
+convertBtn.addEventListener("click", async () => {
+  if (!selectedFile) return;
+  convertBtn.textContent = "Converting...";
+  convertBtn.disabled = true;
 
-    <script src="./app.js"></script>
-  </body>
-  </html>
+  const arrayBuffer = await selectedFile.arrayBuffer();
 
+  // Extract text from Word using Mammoth.js
+  const { value: text } = await mammoth.extractRawText({ arrayBuffer });
 
+  // Create PDF using pdf-lib
+  const pdfDoc = await PDFLib.PDFDocument.create();
+  const page = pdfDoc.addPage();
+  const { width, height } = page.getSize();
+  const fontSize = 12;
+
+  page.drawText(text || "No text found in the Word file.", {
+    x: 50,
+    y: height - 50,
+    size: fontSize,
+    maxWidth: width - 100,
+    lineHeight: 14,
+  });
+
+  const pdfBytes = await pdfDoc.save();
+  const blob = new Blob([pdfBytes], { type: "application/pdf" });
+  const url = URL.createObjectURL(blob);
+
+  downloadLink.href = url;
+  downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
+  downloadLink.style.display = "block";
+
+  convertBtn.textContent = "Convert to PDF";
+  convertBtn.disabled = false;
+});
+</script>
+
+</body>
+</html>
