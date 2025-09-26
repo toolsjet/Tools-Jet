@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word to PDF Converter</title>
-  <style>
+<style>
     body {
       font-family: Arial, sans-serif;
-      background: #ffeb3b; /* bright yellow */
+      background: #fff3b0; /* softer yellow */
       margin: 0;
       padding: 0;
       display: flex;
@@ -24,7 +18,7 @@
       max-width: 450px;
       width: 90%;
       text-align: center;
-      color: #fff;
+      color: #333; /* darker text for contrast */
     }
 
     h1 {
@@ -44,7 +38,7 @@
 
     button {
       padding: 12px;
-      background: #ffeb3b;
+      background: #fff176; /* softer yellow for buttons */
       color: #000;
       font-weight: bold;
       border: none;
@@ -56,7 +50,7 @@
     }
 
     button:hover {
-      background: #fdd835;
+      background: #ffee58;
     }
 
     button:disabled {
@@ -82,45 +76,4 @@
         font-size: 1.2rem;
       }
     }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Word to PDF Converter</h1>
-
-    <input type="file" id="wordInput" accept=".docx"><br>
-    <button id="convertBtn" disabled>Convert to PDF</button>
-
-    <a id="downloadLink">
-      <button>Download PDF</button>
-    </a>
-  </div>
-
-  <script>
-    const wordInput = document.getElementById("wordInput");
-    const convertBtn = document.getElementById("convertBtn");
-    const downloadLink = document.getElementById("downloadLink");
-
-    let selectedFile = null;
-
-    wordInput.addEventListener("change", (e) => {
-      selectedFile = e.target.files[0];
-      convertBtn.disabled = !selectedFile;
-    });
-
-    convertBtn.addEventListener("click", () => {
-      if (!selectedFile) return;
-
-      // ⚠️ Placeholder PDF content for demo
-      const pdfContent = `This is a dummy PDF converted from: ${selectedFile.name}`;
-
-      const blob = new Blob([pdfContent], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-
-      downloadLink.href = url;
-      downloadLink.download = selectedFile.name.replace(".docx", ".pdf");
-      downloadLink.style.display = "block";
-    });
-  </script>
-</body>
-</html>
+</style>
