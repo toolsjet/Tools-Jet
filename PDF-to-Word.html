@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #fffbea; /* soft yellow-white */
+      background: #fff9c4; /* light yellow */
       margin: 0;
       padding: 0;
       display: flex;
@@ -17,25 +17,25 @@
     }
 
     .container {
-      background: #ffeb3b; /* bright yellow */
-      padding: 20px;
+      background: #2196f3; /* bright blue */
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      max-width: 500px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      max-width: 450px;
       width: 90%;
       text-align: center;
-      color: #333;
+      color: #fff;
     }
 
     h1 {
       margin-bottom: 15px;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
     }
 
     input[type="file"] {
-      margin: 10px 0;
+      margin: 15px 0;
       padding: 10px;
-      background: white;
+      background: #fff;
       border-radius: 8px;
       border: 2px solid #ddd;
       cursor: pointer;
@@ -43,15 +43,20 @@
     }
 
     button {
-      padding: 10px 15px;
-      background: #333;
-      color: #fff;
+      padding: 12px;
+      background: #ffeb3b; /* bright yellow */
+      color: #000;
       font-weight: bold;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       margin-top: 10px;
       width: 100%;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #fdd835;
     }
 
     button:disabled {
@@ -66,6 +71,7 @@
 
     #downloadLink button {
       background: #4caf50;
+      color: white;
     }
 
     @media (max-width: 500px) {
@@ -84,6 +90,7 @@
 
     <input type="file" id="pdfInput" accept="application/pdf"><br>
     <button id="convertBtn" disabled>Convert to Word</button>
+
     <a id="downloadLink">
       <button>Download Word File</button>
     </a>
@@ -105,10 +112,9 @@
       if (!selectedFile) return;
 
       // ⚠️ Placeholder conversion logic
-      // In reality, use a backend API like LibreOffice, or pdf2docx Python library
-      // Here we just create a fake Word file as demo
+      // Replace this with real conversion API/server code
       const blob = new Blob(
-        ["This is a dummy converted Word content from: " + selectedFile.name],
+        ["This is a dummy converted Word file for: " + selectedFile.name],
         { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" }
       );
 
