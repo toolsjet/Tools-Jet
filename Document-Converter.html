@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Converter Tool</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.5.1/mammoth.browser.min.js"></script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff9c4; /* soft yellow */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background: #2196f3; /* bright blue */
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    color: #fff;
+  }
+  h1 { margin-bottom: 15px; color: #fff; }
+  input, select {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+  }
+  button {
+    padding: 12px;
+    width: 100%;
+    margin-top: 10px;
+    background: #fff176; /* yellow */
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover { background: #ffee58; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  #downloadLink { display: none; margin-top: 15px; }
+  #downloadLink button { background: #4caf50; color: #fff; }
+  @media(max-width:500px){ .container{padding:15px;} h1{font-size:1.3rem;} }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Document Converter Tool</h1>
+  <input type="file" id="fileInput" accept=".pdf,.docx,.txt">
+  <select id="formatSelect">
+    <option value="pdf">Convert to PDF</option>
+    <option value="docx">Convert to DOCX</option>
+    <option value="txt">Convert to TXT</option>
+  </select>
+  <button id="convertBtn" disabled>Convert Document</button>
+  <a id="downloadLink"><button>Download Converted File</button></a>
+</div>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const formatSelect = document.getElementById("formatSelect");
+const convertBtn = document.getElementById("convertBtn");
+const downloadLink = document.getElementById("downloadLink");
+
+let selectedFile = null;
+
+fileInput.addEventListener("change", (e) => {
+  selectedFile = e.target.files[0];
+  convertBtn.disabled = !selectedFile;
+});
+
+convertBtn.addEventListener("click", async () => {
+  if (!selectedFile) return;
+  const targetFormat = formatSelect.value;
+  const fileName = selectedFile.name.split('.').slice(0, -1).join('.');
+  const ext = selectedFile.name.split('.').pop().toLowerCase();
+
+  if (ext === targetFormat) {
+    alert("File is already in " + targetFormat.toUpperCase() + " format.");
+    return;
+  }
+
+  let arrayBuffer = await selectedFile.arrayBuffer();
+  let blob;
+
+  try {
+    if (ext === "txt") {
+      const text = new TextDecoder().decode(arrayBuffer);
+
+      if (targetFormat === "pdf") {
+        // TXT → PDF
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([600, 800]);
+        page.drawText(text, { x: 50, y: 750, size: 12 });
+        const pdfBytes = await pdfDoc.save();
+        blob = new Blob([pdfBytes], { type: "application/pdf" });
+      } else if (targetFormat === "docx") {
+        // TXT → DOCX (simple)
+        const docxContent = new Blob([text], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+        blob = docxContent;
+      }
+
+    } else if (ext === "docx") {
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      const text = result.value;
+
+      if (targetFormat === "txt") {
+        blob = new Blob([text], { type: "text/plain" });
+      } else if (targetFormat === "pdf") {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([600, 800]);
+        page.drawText(text.substring(0, 3000), { x: 50, y: 750, size: 12 });
+        const pdfBytes = await pdfDoc.save();
+        blob = new Blob([pdfBytes], { type: "application/pdf" });
+      }
+
+    } else if (ext === "pdf") {
+      if (targetFormat === "txt") {
+        blob = new Blob(["Extracting text from PDF needs backend OCR."], { type: "text/plain" });
+      } else if (targetFormat === "docx") {
+        blob = new Blob(["PDF to DOCX conversion needs backend support."], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+      }
+    }
+
+    if (!blob) {
+      alert("Conversion for this format combination is limited in browser-only mode.");
+      return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = `${fileName}.${targetFormat}`;
+    downloadLink.style.display = "block";
+
+  } catch (err) {
+    console.error(err);
+    alert("Conversion failed. Some conversions require backend support.");
+  }
+});
+</script>
+
+</body>
+</html>
